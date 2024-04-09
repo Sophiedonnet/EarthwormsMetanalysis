@@ -1,0 +1,278 @@
+Soil chemistry turned upside down: a meta-analysis of invasive earthworm effects on soil chemical properties
+Effect of earthworm addition on soil nitrogen availability, microbial biomass and litter decomposition in mesocosms.
+A review of earthworm impact on soil function and ecosystem services.
+Ecosystem consequences of exotic earthworm invasion of north temperate forests.
+Non-native invasive earthworms as agents of change in northern temperate forests.
+Protection of soil carbon by microaggregates within earthworm casts.
+Strategies lombriciennes Ecological Bulletins
+How do earthworms affect microfloral and faunal community diversity?
+Carbon and nitrogen mobilisation by earthworms of different functional groups as affected by soil sand content.
+Burrow systems of endogeic earthworms: Effects of earthworm abundance and consequences for soil water infiltration.
+Non-native earthworms in riparian soils increase nitrogen flux into adjacent aquatic ecosystems.
+Invasion of exotic earthworms into ecosystems inhabited by native earthworms. Biological Invasions.
+Pandora's box contained bait: the global problem of introduced earthworms.
+Gross nitrogen mineralisation and fungi-to-bacteria ratios are negatively correlated in boreal forests.
+Influence of invasive earthworms on above and belowground vegetation in a northern hardwood forest.
+Jennions, M. D., C. J. Lortie, M. S. Rosenberg, and H. R. Rothstein. 2013. Publication and related biases.
+Resource stoichiometry and availability modulate species richness and biomass of tropical litter macro-invertebrates.
+Biogeochemistry and the structure of tropical brown food webs.
+Consumption of leaf litter by Lumbricus terrestris (Oligochaeta) on a Michigan woodland floodplain.
+Effect of the endogeic earthworm Aporrectodea tuberculata on aggregation and carbon redistribution in uninvaded forest soil columns.
+Uses and misuses of meta-analysis in plant ecology.
+Handbook of meta-analysis in ecology and evolution.
+Soil ecology. Springer Science Business Media.
+Effects of earthworms on soil organic matter and nutrient dynamics at a landscape scale over decades.
+Influence of nonnative earthworms on mycorrhizal colonization of sugar maple (Acer saccharum).
+Greenhouse-gas emissions from soils increased by earthworms.
+Short-and long-term effects of the endogeic earthworm Millsonia anomala (Omodeo) (Megascolecidæ,Oligochaeta) of tropical savannas, on soil organic matter.
+Plant diversity and ecosystem productivity: theoretical considerations.
+Microbial respiration, biomass, biovolume and nutrient status in burrow walls of Lumbricus terrestris L. (Lumbricidae).
+Microflora, protozoa and nematoda in Lumbricus terrestris burrow walls: a laboratory experiment.
+The unseen invaders: introduced earthworms as drivers of change in plant communities in North American forests (a meta-analysis).
+Factors affecting earthworm abundance in soils.
+Earthworm Ecology. CRC Press, Boca Raton, Florida, USA.
+The action of an animal ecosystem engineer: Identification of the main mechanisms of earthworm impacts on soil microarthropods. Pedobiologia.
+Invasion of a deciduous forest by earthworms: Changes in soil chemistry, microflora, microarthropods and vegetation.
+Ecosystem responses to exotic earthworm invasion in northern North American forests.
+Earthworm effects on the incorporation of litter C and N into soil organic matter in a sugar maple forest.
+Carbon food resources of earthworms of different ecological groups as indicated by 13C compound-specific stable isotope analysis.
+Invasive earthworms erode soil biodiversity: a meta-analysis.
+Linking direct and indirect pathways mediating earthworms, deer, and understory composition in Great Lakes forests.
+Earthworm invasion into previously earthworm-free temperate and boreal forests.
+Earthworms increase plant production: a meta-analysis.
+Exotic earthworm invasion and microbial biomass in temperate forest soils.
+Earthworms increase soil microbial biomass carrying capacity and nitrogen retention in northern hardwood forests.
+Nitrogen oligotrophication in northern hardwood forests.
+Effects of European earthworm invasion on soil characteristics in northern hardwood forests of Minnesota.
+The unseen majority: soil microbes as drivers of plant diversity and productivity in terrestrial ecosystems.
+Exotic earthworm invasions in North America: ecological and policy implications.
+Earthworm-induced shifts in microbial diversity in soils with rare versus established invasive earthworm populations.
+The influence of invasive earthworms on indigenous fauna in ecosystems previously uninhabited by earthworms.
+Belowground interactions with aboveground consequences: Invasive earthworms and arbuscular mycorrhizal fungi.
+Earthworm activity and soil structure changes due to organic enrichments in vineyard system.
+Performance of the trim and fill method in the presence of publication bias and between-study heterogeneity.
+Earthworm species composition affects the soil bacterial community and net nitrogen mineralization.
+Earthworms and management affect organic matter incorporation and microaggregate formation in agricultural soils.
+Effects of non-native Asian earthworm invasion on temperate forest and prairie soils in the Midwestern US.
+R: a language and environment for statistical computing.
+Elemental and mineralogical changes in soils due to bioturbation along an earthworm invasion chronosequence in Northern Minnesota.
+The file-drawer problem revisited: a general weighted method for calculating fail-safe numbers in meta-analysis.
+Microbial and microfaunal community dynamics in artificial and Lumbricus terrestris (L.) burrows.
+Influence of fragmentation and bioturbation on the decomposition of 14C-labelled beech leaf litter.
+Effects of exotic earthworms on soil phosphorus cycling in two broadleaf temperate forests.
+Invasive earthworm species and nitrogen cycling in remnant forest patches.
+Ecosystem effects of non-native earthworms in Mid-Atlantic deciduous forests.
+Bias and efficiency of meta-analytic variance estimators in the random-effects model.
+Conducting meta-analyses in R with the metafor package.
+Terrestrial ecosystem responses to species gains and losses.
+Chemoautotrophic nitrification in acidic forest soils along an urban-to-rural transect.
+Earthworms affect plant growth and resistance against herbivores: A meta-analysis
+The mineral nutrition of wild plants revisited: A re-evaluation of processes and patterns.
+Macroevolution of plant defense strategies.
+Earthworm functional traits and interspecific interactions affect plant nitrogen acquisition and primary production.
+Potential impact of soil microbiomes on the leaf metabolome and on herbivore feeding behavior.
+Experimental evidence that soil fauna enhance nutrient mineralization and plant nutrient uptake in montane grassland ecosystems.
+Using meta-regression to explore moderating effects in surveys of international achievement.
+Earthworm services for cropping systems.
+Role of earthworms in soil fertility maintenance through the production of biogenic structures.
+A review of earthworm impact on soil function and ecosystem services.
+Belowground organism activities affect plant aboveground phenotype, inducing plant tolerance to parasites.
+Interactive effects of functionally different earthworm species on aggregation and incorporation and decomposition of newly added residue carbon.
+Interactions between earthworms and plant-parasitic nematodes.
+How earthworms affect plant growth: Burrowing into the mechanisms.
+Analysis of wheat resistance to the cereal aphid Sitobion avenae using electrical penetration graphs and flow charts combined with correspondence analysis.
+The green peach aphid Myzus persicae perform better on pre-infested Chinese cabbage Brassica pekinensis by enhancing host plant nutritional quality
+Resource availability and plant antiherbivore defense.
+Soil animals and pedogenesis: The role of earthworms in anthropogenic soils.
+The feeding ecology of earthworms – A review. Pedobiologia.
+Competition and resource-mediated tradeoffs between growth and defensive chemistry in trembling aspen (Populus tremuloides).
+Earthworms as drivers of the competition between grasses and legumes.
+The role of protein effectors in plantaphid interactions.
+The growth-defense trade-off and habitat specialization by plants in Amazonian forests.
+Effects of Allelochemicals from First (Brassicaceae) and second (Myzus persicae and Brevicoryne brassicae) trophic levels on Adalia bipunctata.
+The meta-analysis of response ratios in experimental ecology.
+The dilemma of plants: To grow or defend.
+Earthworms influence the production of above and belowground biomass and the expression of genes involved in cell proliferation and stress responses in Arabidopsis thaliana.
+Handbook of meta-analysis in ecology and evolution.
+volutionary ecology of plant defences against herbivores.
+Plant mediated effects of soil invertebrates and summer drought on above-ground multitrophic interactions.
+Plant mediated effects of earthworms on aphid dynamics.
+Induced responses to herbivory. Chicago, IL: University of Chicago Press.
+Herbivore diet breadth and host plant defense mediate the tri-trophic effects of plant toxins on multiple coccinellid predators.
+Earthworms, collembola and residue management change wheat (Triticum aestivum) and herbivore pest performance (Aphidina: Rhophalosiphum padi).
+Myzus persicae (green peach aphid) feeding on Arabidopsis induces the formation of a deterrent indole glucosinolate.
+Meta-analysis of sources of variation in fitness costs of plant antiherbivore defenses.
+Effects of mycorrhizal fungi on insect herbivores: A meta-analysis.
+Handbook of meta-analysis in ecology and evolution.
+Effects of residue decomposition on productivity and soil fertility in rice–wheat rotation.
+Effects of an endogeic and an anecic earthworm on the competition between four annual plants and their relative fecundity.
+Life-history constraints in grassland plant species: A growth-defence trade-off is the norm.
+Decomposers and root feeders interactively affect plant defence in Sinapis alba.
+How earthworm activities affect banana plant response to nematodes parasitism.
+Induced resistance for plant defense: A sustainable approach to crop protection.
+The continuum of plant responses to herbivory: The influence of plant association, nutrient availability, and timing.
+Herbivory in relation to plant nitrogen content.
+Testing and adjusting for publication bias.
+Potential effects of earthworms on leaf-chewer performance.
+The evolution of resistance and tolerance to herbivores.
+Recent progress in plant nutrition research: Cross-talk between nutrients, plant physiology and soil microorganisms.
+Differential costs of two distinct resistance mechanisms induced by different herbivore species in Arabidopsis. 
+Beneficial microbes in a changing environment: Are they always helping plants to deal with insects?
+Editorial: Above-belowground interactions involving plants, microbes and insects.
+Helping plants to deal with insects: The role of beneficial soil-borne microbes.
+Decomposition and mineralization of nutrients from litter and humus. In H. BassiriRad (Ed.), Nutrient acquisition by plants. An ecological perspective (Ecological Studies).
+Signal molecules mediate the impact of the earthworm Aporrectodea caliginosa on growth, development and defence of the plant Arabidopsis thaliana.
+Transcriptional profiling of wheat in response to take-all disease and mechanisms involved in earthworm’s biocontrol effect.
+R: A language and environment for statistical computing.
+The file-drawer problem revisited: A general weighted method for calculating fail-safe numbers in meta-analysis.
+Effects of life history, domestication and agronomic selection on plant defence against insects: Evidence from maizes and wild relatives.
+Tolerance to herbivory by a stem boring caterpillar in architecturally distinct maizes and wild relatives.
+Effects of earthworms on plant growth: Patterns and perspectives.
+Links between the detritivore and the herbivore system: Effects of earthworms and Collembola on plant growth and aphid development.
+Insect-plant biology Schoonhoven, L. M., Van Loon, J. J., & Dicke, M. (2005).
+The role of microarthropods in decomposition and mineralization processes.
+Land-use and land-management change: Relationships with earthworm and fungi communities and soil structural properties.
+Plant interactions with multiple insect herbivores: From community to genes.
+The ecology and evolution of plant tolerance to herbivory.
+Mechanisms of tolerance to herbivore damage: What do we know?
+Herbivory of an invasive slug in a model grassland community can be affected by earthworms and mycorrhizal fungi.
+Earthworms increase plant production: A meta-analysis.
+Conducting meta-analyses in R with the metafor package.
+The myriad plant responses to herbivores.
+Domestication impacts on plant-herbivore interactions: A meta-analysis.
+Effects of earthworms on above- and below-ground herbivores.
+Plant-mediated links between detritivores and aboveground herbivores.
+Earthworms counterbalance the negative effect of microorganisms on plant diversity and enhance the tolerance of grasses to nematodes.
+Combined effects of earthworms and vesicular-arbuscular mycorrhizas on plant and aphid performance.
+Earthworms and litter distribution affect plant-defensive chemistry.
+Indirect effects of earthworms (Aporrectodea caliginosa) on an above-ground tritrophic interaction.
+Effects of earthworms and organic litter distribution on plant performance and aphid reproduction.
+Effects of belowground biota on primary and secondary metabolites in Brassica oleracea.
+Earthworms affect plant growth and resistance against herbivores: A meta-analysis.
+Deposition and decomposition of cattle dung and its impact on soil properties and plant growth in a cool-temperate pasture.
+Mechanisms and evolution of plant resistance to aphids.
+Trade-offs between plant growth and defense against insect herbivory: An emerging mechanistic synthesis.
+Using knockout mutants to reveal the growth costs of defensive traits.
+Growth-defense tradeoffs for two major anti-herbivore traits of the common milkweed Asclepias syriaca.
+The unseen invaders: introduced earthworms as drivers of change in plant communities in North American forests (a meta-analysis)
+Different earthworm ecological groups interactively impact seedling establishment.
+Historical anthropogenic disturbances influence patterns of non-native earthworm and plant invasions in a temperate primary forest.
+Non-native invasive earthworms as agents of change in northern temperate forests.
+What limits trees in c4 grasslands and savannas?
+How do earthworms affect microfloral and faunal community diversity?
+Relative abundance and seasonal activity of earthworms (Lumbricidae and Megascolecidae) as determined by hand-sorting and formalin extraction in forest soils on the southern Appalachian Piedmont.
+Root foraging influences plant growth responses to earthworm foraging.
+Global meta-analysis of the impacts of terres trial invertebrate invaders on species, communities and ecosystems.
+Invasive earthworms as seed predators of temperate forest plants.
+Non-native earthworms promote plant invasion by ingesting seeds and modifying soil properties.
+R: A Language and Environment for Statistical Computing.
+Exotic earthworms of great lakes forests: a search for indicator plant species in maple forests.
+Global diversity of drought tolerance and grassland climate-change resilience.
+Single and interactive effects of deer and earth worms on non-native plants.
+Linking aboveground and belowground diversity.
+Earthworm invasion, white-tailed deer and seedling establishment in deciduous forests of north-eastern North America.
+Assemblage time series reveal biodiversity change but not systematic loss.
+Non-native anecic earthworms (Lumbricus terrestris L.) reduce seed germination and seedling survival of temperate and boreal trees species.
+Ecosystem consequences of biological invasions.
+The action of an animal ecosystem engineer: identification of the main mechanisms of earthworm impacts on soil microarthropods.
+Invasibility of experimental grassland communities: the role of earthworms, plant functional group identity and seed size.
+Invasion of a deciduous forest by earthworms: changes in soil chemistry, microflora, microarthropods and vegetation.
+Assessment of anecic behavior in selected earthworm species: Effects on wheat seed burial, seedling establishment, wheat growth and litter incorporation.
+Direct and indirect effects of endogeic earthworms on plant seeds.
+Earthworms as seedling predators: Importance of seeds and seedlings for earthworm nutrition.
+Interactive effects of global warming and “global worming” on the initial establishment of native and exotic herbaceous plant species.
+Biodiversity–ecosystem function experiments reveal the mechanisms underlying the consequences of biodiversity change in real world ecosystems.
+Trophic Downgrading of Planet Earth.
+Earthworms reduce biotic 15-Nitrogen retention in northern hardwood forests.
+Earthworm effects on the incorporation of litter C and N into soil organic matter in a sugar maple forest.
+Carbon food resources of earthworms of different ecological groups as indicated by 13C compound-specific stable isotope analysis.
+Linking direct and indirect pathways mediating earthworms, deer, and understory composition in Great Lakes forests.
+Importance of earthworm–seed interactions for the composition and structure of plant communities: A review.
+Earthworm invasion into previously earthworm-free temperate and boreal forests.
+Trophic cascades, invasive species and body-size hierarchies interactively modulate climate change responses of ecotonal temperate–boreal forest.
+Exploring carbon flow through the root channel in a temperate forest soil food web.
+Estimating local biodiversity change: a critique of papers claiming no net loss of local diversity.
+Earthworms increase soil microbial biomass carrying capacity and nitrogen retention in northern hardwood forests.
+Allometric equations for estimation of ash-free dry mass from length measurements for selected European earthworm species (Lumbricidae) in the western Great Lakes region.
+Effects of European earthworm invasion on soil characteristics in northern hardwood forests of Minnesota.
+Changes in hardwood forest understory plant communities in response to European earthworm invasions.
+Invader disruption of belowground plant mutualisms reduces carbon acquisition and alters allocation patterns in a native forest herb.
+An unbiased correction for sampling error in validity generalization studies.
+Exotic earthworm invasions in North America: ecological and policy implications: expanding global commerce may be increasing thelikelihood of exotic earthworm invasions, which could have negative implications for soil processes, other animal and plant species, and importation of certain pathogens.
+Interactions of an introduced shrub and introduced earthworms in an Illinois urban woodland: impact on leaf litter decomposition.
+Effects of earthworm invasion on plant species richness in northern hardwood forests.
+Regional extent of an ecosystem engineer: Earthworm invasion in northern hardwood forests.
+Uses and misuses of meta-analysis in plant ecology.
+Handbook of Meta-Analysis in Ecology and Evolution.
+Tree rings detect earthworm invasions and their effects in northern Hardwood forests.
+The structure of earthworm communities.
+Quantifying differences between native and introduced species.
+Earthworm invasions in northern hardwood forests: a rapid assessment method.
+Greenhouse-gas emissions from soils increased by earthworms.
+The influence of invasive earthworms on indigenous fauna in ecosystems previously uninhabited by earthworms.
+Invasions: the trail behind, the path ahead, and a test of a disturbing idea.
+A meta-analysis of declines in local species richness from human disturbances.
+Methodological issues and advances in biological meta-analysis.
+Vive la resistance: reviving resistance for 21st century conservation.
+Earthworm invasion as the driving force behind plant invasion and community change in northeastern North American forests.
+Invasive earthworms shape forest seed bank composition.
+Belowground interactions with aboveground consequences: Invasive earthworms and arbuscular mycorrhizal fungi.
+Invasive plants have scale-dependent effects on diversity by altering species-area relationships.
+Disturbance dynamics influence Carex pensylvanica abundance in a northern hardwood forest.
+Invasive earthworms deplete key soil inorganic nutrients (Ca, Mg, K, and P) in a northern hardwood forest.
+Ecosystem engineering effects on species diversity across ecosystems: a meta-analysis.
+Invasive earthworms interact with abiotic conditions to influence the invasion of common buckthorn (Rhamnus cathartica).
+Indirect and direct effects of exotic earthworms on soil nutrient and carbon pools in North American temperate forests.
+Global biodiversity scenarios for the year 2100.
+Positive interactions of nonindigenous species: invasional meltdown?
+Impacts of biological invasions: what’s what and the way forward.
+A consumer’s guide to evenness indices.
+Invasive earthworm species and nitrogen cycling in remnant forest patches.
+Belowground bud bank response to grazing under severe, short-term drought.
+Global meta-analysis reveals no net change in local-scale plant biodiversity over time.
+Ecological impacts of invasive alien plants: a meta-analysis of their effects on species, communities and ecosystems.
+Invasive species triggers a massive loss of ecosystem services through a trophic cascade.
+Ecological linkages between aboveground and belowground biota.
+Terrestrial ecosystem responses to species gains and losses.
+Resident plant diversity and introduced earthworms have contrasting effects on the success of invasive plants.
+Selective vertical seed transport by earthworms: Implications for the diversity of grassland ecosystems.
+Earthworms increase plant production: a meta-analysis.
+Food security: the challenge of feeding 9 billion people.
+The role of conservation agriculture in sustainable agriculture.
+Comparing the yields of organic and conventional agriculture.
+A review of earthworm impact on soil function and ecosystem services.
+The formation of vegetable mould through the action of worms with observations on their habits.
+Effects of earthworms on plant growth: patterns and perspectives.
+The role of biomass allocation in the growth response of plants to different levels of light, CO2, nutrients and water: a quantitative review.
+Earthworm ecology. 2nd Edition.
+Earthworms influence the production of above- and belowground biomass and the expression of genes involved in cell proliferation and stress responses in Arabidopsis thaliana.
+Signal Molecules Mediate the Impact of the Earthworm Aporrectodea caliginosa on Growth, Development and Defence of the Plant Arabidopsis thaliana.
+Changes in soil N pools in response to earthworm population manipulations in agroecosystems with different N sources.
+Earthworm species composition affects the soil bacterial community and net nitrogen mineralization.
+Inorganic and organic phosphorus pools in earthworm casts (Glossoscolecidae) and a Brazilian rainforest Oxisol.
+Effects of earthworms on Phosphorus dynamics - a review.
+Movement of N from decomposing earthworm tissue to soil, microbial and plant N pools.
+Effects of earthworm inoculation upon the root-growth of direct drilled cereals.
+Influence of earthworms on soil productivity.
+Land-use and land-management change: relationships with earthworm and fungi communities and soil structural properties.
+Soil invertebrates and ecosystem services.
+Soil fertility concepts over the past two centuries: the importance attributed to soil organic matter in developed and developing countries.
+Ecology of arable land: perspectives and challenges
+SOM management in the tropics: Why feeding the soil macrofauna?
+Organic inputs for soil fertility management in tropical agroecosystems: application of an organic resource database.
+An overview of some tillage impacts on earthworm population abundance and diversity - implications for functioning in soils.
+A meta-analysis of experimental warming effects on terrestrial nitrogen pools and dynamics.
+Handling continuous outcomes in quantitative synthesis. Methods guide for comparative effectiveness reviews.
+Soil organisms as components of ecosystems Ecological Bulletins.
+Earthworm management in tropical agroecosystems.
+Earthworm communities in grasslands and horticultural soils.
+Keys to Soil Taxonomy.
+Are miroorganisms more effective than plants at competing for nitrogen?
+Element interactions limit soil carbon storage.
+The role of residues management in sustainable agricultural systems.
+The meta-analysis of response ratios in experimental ecology.
+Assessing the effect of elevated carbon dioxide on soil carbon: A comparison of four meta-analyses.
+Statistical Methods for Meta-analysis.
+A meta-analysis of elevated CO2 effects on woody plant mass, form and physiology.
+The file drawer problem and tolerance for null results.
+Metawin: Statistical Software for Meta-Analysis, Version 2.0.
