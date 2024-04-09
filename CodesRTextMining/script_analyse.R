@@ -1,12 +1,11 @@
 library(dplyr)
 library(ggplot2)
-install.packages(tidytext)
+#install.packages(tidytext)
 library(tm)
 library(knitr)
-library(gg)
 
 #----------------------------- 
-earthworms <- read.csv("~/WORK_ALL/RECHERCHE/TRAVAUX_RECHERCHE/Makowski/EarthwormsMetanalysis/database/metaanalyse_csv_final_wip.csv")
+earthworms <- read.csv("~/Documents/GitHub/EarthwormsMetanalysis/ExtractionBiblio/metaanalyse_csv_final_wip.csv")
 countries <-  read.csv("~/WORK_ALL/RECHERCHE/TRAVAUX_RECHERCHE/Makowski/EarthwormsMetanalysis/database/Countries-Continents.csv")
 
 #--------------------- 
