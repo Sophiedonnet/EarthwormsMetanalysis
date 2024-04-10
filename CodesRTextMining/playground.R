@@ -44,5 +44,5 @@ ggplot(word_counts_df[1:20, ], aes(x = frequency, y = reorder(word, frequency)))
 mean(earthworms$aboutEarthworms==TRUE)
 
 
-
+# revenir à la source?? ce que j'ai ressemble à ce qu'il faut mais ce n'est plus un tidytext. . .
 
