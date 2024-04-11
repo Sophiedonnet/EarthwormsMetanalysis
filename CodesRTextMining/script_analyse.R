@@ -31,7 +31,13 @@ for (i in 1:n){
   if (("earthworm" %in% mylist.i) | ("earthworms" %in% mylist.i)){earthworms$aboutEarthworms[i] = TRUE}else{earthworms$aboutEarthworms[i] = FALSE} 
 }
 
-all_words <- c(token_list$word)
+#Here we could try to remove the "abstract" word from the token list, but given it technically appear only one per abstract, its presence
+#in the graph may give additional information about words relative frequencies in the abstracts.
+for (i in seq_along(token_list)) {
+  words <- token_list[i]$word
+  all_words <- c(all_words, words)
+}
+
 word_counts <- table(all_words)
 word_counts_df <- as.data.frame(word_counts, stringsAsFactors = FALSE)
 colnames(word_counts_df) <- c("word", "frequency")
