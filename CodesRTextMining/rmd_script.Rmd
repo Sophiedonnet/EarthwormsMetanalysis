@@ -1,14 +1,20 @@
-# DONT FORGET TO CLEAN ENVIRONNEMENT BETWEN RUNS 
-# WORDSTEM do not work as well as intended to remove plurals.
-
+---
+title: "rmd_script_analyse"
+output: html_document
+date: "2024-04-23"
+---
+Premier bloc de code : importation des librairies.
+```{r}
 library(dplyr)
 library(ggplot2)
 library(tidytext)
 library(tm)
 library(knitr)
 library(SemNetCleaner)
-
 data("stop_words")
+```
+Deuxième bloc de code : définition des variables.
+```{r}
 
 #----------------------------- 
 earthworms <- read.csv("~/Documents/GitHub/EarthwormsMetanalysis/ExtractionBiblio/metaanalyse_csv_final.csv")
@@ -20,11 +26,20 @@ n = nrow(earthworms)
 token_list <- c()
 all_words<- c()
 all_words_sg<-c()
-
+```
+Troisième bloc de code: ajout d'une colonne "aboutEarthworms".
+```{r}
 earthworms <- earthworms %>% mutate(aboutEarthworms = rep(TRUE,n))
+```
+Quatrième bloc de code: Construction de la liste des abstracts.
+```{r}
  for (i in 1:n){
-   abstract.i <- earthworms$Abstract..
+   abstract.i <-earthworms$Abstract[i]
    abstracts <- c(abstracts, abstract.i)
+ }
+```
+Cinquième bloc de code : Construction de la liste de tokens.
+```{r}
    for (i in seq_along(abstracts)) {
      # Unnest tokens for the current abstract
      unnested_tokens <- tibble(abstracts = abstracts[i]) %>%
@@ -35,31 +50,5 @@ earthworms <- earthworms %>% mutate(aboutEarthworms = rep(TRUE,n))
    }
    mylist.i <- strsplit(abstract.i, split = " ")[[1]]
   if (("earthworm" %in% mylist.i) | ("earthworms" %in% mylist.i)){earthworms$aboutEarthworms[i] = TRUE}else{earthworms$aboutEarthworms[i] = FALSE}
-}
-
-for (i in seq_along(token_list)) {
-  words <- token_list[i]$word
-  all_words <- c(all_words, words)
-}
-
-for (sg in seq_along(all_words)) {
-  word_parts <- unlist(strsplit(all_words[[sg]], " "))
-  singular_parts <- sapply(word_parts, singularize)
-  all_words_sg <- c(all_words_sg, unname(singular_parts))
-}
-
-word_counts <- table(all_words_sg)
-word_counts_df <- as.data.frame(word_counts, stringsAsFactors = FALSE)
-colnames(word_counts_df) <- c("word", "frequency")
-word_counts_df <- word_counts_df[order(-word_counts_df$frequency), ]
-word_counts_df <- subset(word_counts_df, word != "abstract")
-ggplot(word_counts_df[1:20, ], aes(x = frequency, y = reorder(word, frequency))) +
-  geom_bar(stat = "identity") +
-  labs(x = "Frequency", y = "Words") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
-
-mean(earthworms$aboutEarthworms==TRUE)
-
-
-
+```
 

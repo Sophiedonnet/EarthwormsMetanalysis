@@ -11,7 +11,7 @@ library(SemNetCleaner)
 data("stop_words")
 
 #----------------------------- 
-earthworms <- read.csv("~/Documents/GitHub/EarthwormsMetanalysis/ExtractionBiblio/metaanalyse_csv_final_wip.csv")
+earthworms <- read.csv("~/Documents/GitHub/EarthwormsMetanalysis/ExtractionBiblio/metaanalyse_csv_final.csv")
 abstracts<-c()
 bing<-get_sentiments("bing")
 #--------------------- 
