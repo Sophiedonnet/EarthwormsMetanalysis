@@ -23,9 +23,6 @@ bing<-get_sentiments("bing")
 #--------------------- 
 names(earthworms)
 n = nrow(earthworms)
-token_list <- c()
-all_words<- c()
-all_words_sg<-c()
 ```
 Troisième bloc de code: ajout d'une colonne "aboutEarthworms".
 ```{r}
@@ -38,17 +35,26 @@ Quatrième bloc de code: Construction de la liste des abstracts.
    abstracts <- c(abstracts, abstract.i)
  }
 ```
-Cinquième bloc de code : Construction de la liste de tokens.
+Cinquième bloc de code : Construction d'un dataframe de tokens.
 ```{r}
-   for (i in seq_along(abstracts)) {
-     # Unnest tokens for the current abstract
-     unnested_tokens <- tibble(abstracts = abstracts[i]) %>%
-       unnest_tokens(word, abstracts)
-     # Append the unnested tokens to the list
-     unnested_tokens<-unnested_tokens%>%anti_join(stop_words)
-     token_list<-c(token_list, unnested_tokens)
-   }
-   mylist.i <- strsplit(abstract.i, split = " ")[[1]]
-  if (("earthworm" %in% mylist.i) | ("earthworms" %in% mylist.i)){earthworms$aboutEarthworms[i] = TRUE}else{earthworms$aboutEarthworms[i] = FALSE}
+ # Unnest tokens for the current abstract
+unnested_tokens <- tibble(abstracts) %>%
+unnest_tokens(word, abstracts)
+# Append the unnested tokens to the list
+unnested_tokens<-unnested_tokens%>%anti_join(stop_words)
+unnested_tokens<-unnested_tokens %>% rowwise() %>% mutate(word = singularize(word))
 ```
+Analyse du dataframe: 
+```{r}
+ordre=unnested_tokens %>%
+     count(word, sort = TRUE) %>%
+     filter(n > 100) %>%
+     mutate(word = reorder(word, n,decreasing=TRUE))
+
+ ordre$word = factor(ordre$word,levels=rev(levels(ordre$word)))
+ ggplot(ordre,aes(n, word)) +
+     geom_col() +
+     labs(y = NULL)
+```
+
 
