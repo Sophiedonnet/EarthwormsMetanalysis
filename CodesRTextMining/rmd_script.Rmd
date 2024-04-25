@@ -56,5 +56,115 @@ ordre=unnested_tokens %>%
      geom_col() +
      labs(y = NULL)
 ```
+Import subset MA1:
+```{r}
+abstracts1<-c()
+MA1 <- read.csv("~/Documents/GitHub/EarthwormsMetanalysis/ExtractionBiblio/subset_MA1.csv")
+nMA1 <- nrow(MA1)
+ for (i in 1:nMA1){
+   abstract.i <-MA1$Abstract[i]
+   abstracts1 <- c(abstracts1, abstract.i)
+ }
+unnested_tokens1 <- tibble(abstracts1) %>%
+unnest_tokens(word, abstracts1)
+unnested_tokens1<-unnested_tokens1 %>% anti_join(stop_words)
+unnested_tokens1<-unnested_tokens1 %>% rowwise() %>% mutate(word = singularize(word))
+```
+Import subset MA2:
+```{r}
+abstracts2<-c()
+MA2 <- read.csv("~/Documents/GitHub/EarthwormsMetanalysis/ExtractionBiblio/subset_MA2.csv")
+nMA2 <- nrow(MA2)
+ for (i in 1:nMA2){
+   abstract.i <-MA2$Abstract[i]
+   abstracts2 <- c(abstracts2, abstract.i)
+ }
+unnested_tokens2 <- tibble(abstracts2) %>%
+unnest_tokens(word, abstracts2)
+unnested_tokens2<-unnested_tokens2 %>% anti_join(stop_words)
+unnested_tokens2<-unnested_tokens2 %>% rowwise() %>% mutate(word = singularize(word))
+```
+Import subset MA3:
+```{r}
+abstracts3<-c()
+MA3 <- read.csv("~/Documents/GitHub/EarthwormsMetanalysis/ExtractionBiblio/subset_MA3.csv")
+nMA3 <- nrow(MA3)
+ for (i in 1:nMA3){
+   abstract.i <-MA3$Abstract[i]
+   abstracts3 <- c(abstracts3, abstract.i)
+ }
+unnested_tokens3 <- tibble(abstracts3) %>%
+unnest_tokens(word, abstracts3)
+unnested_tokens3<-unnested_tokens3 %>% anti_join(stop_words)
+unnested_tokens3<-unnested_tokens3 %>% rowwise() %>% mutate(word = singularize(word))
+```
+Import subset MA4:
+```{r}
+abstracts4<-c()
+MA4 <- read.csv("~/Documents/GitHub/EarthwormsMetanalysis/ExtractionBiblio/subset_MA4.csv")
+nMA4 <- nrow(MA4)
+ for (i in 1:nMA4){
+   abstract.i <-MA4$Abstract[i]
+   abstracts4 <- c(abstracts4, abstract.i)
+ }
+unnested_tokens4 <- tibble(abstracts4) %>%
+unnest_tokens(word, abstracts4)
+unnested_tokens4<-unnested_tokens4 %>% anti_join(stop_words)
+unnested_tokens4<-unnested_tokens4 %>% rowwise() %>% mutate(word = singularize(word))
+```
+Création des quatre plots:
 
+Plot MA1 :
+```{r}
+ordre1=unnested_tokens1 %>%
+     count(word, sort = TRUE) %>%
+     filter(n > 25) %>%
+     mutate(word = reorder(word, n,decreasing=TRUE))
+
+ ordre1$word = factor(ordre1$word,levels=rev(levels(ordre1$word)))
+ plot1<-ggplot(ordre1,aes(n, word)) +
+     geom_col() +
+     labs(y = NULL)
+```
+Plot MA2 :
+```{r}
+ordre2=unnested_tokens2 %>%
+     count(word, sort = TRUE) %>%
+     filter(n > 25) %>%
+     mutate(word = reorder(word, n,decreasing=TRUE))
+
+ ordre2$word = factor(ordre2$word,levels=rev(levels(ordre2$word)))
+ plot2<-ggplot(ordre2,aes(n, word)) +
+     geom_col() +
+     labs(y = NULL)
+```
+Plot MA3 :
+```{r}
+ordre3=unnested_tokens3 %>%
+     count(word, sort = TRUE) %>%
+     filter(n > 25) %>%
+     mutate(word = reorder(word, n,decreasing=TRUE))
+
+ ordre3$word = factor(ordre3$word,levels=rev(levels(ordre3$word)))
+ plot3<-ggplot(ordre3,aes(n, word)) +
+     geom_col() +
+     labs(y = NULL)
+```
+Plot MA4:
+```{r}
+ordre4=unnested_tokens4 %>%
+     count(word, sort = TRUE) %>%
+     filter(n > 25) %>%
+     mutate(word = reorder(word, n,decreasing=TRUE))
+
+ ordre4$word = factor(ordre4$word,levels=rev(levels(ordre4$word)))
+ plot4<-ggplot(ordre4,aes(n, word)) +
+     geom_col() +
+     labs(y = NULL)
+```
+Comparaison des quatre MA:
+```{r}
+library(egg)
+ggarrange(plot1,plot2,plot3,plot4,widths = c(2,2),labels = c("MA1","MA2","MA3","MA4"))
+```
 
