@@ -44,7 +44,8 @@ unnest_tokens(word, abstracts)
 unnested_tokens<-unnested_tokens%>%anti_join(stop_words)
 unnested_tokens<-unnested_tokens %>% rowwise() %>% mutate(word = singularize(word))
 ```
-Analyse du dataframe: 
+Analyse du dataframe: trouver les mots les plus communs dans les quatre MA confondues.
+
 ```{r}
 ordre=unnested_tokens %>%
      count(word, sort = TRUE) %>%
@@ -56,7 +57,10 @@ ordre=unnested_tokens %>%
      geom_col() +
      labs(y = NULL)
 ```
-Import subset MA1:
+
+# Création de subsets correspondant aux 4 MA individuellement, afin de pouvoir les comparer entre elles.
+
+## Import subset MA1:
 ```{r}
 abstracts1<-c()
 MA1 <- read.csv("~/Documents/GitHub/EarthwormsMetanalysis/ExtractionBiblio/subset_MA1.csv")
@@ -70,7 +74,7 @@ unnest_tokens(word, abstracts1)
 unnested_tokens1<-unnested_tokens1 %>% anti_join(stop_words)
 unnested_tokens1<-unnested_tokens1 %>% rowwise() %>% mutate(word = singularize(word))
 ```
-Import subset MA2:
+## Import subset MA2:
 ```{r}
 abstracts2<-c()
 MA2 <- read.csv("~/Documents/GitHub/EarthwormsMetanalysis/ExtractionBiblio/subset_MA2.csv")
@@ -84,7 +88,7 @@ unnest_tokens(word, abstracts2)
 unnested_tokens2<-unnested_tokens2 %>% anti_join(stop_words)
 unnested_tokens2<-unnested_tokens2 %>% rowwise() %>% mutate(word = singularize(word))
 ```
-Import subset MA3:
+## Import subset MA3:
 ```{r}
 abstracts3<-c()
 MA3 <- read.csv("~/Documents/GitHub/EarthwormsMetanalysis/ExtractionBiblio/subset_MA3.csv")
@@ -98,7 +102,7 @@ unnest_tokens(word, abstracts3)
 unnested_tokens3<-unnested_tokens3 %>% anti_join(stop_words)
 unnested_tokens3<-unnested_tokens3 %>% rowwise() %>% mutate(word = singularize(word))
 ```
-Import subset MA4:
+## Import subset MA4:
 ```{r}
 abstracts4<-c()
 MA4 <- read.csv("~/Documents/GitHub/EarthwormsMetanalysis/ExtractionBiblio/subset_MA4.csv")
@@ -112,9 +116,9 @@ unnest_tokens(word, abstracts4)
 unnested_tokens4<-unnested_tokens4 %>% anti_join(stop_words)
 unnested_tokens4<-unnested_tokens4 %>% rowwise() %>% mutate(word = singularize(word))
 ```
-Création des quatre plots:
+# Création des quatre plots:
 
-Plot MA1 :
+## Plot MA1 :
 ```{r}
 ordre1=unnested_tokens1 %>%
      count(word, sort = TRUE) %>%
@@ -126,7 +130,7 @@ ordre1=unnested_tokens1 %>%
      geom_col() +
      labs(y = NULL)
 ```
-Plot MA2 :
+## Plot MA2 :
 ```{r}
 ordre2=unnested_tokens2 %>%
      count(word, sort = TRUE) %>%
@@ -138,7 +142,7 @@ ordre2=unnested_tokens2 %>%
      geom_col() +
      labs(y = NULL)
 ```
-Plot MA3 :
+## Plot MA3 :
 ```{r}
 ordre3=unnested_tokens3 %>%
      count(word, sort = TRUE) %>%
@@ -150,7 +154,7 @@ ordre3=unnested_tokens3 %>%
      geom_col() +
      labs(y = NULL)
 ```
-Plot MA4:
+## Plot MA4:
 ```{r}
 ordre4=unnested_tokens4 %>%
      count(word, sort = TRUE) %>%
@@ -162,9 +166,74 @@ ordre4=unnested_tokens4 %>%
      geom_col() +
      labs(y = NULL)
 ```
-Comparaison des quatre MA:
+# Comparaison des quatre MA:
+
+Quels sont les mots les plus communs dans chacunes des MA?
+
 ```{r}
 library(egg)
-ggarrange(plot1,plot2,plot3,plot4,widths = c(2,2),labels = c("MA1","MA2","MA3","MA4"))
+ggarrange(plot1,plot2,plot3,plot4,widths = c(2,2),labels = c("1","2","3","4"))
 ```
+# DataFrame pour comparer les fréquences des 4 MA:
+
+```{r}
+library(tidyr)
+
+frequency <- bind_rows(mutate(unnested_tokens1, author = "MA1"),
+                       mutate(unnested_tokens2, author = "MA2"), 
+                       mutate(unnested_tokens3, author = "MA3"),
+                       mutate(unnested_tokens4, author = "MA4"))%>% 
+  mutate(word = stringr::str_extract(word, "[a-z']+")) %>%
+  count(author, word) %>%
+  group_by(author) %>%
+  mutate(proportion = n / sum(n)) %>% 
+  select(-n) %>% 
+  pivot_wider(names_from = author, values_from = proportion) %>%
+  pivot_longer('MA2':'MA3':'MA4',
+               names_to = "author", values_to = "proportion")
+
+```
+# Graphe de comparaison des fréquences:
+```{r}
+library(scales)
+
+# expect a warning about rows with missing values being removed
+ggplot(frequency, aes(x = proportion, y = `MA1`, 
+                      color = abs(`MA1` - proportion))) +
+  geom_abline(color = "gray40", lty = 2) +
+  geom_jitter(alpha = 0.1, size = 2.5, width = 0.3, height = 0.3) +
+  geom_text(aes(label = word), check_overlap = TRUE, vjust = 1.5) +
+  scale_x_log10(labels = percent_format()) +
+  scale_y_log10(labels = percent_format()) +
+  scale_color_gradient(limits = c(0, 0.001), 
+                       low = "darkslategray4", high = "gray75") +
+  facet_wrap(~author, ncol = 2) +
+  theme(legend.position="none") +
+  labs(y = "MA1", x = NULL)
+```
+
+Quelques mots sont au pluriel, ce qui signifie que la fonction "singularize" n'a pas fonctionné correctement (des mots tels que "herbivores" ou "abundances".)
+
+## MA1 vs MA2 : 
+- Les mots dont la fréquence est la plus similaires entre les deux sont ceux qui sont les plus proches de la ligne, soit, dans l'ordre croissant: "account", "action", "abundance", "fungal", "ability", "vary", "addition", "animal", "chemical", "approach", "control", "experiment", "impact", "activity", "liter", "result", **"analysis", "specie", "effect", "earthworm"**.
+
+- Les mots **"fraction", "invasion", "native" et "burrow"** sont plus fréquents dans la MA1 que dans la MA2, tandis que les mots **"grass", "herbivore" et "plant"** sont plus fréquents dans la MA2 que de la MA1.
+
+## MA1 vs MA3 :
+- Les mots dont la fréquence est la plus similaires entre les deux sont ceux qui sont les plus proches de la ligne, soit, dans l'ordre croissant: "acquisition", "accompany", "abiotic", "mass", "addition", "common", "fauna", "north", America", "due", "affect","carbon", "analysis", "abundance", "study", "impact", "ecosystem", "community", "effect", **"plant", "specie", "soil", "earthworm"**.
+
+- Les mots **"caliginosa", "macroaggregate", "bacterial" et "volume"** sont plus fréquents dans la MA1 que dans la MA3, tandis que les mots **"bank", "invader", "seedling" et "seed"** sont plus fréquents dans la MA3 que de la MA1.
+
+## MA1 vs MA4 :
+- Les mots dont la fréquence est la plus similaires entre les deux sont ceux qui sont les plus proches de la ligne, soit, dans l'ordre croissant: "action", "analytic", "abiotic", "arable", "affected", "cover", "abovground", "addition", "change", "role", "influence", "affect", "activity", "increase", "impact", "result", "community", "analysis", "ecosystem", **"species", "organic", "plant", "effect","earthworm"**.
+
+- Les mots **"exotic","burrow","density" et "habitat"** sont plus fréquents dans la MA1 que dans la MA4, tandis que les mots **"atmosferic", "tissue" et "crop"** sont plus fréquents dans la MA4 que de la MA1.
+
+## Analyse globale:
+- Dans cette configuration, la MA1 et la MA3 semblent être les plus similaires en termes de fréquences de mots (nuage de points davantage resserré autour de la droite.)
+
+- Dans cette configuration, la MA1 et la MA2 semblent être les moins similaires en termes de fréquences de mots (nuage de points davantage dispersé autour de la droite.)
+
+
+
 
