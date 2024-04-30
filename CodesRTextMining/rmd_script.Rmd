@@ -3,6 +3,7 @@ title: "rmd_script_analyse"
 output: html_document
 date: "2024-04-23"
 ---
+
 Premier bloc de code : importation des librairies.
 ```{r}
 library(dplyr)
@@ -12,6 +13,9 @@ library(tm)
 library(knitr)
 library(SemNetCleaner)
 data("stop_words")
+custom_stop_words <- bind_rows(tibble(word = c("plot","wild","slug","manipulation"),  
+                                      lexicon = c("custom")), 
+                               stop_words)
 ```
 Deuxième bloc de code : définition des variables.
 ```{r}
@@ -19,7 +23,6 @@ Deuxième bloc de code : définition des variables.
 #----------------------------- 
 earthworms <- read.csv("~/Documents/GitHub/EarthwormsMetanalysis/ExtractionBiblio/metaanalyse_csv_final.csv")
 abstracts<-c()
-bing<-get_sentiments("bing")
 #--------------------- 
 names(earthworms)
 n = nrow(earthworms)
@@ -41,7 +44,7 @@ Cinquième bloc de code : Construction d'un dataframe de tokens.
 unnested_tokens <- tibble(abstracts) %>%
 unnest_tokens(word, abstracts)
 # Append the unnested tokens to the list
-unnested_tokens<-unnested_tokens%>%anti_join(stop_words)
+unnested_tokens<-unnested_tokens%>%anti_join(custom_stop_words)
 unnested_tokens<-unnested_tokens %>% rowwise() %>% mutate(word = singularize(word))
 ```
 Analyse du dataframe: trouver les mots les plus communs dans les quatre MA confondues.
@@ -71,7 +74,7 @@ nMA1 <- nrow(MA1)
  }
 unnested_tokens1 <- tibble(abstracts1) %>%
 unnest_tokens(word, abstracts1)
-unnested_tokens1<-unnested_tokens1 %>% anti_join(stop_words)
+unnested_tokens1<-unnested_tokens1 %>% anti_join(custom_stop_words)
 unnested_tokens1<-unnested_tokens1 %>% rowwise() %>% mutate(word = singularize(word))
 ```
 ## Import subset MA2:
@@ -85,7 +88,7 @@ nMA2 <- nrow(MA2)
  }
 unnested_tokens2 <- tibble(abstracts2) %>%
 unnest_tokens(word, abstracts2)
-unnested_tokens2<-unnested_tokens2 %>% anti_join(stop_words)
+unnested_tokens2<-unnested_tokens2 %>% anti_join(custom_stop_words)
 unnested_tokens2<-unnested_tokens2 %>% rowwise() %>% mutate(word = singularize(word))
 ```
 ## Import subset MA3:
@@ -99,7 +102,7 @@ nMA3 <- nrow(MA3)
  }
 unnested_tokens3 <- tibble(abstracts3) %>%
 unnest_tokens(word, abstracts3)
-unnested_tokens3<-unnested_tokens3 %>% anti_join(stop_words)
+unnested_tokens3<-unnested_tokens3 %>% anti_join(custom_stop_words)
 unnested_tokens3<-unnested_tokens3 %>% rowwise() %>% mutate(word = singularize(word))
 ```
 ## Import subset MA4:
@@ -113,7 +116,7 @@ nMA4 <- nrow(MA4)
  }
 unnested_tokens4 <- tibble(abstracts4) %>%
 unnest_tokens(word, abstracts4)
-unnested_tokens4<-unnested_tokens4 %>% anti_join(stop_words)
+unnested_tokens4<-unnested_tokens4 %>% anti_join(custom_stop_words)
 unnested_tokens4<-unnested_tokens4 %>% rowwise() %>% mutate(word = singularize(word))
 ```
 # Création des quatre plots:
@@ -174,12 +177,13 @@ Quels sont les mots les plus communs dans chacunes des MA?
 library(egg)
 ggarrange(plot1,plot2,plot3,plot4,widths = c(2,2),labels = c("1","2","3","4"))
 ```
+
 # DataFrame pour comparer les fréquences des 4 MA:
 
 ```{r}
 library(tidyr)
 
-frequency <- bind_rows(mutate(unnested_tokens1, author = "MA1"),
+frequency1 <- bind_rows(mutate(unnested_tokens1, author = "MA1"),
                        mutate(unnested_tokens2, author = "MA2"), 
                        mutate(unnested_tokens3, author = "MA3"),
                        mutate(unnested_tokens4, author = "MA4"))%>% 
@@ -189,16 +193,51 @@ frequency <- bind_rows(mutate(unnested_tokens1, author = "MA1"),
   mutate(proportion = n / sum(n)) %>% 
   select(-n) %>% 
   pivot_wider(names_from = author, values_from = proportion) %>%
-  pivot_longer('MA2':'MA3':'MA4',
+  pivot_longer(cols=c('MA2','MA3','MA4'),
+               names_to = "author", values_to = "proportion")
+```
+
+
+
+```{r}
+frequency2 <- bind_rows(mutate(unnested_tokens1, author = "MA1"),
+                       mutate(unnested_tokens2, author = "MA2"), 
+                       mutate(unnested_tokens3, author = "MA3"),
+                       mutate(unnested_tokens4, author = "MA4"))%>% 
+  mutate(word = stringr::str_extract(word, "[a-z']+")) %>%
+  count(author, word) %>%
+  group_by(author) %>%
+  mutate(proportion = n / sum(n)) %>% 
+  select(-n) %>% 
+  pivot_wider(names_from = author, values_from = proportion) %>%
+  pivot_longer(cols=c('MA1','MA3','MA4'),
                names_to = "author", values_to = "proportion")
 
 ```
+
+
+```{r}
+frequency3 <- bind_rows(mutate(unnested_tokens1, author = "MA1"),
+                       mutate(unnested_tokens2, author = "MA2"), 
+                       mutate(unnested_tokens3, author = "MA3"),
+                       mutate(unnested_tokens4, author = "MA4"))%>% 
+  mutate(word = stringr::str_extract(word, "[a-z']+")) %>%
+  count(author, word) %>%
+  group_by(author) %>%
+  mutate(proportion = n / sum(n)) %>% 
+  select(-n) %>% 
+  pivot_wider(names_from = author, values_from = proportion) %>%
+  pivot_longer(cols=c('MA1','MA2','MA4'),
+               names_to = "author", values_to = "proportion")
+```
+
+
 # Graphe de comparaison des fréquences:
 ```{r}
 library(scales)
 
 # expect a warning about rows with missing values being removed
-ggplot(frequency, aes(x = proportion, y = `MA1`, 
+ggplot(frequency1, aes(x = proportion, y = `MA1`, 
                       color = abs(`MA1` - proportion))) +
   geom_abline(color = "gray40", lty = 2) +
   geom_jitter(alpha = 0.1, size = 2.5, width = 0.3, height = 0.3) +
@@ -233,6 +272,281 @@ Quelques mots sont au pluriel, ce qui signifie que la fonction "singularize" n'a
 - Dans cette configuration, la MA1 et la MA3 semblent être les plus similaires en termes de fréquences de mots (nuage de points davantage resserré autour de la droite.)
 
 - Dans cette configuration, la MA1 et la MA2 semblent être les moins similaires en termes de fréquences de mots (nuage de points davantage dispersé autour de la droite.)
+
+# Tests de corrélation:
+```{r}
+cor.test(data = frequency1[frequency1$author == "MA2",],
+         ~ proportion + `MA1`)
+```
+```{r}
+cor.test(data = frequency1[frequency1$author == "MA3",],
+         ~ proportion + `MA1`)
+```
+
+```{r}
+cor.test(data = frequency1[frequency1$author == "MA4",],
+         ~ proportion + `MA1`)
+```
+
+```{r}
+cor.test(data = frequency2[frequency2$author == "MA3",],
+         ~ proportion + `MA2`)
+```
+
+```{r}
+cor.test(data = frequency2[frequency2$author == "MA4",],
+         ~ proportion + `MA2`)
+```
+
+```{r}
+cor.test(data = frequency3[frequency3$author == "MA4",],
+         ~ proportion + `MA3`)
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-0pky"></th>
+    <th class="tg-0pky"><span style="font-weight:bold">MA1</span></th>
+    <th class="tg-0pky"><span style="font-weight:bold">MA2</span></th>
+    <th class="tg-0pky"><span style="font-weight:bold">MA3</span></th>
+    <th class="tg-0lax"><span style="font-weight:bold">MA4</span></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-0lax"><span style="font-weight:bold">MA1</span></td>
+    <td class="tg-0lax">&nbsp;&nbsp;&nbsp;&nbsp;-<br></td>
+    <td class="tg-0lax">0.671</td>
+    <td class="tg-0lax">0.883</td>
+    <td class="tg-0lax">0.897</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"><span style="font-weight:bold">MA2</span></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">&nbsp;&nbsp;&nbsp;&nbsp;-</td>
+    <td class="tg-0lax">0.728</td>
+    <td class="tg-0lax">0.756</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"><span style="font-weight:bold">MA3</span></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">&nbsp;&nbsp;&nbsp;&nbsp;-</td>
+    <td class="tg-0lax">0.778</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"><span style="font-weight:bold">MA4</span></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">&nbsp;&nbsp;&nbsp;&nbsp;-</td>
+  </tr>
+</tbody>
+</table>
+
+<br>
+<i>MA1: "Soil chemistry turned upside down: a meta-analysis of invasive  earthworm effects on soil chemical properties"<br>
+MA2: "Earthworms affect plant growth and resistance against herbivores: A meta-analysis" <br>
+MA3: "The unseen invaders: introduced earthworms as drivers of change in plant communities in North American
+forests (a meta-analysis)" <br>
+MA4: "Earthworms increase plant production: a meta-analysis"</i>
+<br>
+
+D'après le tableau ci-dessus, on peut voir que le choix de mots est le plus corrélé (correlation de Pearson) entre la MA1 et la MA4 (r²=0.897), tandis que le choix de mots est le moins corrélé (corrélation de Pearson) entre la MA1 et la MA2 (r²=0.671).
+
+# Analyse de sentiments entre les 4 métaanalyses:
+
+## Premiers graphiques.
+```{r}
+library(tidytext)
+bing<-get_sentiments("bing")
+
+senti1<-unnested_tokens1 %>%
+  inner_join(bing) %>%
+  count(word, sort = TRUE)
+
+senti2<-unnested_tokens2 %>%
+  inner_join(bing) %>%
+  count(word, sort = TRUE)
+
+senti3<-unnested_tokens3 %>%
+  inner_join(bing) %>%
+  count(word, sort = TRUE)
+
+senti4<-unnested_tokens4 %>%
+  inner_join(bing) %>%
+  count(word, sort = TRUE)
+```
+```{r}
+library(tidyr)
+MA1_senti <- senti1 %>%
+  inner_join(get_sentiments("bing")) %>%
+  pivot_wider(names_from = sentiment, values_from = n, values_fill = 0) %>% 
+  mutate(sentiment = positive - negative)
+sub1_MA1_senti<-MA1_senti %>%
+    arrange(sentiment) %>%
+    slice(1:10)
+sub2_MA1_senti<-MA1_senti %>%
+    arrange(desc(sentiment)) %>%
+    slice(1:10)
+sub_MA1_senti<-bind_rows(sub1_MA1_senti, sub2_MA1_senti)
+```
+
+```{r}
+ggplot(sub_MA1_senti, aes(x = word, y = sentiment, fill = factor(sign(sentiment)))) +
+  geom_bar(stat = "identity") +
+  labs(x = "Word", y = "Sentiment Score", fill = "Sentiment") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+```{r message=FALSE}
+library(tidyr)
+library(ggplot2)
+
+plot_sentiment_subset <- function(senti) {
+  MA_senti <- senti %>%
+    inner_join(get_sentiments("bing")) %>%
+    pivot_wider(names_from = sentiment, values_from = n, values_fill = 0) %>% 
+    mutate(sentiment = positive - negative)
+  
+  sub1_MA_senti <- MA_senti %>%
+    arrange(sentiment) %>%
+    slice(1:5)
+  
+  sub2_MA_senti <- MA_senti %>%
+    arrange(desc(sentiment)) %>%
+    slice(1:5)
+  
+  sub_MA_senti <- bind_rows(sub1_MA_senti, sub2_MA_senti)
+  
+  ggplot(sub_MA_senti, aes(x = word, y = sentiment, fill = factor(sign(sentiment)))) +
+    geom_bar(stat = "identity") +
+    labs(x = "Word", y = "Sentiment Score", fill = "Sentiment") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+}
+
+plot_senti1<-plot_sentiment_subset(senti1)
+plot_senti2<-plot_sentiment_subset(senti2)
+plot_senti3<-plot_sentiment_subset(senti3)
+plot_senti4<-plot_sentiment_subset(senti4)
+
+```
+
+```{r}
+library(egg)
+ggarrange(plot_senti1,plot_senti2,plot_senti3,plot_senti4,widths = c(2,2),labels = c("1","2","3","4"))
+```
+## Contribution de chaque terme au sentiment.
+```{r message=FALSE}
+bing_word_counts1 <- unnested_tokens1 %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  ungroup()
+bing_word_counts2 <- unnested_tokens2 %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  ungroup()
+bing_word_counts3 <- unnested_tokens3 %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  ungroup()
+bing_word_counts4 <- unnested_tokens4 %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  ungroup()
+```
+
+```{r}
+contrib1<-bing_word_counts1 %>%
+  group_by(sentiment) %>%
+  slice_max(n, n = 10) %>% 
+  ungroup() %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~sentiment, scales = "free_y") +
+  labs(x = "Contribution to sentiment",
+       y = NULL)
+
+contrib2<-bing_word_counts2 %>%
+  group_by(sentiment) %>%
+  slice_max(n, n = 10) %>% 
+  ungroup() %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~sentiment, scales = "free_y") +
+  labs(x = "Contribution to sentiment",
+       y = NULL)
+
+contrib3<-bing_word_counts3 %>%
+  group_by(sentiment) %>%
+  slice_max(n, n = 10) %>% 
+  ungroup() %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~sentiment, scales = "free_y") +
+  labs(x = "Contribution to sentiment",
+       y = NULL)
+
+contrib4<-bing_word_counts4 %>%
+  group_by(sentiment) %>%
+  slice_max(n, n = 10) %>% 
+  ungroup() %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~sentiment, scales = "free_y") +
+  labs(x = "Contribution to sentiment",
+       y = NULL)
+```
+
+```{r}
+library(egg)
+ggarrange(contrib1,contrib2,contrib3,contrib4,widths = c(2,2),labels = c("1","2","3","4"))
+```
+```{r }
+library(wordcloud)
+library(dplyr)
+library(ggpubr)
+library(gridGraphics)
+
+unnested_tokens1 %>%
+  anti_join(stop_words) %>%
+  count(word) %>%
+  with(wordcloud(word, n, max.words = 50))
+cloud1 <- recordPlot()
+
+unnested_tokens2 %>%
+  anti_join(stop_words) %>%
+  count(word) %>%
+  with(wordcloud(word, n, max.words = 50))
+cloud2 <- recordPlot()
+
+unnested_tokens3 %>%
+  anti_join(stop_words) %>%
+  count(word) %>%
+  with(wordcloud(word, n, max.words = 50))
+cloud3 <- recordPlot()
+
+unnested_tokens4 %>%
+  anti_join(stop_words) %>%
+  count(word) %>%
+  with(wordcloud(word, n, max.words = 50))
+cloud4 <- recordPlot()
+```
 
 
 
