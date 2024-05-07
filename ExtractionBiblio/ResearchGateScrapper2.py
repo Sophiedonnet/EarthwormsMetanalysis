@@ -2,6 +2,7 @@ from parsel import Selector
 from playwright.sync_api import sync_playwright
 import json
 import re
+import time
 
 def extract_url(text):
     """
@@ -38,16 +39,8 @@ def scrape_researchgate_publications(query: str):
                 publication_isbn = publication.css(".nova-legacy-v-publication-item__meta-data-item:nth-child(3) span").xpath("normalize-space()").get()
                 source_link = f'https://www.researchgate.net{publication.css(".nova-legacy-v-publication-item__preview-source .nova-legacy-e-link--theme-bare::attr(href)").get()}'
 
-                publications.append({
-                    "title": title,
-                    "link": title_link,
-                    "source_link": source_link,
-                    "publication_type": publication_type,
-                    "publication_date": publication_date,
-                    "publication_doi": publication_doi,
-                    "publication_isbn": publication_isbn,
-                })
-            print(f"page number: {page_num}")
+                publications.append(publication_doi)
+                publications.append(publication_date)
 
             # checks if next page arrow key is greyed out `attr(rel)` (inactive) and breaks out of the loop
             if selector.css(".nova-legacy-c-button-group__item:nth-child(9) a::attr(rel)").get():
@@ -55,15 +48,18 @@ def scrape_researchgate_publications(query: str):
             else:
                 page_num += 1
                 break
-
-
-        target_url='https://www.researchgate.net/publication/'+extract_url(str(page.content()))
+        try:
+            target_url='https://www.researchgate.net/publication/'+extract_url(str(page.content()))
+            # Sleep used to escape recognition as a bot.
+            time.sleep(5)
+        except(TypeError):
+            target_url='null'
 
         browser.close()
-        return(target_url)
+        return(publications,target_url)
     
 publications = []
-target_url=scrape_researchgate_publications(query="Soil chemistry turned upside down: a meta-analysis of invasive earthworm effects on soil chemical properties")
-print(json.dumps(publications, indent=2, ensure_ascii=False))
-print()
-print(target_url)
+# target_url=scrape_researchgate_publications(query="Soil chemistry turned upside down: a meta-analysis of invasive earthworm effects on soil chemical properties")
+# print(json.dumps(publications, indent=2, ensure_ascii=False))
+# print()
+# print(target_url)
