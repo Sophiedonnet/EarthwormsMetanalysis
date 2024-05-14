@@ -1,5 +1,5 @@
 ---
-title: "Rapport test (interprétation à refaire)"
+title: "Rapport Text Mining Earthworms"
 output: html_document
 date: "`r format(Sys.time(), '%d/%m/%y')`"
 ---
@@ -168,7 +168,7 @@ ordre4=unnested_tokens4 %>%
 
 Quels sont les mots les plus communs dans chacunes des MA?
 
-```{r ggarrange 4 plots}
+```{r ggarrange 4 plots,, fig.height=10,fig.width=10}
 library(egg)
 ggarrange(plot1,plot2,plot3,plot4,widths = c(5,5),labels = c("1","2","3","4"))
 ```
@@ -239,7 +239,7 @@ frequency3 <- bind_rows(mutate(unnested_tokens1, author = "MA1"),
 
 
 # Graphe de comparaison des fréquences:
-```{r Scale Plot}
+```{r Scale Plot, fig.width=15,fig.height=10}
 library(scales)
 
 # expect a warning about rows with missing values being removed
@@ -278,6 +278,8 @@ ggplot(frequency1, aes(x = proportion, y = `MA1`,
 "access","acquisition","data","australia", "amonium", "applied", "analysis", "due", "mass", "direct", "affect", "system", "native", "ecosystem", "density", "experiment", "organic", "activity", "litter", "community", "biomass", "specie", **effect, earthworm**. On remarque que certains mots dont la fréquence est proches pourraient peut-être faire partie du même groupe de mots (comme **acquisition data**, **direct effect**, **native ecosystem**, ou encore **litter community**).
 
 - Les mots **"forest","invasion", "carbon" et "floor"** sont plus fréquents dans la MA1 que dans la MA4, tandis que les mots **"invader", "functional", "grassland", "grass" et "plant"** sont plus fréquents dans la MA4 que de la MA1.
+
+- Les mots **"effect" et "earthworm"** représentent entre 1 et 10% des mots totaux de chaque métaanalyse pour les métaanalyses 1 et 4 (échelle logarithmique).
 
 ## Analyse globale:
 - Dans cette configuration, la MA1 et la MA4 semblent être les plus similaires en termes de fréquences de mots (nuage de points davantage resserré autour de la droite.)
@@ -488,7 +490,7 @@ Tout d'abord, il est immportant de noter que tous les graphes n'ont pas les mêm
 On peut constater que le mot positif *"significant"* est retrouvé dans tous les corpus fournis, tandis que *"abundance"* est retrouvé dans la plupart de métaanalyses (1,2 et 3). Il serait cependant nécessaire d'inspecter des unités textuelles plus larges pour interpréter au mieux ce résultat, car la signification de ces mots peut grandement dépendre des autres mots auquels ils sont associés et du contexte. 
 le mot *"dynamic* n'est retrouvé que dans les MA1 et 3. A l'inverse, Le mot *"unaffected"* n'est quant à lui retrouvé que dans les MA2 et 4. On peut émettre l'hypothèse que les MA2 et 4 se focalisent sur les mécanismes de préservation et de résistance, alors que la 1 et la 3 sont davantage axées sur la dynamique des écosystèmes.
 
-On peut constater qu'il n'y a aucun mots commun à tous les corpus. Cependant, les mots *"invasive"* ou *"invader"* sont retrouvées dans las MA 1, 3 et 4, ce qui sous-entend que la MA2 s'intéresse moins aux espèces invasives que les trois autres.
+On peut constater qu'il n'y a aucun mot négatif commun à tous les corpus. Cependant, les mots *"invasive"* ou *"invader"* sont retrouvées dans las MA 1, 3 et 4, ce qui sous-entend que la MA2 s'intéresse moins aux espèces invasives que les trois autres.
 On peut aussi remarquer que le mot *"loss"* n'est retrouvé que dans les MA1 et 4, ce qui semble indiquer que les effets négatifs relevés ne sont pas forcément liés à des pertes de caractéristiques. Le mot *"severity"*, à l'inverse, n'est retrouvé que dans les MA3 et 4, ce qui signifie peut-être qu'elles sont plus "quantitatives" que les deux autres. 
 On peut enfin constater que le mot *"loss"* est le mot avec le score négatif le plus important des quatre graphiques, représenté dans la MA1. 
 
@@ -570,35 +572,51 @@ contrib4<-bing_word_counts4 %>%
        y = NULL)
 ```
 
-```{r ggarrange contrib}
+```{r ggarrange contrib, fig.height=10,fig.width=10}
 library(egg)
 ggarrange(contrib1,contrib2,contrib3,contrib4,widths = c(2,2),labels = c("1","2","3","4"))
 ```
-Par ailleues, de même que précédemment, l'échelle du graphique de la MA4 en abscisse est quatre fois plus petite, ce qui laisse entendre, une fois de plus, que le subset 4 est plus réduit que les autres.
 
-<u>Les quatre mots positifs les plus courants sont:</u><br> 
+Tout d'abord, il faut noter que les graphiques ne sont pas à la même échelle en abscisse. Cela ne pose en théorie pas de problème pour interpréter les résultats au cas par cas, mais cela rentrera en jeux lors d'éventuelles comparaisons entre métaanalyses.
+
+<u>Les quatre mots positifs les plus importants en contribution sont: </u><br> 
 * *MA1:* "abundance", dynamic", "dominated","significant".<br>
 * *MA2:* "enhanced", "abundance", "variety","significant".<br>
 * *MA3:* "richness", "abundance", "significant","leading".<br>
 * *MA4:* "significant", "unnaffected", "enhanced","enhance".<br>
 On remarque tout d'abord que le mot *"significant"* fait partie des quatre mots qui a le plus contribué au sentiment dans tous les subsets. Le contexte semble nécessaire pour savoir s'il est employé pour décrire un phénomène positif ou négatif.<br>
-Par ailleurs, le mot *"abundance"* est dans les premiers pour les MA 1, 2 et 3, mais pas pour la MA4, ce qui pourrait signifier qu'elle est moins orientée sur la richesse écosystémique que les autres.<br>
+Par ailleurs, le mot *"abundance"* est dans les premiers pour les MA 1, 2 et 3, mais pas pour la MA4, ce qui pourrait signifier qu'elle est moins orientée sur la richesse écosystémique que les autres. De plus, la présence des mots *"enhanced"* et *"enhance"* semble montrer que, comme son nom l'indique, elle choisit une approche plus quantitative (étude de la **production**) que les autres.<br>
 
-<u>Les trois mots négatifs les plus courants sont:</u><br> 
-* *MA1:* "invasive", "loss", "bias".<br>
-* *MA2:* "negative", "stress", "damage".<br>
-* *MA3:* "invasive", "loss", "invader".<br>
-* *MA4:* "loss", "stress", "limited".<br>
-On remarque d'abord qu'aucun des mots négatifs relevés n'est présent dans toutes les métaanalyses.<br>
-Une fois encore, la MA1 et la MA3 semblent plus comparables dans leurs choix de mots (avec *"invasive"* et *"loss"* aux première et seconde positions pour les deux subsets), tandis les MA2 et 4 se focalisent davantage sur le *"stress"*.
-On peut aussi relever que la MA2 à l'air d'étudier plus en détail le stress lié aux dommages causées sur la plante (*negative* en première position, *"damage"* en trosième).<br>
-La MA3 semblent insister davantage sur le concept d'invasion biologique, avec *"invasive"* en première place <u>et</u> *"invader"* en troisième.<br>
-Dans la MA4, de nombreux scores successifs semblent d'une remarquable stabilité entre les différents mots (*"weak"* --> *"absence"* pour les mots négatifs, *"support"* --> *"consistent"* pour les mots positifs).<br>
+<u>Les quatre mots négatifs les plus importants en contribution (en ne comptant pas "rocky", qui dans ce contexte est sans doute employé au sens propre de "rocheux/rocailleux", comme par exemple dans le groupe de mots "Rocky area".) sont: </u><br> 
+* *MA1:* "loss", "invasive", "negative", "poorly".<br>
+* *MA2:* "drought", "negative", "dead","absence".<br>
+* *MA3:* "invasive", "burned", "severity","negative".<br>
+* *MA4:* "invader", "severity", "infested","absence".<br>
+On remarque d'abord qu'aucun des mots négatifs relevés n'est présent dans les quatre premiers de toutes les métaanalyses. Cela dit, le mot *"negative"* semble être le mieux réparti, car présent dans 3 MA sur les 4 (1,2 et 3). De la même façon, on peut aussi noter que les mots *"invasive"* et *"invader"* sont aussi présents dans les 4 premiers de 3 MA sur les 4 (1,3 et 4, respectivement en 2e et 1er position pour *"invasive"* et 1er position pour *"invader"*).<br>
+On peut aussi noter que *"invasive"* semble souvent dans le même groupe que *"negative* (MA1,3), tandis que le mot *"invader"*, lui, semble plutôt associé avec *"infested"* (MA4).<br>
+La MA2 semble sortir du lot, avec des mots uniques comme *"drought"* et *"dead"*. Cela pourrait indiquer que l'étude s'intéresse davantage aux effets des vers de terre sur la physiologie végétale en tant que telle plutôt qu'à leurs aoports écologiques ou de production, ce qui semble en accord avec le titre donné à cette métaanalyse.<br>
+
+Da façon simpliste, il semble donc possible, à partir de ces graphiques, de proposer une première catégorisation comme suit:
+- **MA1/MA3:** étude de l'impact écologique des vers de terre sur les écosystèmes.<br>
+- **MA2:** étude des effets des vers de terre sur la physiologie végétale.<br>
+- **MA4:** étude de l'influence des vers de terre invasifs sur la production végétale. 
 
 Cependant, il serait peut-être nécessaire d'étudier des unités textuelles plus larges, comme par exemple les phrases, pour éviter au maximum le risque de contresens.
 
-# Wordclouds
-## Wordcloud MA1
+<br>
+<i>MA1: "Soil chemistry turned upside down: a meta-analysis of invasive earthworm effects on soil chemical properties"<br>
+MA2: "Earthworms affect plant growth and resistance against herbivores: A meta-analysis" <br>
+MA3: "The unseen invaders: introduced earthworms as drivers of change in plant communities in North American
+forests (a meta-analysis)" <br>
+MA4: "Earthworms increase plant production: a meta-analysis"</i>
+<br>
+
+# Représentation visuelle de la fréquence des mots: Wordclouds
+
+## Wordcloud MA1: "Soil chemistry turned upside down: a meta-analysis of invasive earthworm effects on soil chemical properties"
+
+Visuellement, on peut voir sur le nuage de mots que les termes prépondérants dans la MA1 sont : *"earthworm","soil","forest"* et *"effect"*. On peut remarquer aussi que le mot *"invasion"* semble aussi relativement fréquent, ce qui est cohérent avec le titre de l'article ("invasive earthworms"). La prépondérance du mot *"earthworm"* sur les autres semble confirmer que les vers de terre sont le sujet principal de cette métaanalyse.
+
 ```{r Wordcloud 1}
 library(wordcloud)
 library(dplyr)
@@ -610,7 +628,10 @@ unnested_tokens1 %>%
 cloud1 <- recordPlot()
 ```
 
-## Wordcloud MA2
+## Wordcloud MA2: "Earthworms affect plant growth and resistance against herbivores: A meta-analysis"
+
+Visuellement, on peut voir sur le nuage de mots que les termes prépondérants dans la MA2 sont : *"plant","earthworm","aphid", "soil"* et *"effect"*. D'autres mots tel que *"increased", "community", "interaction", "presence" ou "biomass"* semblent décrire un processus biologique dynamique. La prépondérance de *"plant"* sur les autres semble confirmer que la biologie végétale en lien avec les vers de terre est le thème principal de cette métaanalyse.
+
 ```{r Wordcloud 2}
 unnested_tokens2 %>%
   anti_join(stop_words) %>%
@@ -619,7 +640,10 @@ unnested_tokens2 %>%
 cloud2 <- recordPlot()
 ```
 
-## Wordcloud MA3
+## Wordcloud MA3: "The unseen invaders: introduced earthworms as drivers of change in plant communities in North American forests (a meta-analysis)"
+
+Visuellement, on peut voir sur le nuage de mots que les termes prépondérants dans la MA3 sont : *"earthworm","specie", "plant"* et *"forest"*. La prépondérance des mots *"earthworm"* et *"specie"* sur les autres semble confirmer que la métaanlyse s'intéresse en particulier à la façon dont les différentes **espèces** de vers de terre (natives ou introduite) influent sur l'écosystème global (et notamment l'écosystème **forestier**). D'autres mots tel que *"invasion", "community", "interaction", "presence"* ou *"biomass"* semblent décrire un processus écologique dynamique.
+
 ```{r Wordcloud 3}
 unnested_tokens3 %>%
   anti_join(stop_words) %>%
@@ -628,7 +652,10 @@ unnested_tokens3 %>%
 cloud3 <- recordPlot()
 ```
 
-## Wordcloud MA4
+## Wordcloud MA4: "Earthworms increase plant production: a meta-analysis"
+
+Visuellement, on peut voir sur le nuage de mots que les termes prépondérants dans la MA4 sont : *"earthworm","soil", "plant"* et *"increased"*. La prépondérance de ces mots semble confirmer que cette métaanalyse montre un effet positif ("increased" et "production") des vers de terre sur les plantes, via, probablement, une amélioration de la qualité des sols (voir des mots comme "decomposer", "nurient", "growth", "organic", qui sont souvent utilisés pour décrire les sols favorables à la croissance végétale).
+
 ```{r Wordcloud 4}
 unnested_tokens4 %>%
   anti_join(stop_words) %>%
@@ -637,8 +664,12 @@ unnested_tokens4 %>%
 cloud4 <- recordPlot()
 ```
 
-# Wordcloud: coloration en fonction de la valence des mots.
-## Wordcloud MA1
+# Wordcloud: coloration en fonction de la valence des mots (bleu: Positif / rouge: Négatif)
+## Wordcloud MA1: "Soil chemistry turned upside down: a meta-analysis of invasive earthworm effects on soil chemical properties"
+
+Visuellement, on peut voir sur le nuage de mots que les termes positfs prépondérants dans la MA1 sont *"abundance", "dynamic"* et *dominated*, tandis que les termes négatifs prépondérants sont *"loss","invasive"* et *"negative"*. On remarque tout d'abord que ces résultats sont très différents de ceux trouvés dans la partie précédente pour la même métaanalyse (Wordclouds: Wordcloud MA1) à cause de l'ajout de la variable "sentiment". On peut aussi constater grâce à la taille de chaque mot du nuage et à la quantité de mots négatifs et positifs que la métaanalyse 1 semble porter un avis plutôt négatif sur son sujet d'étude (ici, l'impact des vers de terre sur les écosystèmes).
+
+
 ```{r Wordcloud senti1, warning=FALSE}
 library(reshape2)
 
@@ -647,43 +678,52 @@ unnested_tokens1 %>%
   inner_join(get_sentiments("bing")) %>%
   count(word, sentiment, sort = TRUE) %>%
   acast(word ~ sentiment, value.var = "n", fill = 0) %>%
-  comparison.cloud(colors = c("gray20", "gray80"),
+  comparison.cloud(colors = c("red", "blue"),
                    max.words = 100)
 cloud_senti1<-recordPlot()
 ```
 
-## Wordcloud MA2
+## Wordcloud MA2: "Earthworms affect plant growth and resistance against herbivores: A meta-analysis" 
+
+Visuellement, on peut voir sur le nuage de mots que les termes positfs prépondérants dans la MA2 sont *"enhanced", "abundance"* et *variety*, tandis que les termes négatifs prépondérants sont *"drought","negative"* et *"dead"*. On remarque tout d'abord que ces résultats sont très différents de ceux trouvés dans la partie précédente pour la même métaanalyse (Wordclouds: Wordcloud MA2) à cause de l'ajout de la variable "sentiment". On peut aussi constater grâce à la taille de chaque mot du nuage et à la quantité de mots négatifs et positifs que la métaanalyse 2 semble porter un jugement moins tranché que la précédente sur son sujet d'étude, sans dominance claire des mots positifs ou des mots négatifs (même si le mot le plus représenté, "drought", est un mot à valence négative).
+
 ```{r Wordcloud senti2, warning=FALSE}
 unnested_tokens2 %>%
   anti_join(custom_stop_words, by = c("word")) %>%
   inner_join(get_sentiments("bing")) %>%
   count(word, sentiment, sort = TRUE) %>%
   acast(word ~ sentiment, value.var = "n", fill = 0) %>%
-  comparison.cloud(colors = c("gray20", "gray80"),
+  comparison.cloud(colors = c("red", "blue"),
                    max.words = 100)
 cloud_senti2<-recordPlot()
 ```
 
-## Wordcloud MA3
+## Wordcloud MA3: "The unseen invaders: introduced earthworms as drivers of change in plant communities in North American forests (a meta-analysis)"
+
+Visuellement, on peut voir sur le nuage de mots que les termes positfs prépondérants dans la MA3 sont *"richness", "abundance"* et *significant*, tandis que les termes négatifs prépondérants sont *"invasive","burned"* et *"negative"*. On remarque tout d'abord que ces résultats sont très différents de ceux trouvés dans la partie précédente pour la même métaanalyse (Wordclouds: Wordcloud MA3) à cause de l'ajout de la variable "sentiment". On peut aussi constater grâce à la taille de chaque mot du nuage et à la quantité de mots négatifs et positifs que la métaanalyse 3 semble aussi porter jugement nuancé sur son sujet d'étude, sans dominance claire des mots positifs ou des mots négatifs (même si le mot le plus représenté, "richness", est un mot à valence positive). On peut cependant constater par la présence du mot "invasive" **et** du mot "invader" dans le même nuage que cette métaanalyse semble davantage parler d'invasion biologique que les autres.
+
 ```{r Wordcloud senti3, warning=FALSE}
 unnested_tokens3 %>%
   anti_join(custom_stop_words, by = c("word")) %>%
   inner_join(get_sentiments("bing")) %>%
   count(word, sentiment, sort = TRUE) %>%
   acast(word ~ sentiment, value.var = "n", fill = 0) %>%
-  comparison.cloud(colors = c("gray20", "gray80"),
+  comparison.cloud(colors = c("red", "blue"),
                    max.words = 100)
 cloud_senti3<-recordPlot()
 ```
 
-## Wordcloud MA4
+## Wordcloud MA4: "Earthworms increase plant production: a meta-analysis"
+
+Visuellement, on peut voir sur le nuage de mots que les termes positfs prépondérants dans la MA4 sont *"significant", "unaffected" et "enhance"*, tandis que les termes négatifs prépondérants sont *"invader","severity"* et *"infested"*. On remarque tout d'abord que ces résultats sont très différents de ceux trouvés dans la partie précédente pour la même métaanalyse (Wordclouds: Wordcloud MA4) à cause de l'ajout de la variable "sentiment". On peut cependant constater par la présence des mots "infested", "severity", "absence" et "invader" que la métaanalyse semble porter un jugement plutôt négatif, ce qui semble étonnant au vu du titre de la métaanalyse. Par ailleurs, même si le mot central, **"significant"**, est théoriquement le plus fréquent, on pourrait penser que la métaanalyse contient plus de mots positifs que de mots négatifs. Cependant, nous avons déjà vu que dans un contexte scientifique, la valence de ce mot dépend beaucoup du groue de mots auquel il est associé.
+
 ```{r Wordcloud senti4, warning=FALSE}
 unnested_tokens4 %>%
   anti_join(custom_stop_words, by = c("word")) %>%
   inner_join(get_sentiments("bing")) %>%
   count(word, sentiment, sort = TRUE) %>%
   acast(word ~ sentiment, value.var = "n", fill = 0) %>%
-  comparison.cloud(colors = c("gray20", "gray80"),
+  comparison.cloud(colors = c("red", "blue"),
                    max.words = 100)
 cloud_senti4<-recordPlot()
 ```
