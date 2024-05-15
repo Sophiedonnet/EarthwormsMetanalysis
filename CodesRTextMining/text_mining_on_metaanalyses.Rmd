@@ -507,18 +507,22 @@ MA4: "Earthworms increase plant production: a meta-analysis"</i>
 bing_word_counts1 <- unnested_tokens1 %>%
   inner_join(get_sentiments("bing")) %>%
   count(word, sentiment, sort = TRUE) %>%
-  ungroup()
+  mutate(MA="MA1") %>%
+  ungroup() 
 bing_word_counts2 <- unnested_tokens2 %>%
   inner_join(get_sentiments("bing")) %>%
   count(word, sentiment, sort = TRUE) %>%
+  mutate(MA="MA2") %>%
   ungroup()
 bing_word_counts3 <- unnested_tokens3 %>%
   inner_join(get_sentiments("bing")) %>%
   count(word, sentiment, sort = TRUE) %>%
-  ungroup()
+  mutate(MA="MA3") %>%
+  ungroup() 
 bing_word_counts4 <- unnested_tokens4 %>%
   inner_join(get_sentiments("bing")) %>%
   count(word, sentiment, sort = TRUE) %>%
+  mutate(MA="MA4") %>%
   ungroup()
 ```
 
@@ -596,7 +600,7 @@ On remarque d'abord qu'aucun des mots négatifs relevés n'est présent dans les
 On peut aussi noter que *"invasive"* semble souvent dans le même groupe que *"negative* (MA1,3), tandis que le mot *"invader"*, lui, semble plutôt associé avec *"infested"* (MA4).<br>
 La MA2 semble sortir du lot, avec des mots uniques comme *"drought"* et *"dead"*. Cela pourrait indiquer que l'étude s'intéresse davantage aux effets des vers de terre sur la physiologie végétale en tant que telle plutôt qu'à leurs aoports écologiques ou de production, ce qui semble en accord avec le titre donné à cette métaanalyse.<br>
 
-Da façon simpliste, il semble donc possible, à partir de ces graphiques, de proposer une première catégorisation comme suit:
+Da façon simpliste, il semble donc possible, à partir de ces graphiques, de proposer une première catégorisation comme suit:<br>
 - **MA1/MA3:** étude de l'impact écologique des vers de terre sur les écosystèmes.<br>
 - **MA2:** étude des effets des vers de terre sur la physiologie végétale.<br>
 - **MA4:** étude de l'influence des vers de terre invasifs sur la production végétale. 
@@ -739,21 +743,48 @@ sentences4 <- tibble(text = abstracts4) %>%
 ```
 
 ```{r Ratio WIP}
+library(dplyr)
+library(purrr)
+
 bingnegative <- get_sentiments("bing") %>% 
   filter(sentiment == "negative")
 
-wordcounts1 <- bing_word_counts1 %>%
-  group_by(word, sentiment) %>%
-  summarize(words =n)
+unnested_tokens1 <- unnested_tokens1 %>%
+  mutate(MA = "MA1")
+unnested_tokens2 <- unnested_tokens2 %>%
+  mutate(MA = "MA2")
+unnested_tokens3 <- unnested_tokens3 %>%
+  mutate(MA = "MA3")
+unnested_tokens4 <- unnested_tokens4 %>%
+  mutate(MA = "MA4")
 
-ratio1<-bing_word_counts1 %>%
-  semi_join(bingnegative) %>%
-  group_by(word, sentiment) %>%
-  summarize(negativewords = n()) %>%
-  left_join(wordcounts1, by = c("word", "sentiment")) %>%
-  mutate(ratio = negativewords/words) %>%
-  slice_max(ratio, n = 1) %>% 
-  ungroup()
+MA_labels <- c("MA1", "MA2", "MA3", "MA4")
+word_counts_MA <- c(length(unnested_tokens1$word), length(unnested_tokens2$word), length(unnested_tokens3$word), length(unnested_tokens4$word))
 
+word_count_tibble <- tibble(
+  MA = MA_labels,
+  word = word_counts_MA
+)
+
+all_ratios <- bind_rows(unnested_tokens1,unnested_tokens2,unnested_tokens3,unnested_tokens4)
+
+joined_tibble <- inner_join(all_ratios, bingnegative, by = "word")
+
+summary_tibble <- joined_tibble %>%
+     group_by(MA) %>%
+     summarize(
+         negativewords = n(),
+         words = word_count_tibble$word,
+         ratio = negativewords / words
+     ) %>%
+     ungroup() %>%
+     mutate(current_MA = MA, MA_number = row_number()) %>%
+     select(current_MA, MA_number, words, negativewords, ratio)
+ summary_tibble
 ```
 
+tidybook=avec une colonne mot et une colone métaanalyse (unnested token) OK
+tableau avec le nombre de mots/métaanalyse OK
+semi join 
+summarize pour compter le nombre de mots négatifs
+calcul du ratio
