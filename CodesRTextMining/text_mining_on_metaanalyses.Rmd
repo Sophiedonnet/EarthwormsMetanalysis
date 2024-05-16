@@ -4,6 +4,12 @@ output: html_document
 date: "`r format(Sys.time(), '%d/%m/%y')`"
 ---
 
+```{r setup,include=FALSE}
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+
 Premier bloc de code : importation des librairies.
 ```{r Libraries}
 library(dplyr)
@@ -742,9 +748,11 @@ sentences4 <- tibble(text = abstracts4) %>%
   unnest_tokens(sentence, text, token = "sentences")
 ```
 
-```{r Ratio WIP}
+## Ratios de mots positifs / négatifs pour chaque métaanalyse:  
+```{r Ratio}
 library(dplyr)
 library(purrr)
+library(kableExtra)
 
 bingnegative <- get_sentiments("bing") %>% 
   filter(sentiment == "negative")
@@ -763,28 +771,67 @@ word_counts_MA <- c(length(unnested_tokens1$word), length(unnested_tokens2$word)
 
 word_count_tibble <- tibble(
   MA = MA_labels,
-  word = word_counts_MA
+  words = word_counts_MA
 )
 
 all_ratios <- bind_rows(unnested_tokens1,unnested_tokens2,unnested_tokens3,unnested_tokens4)
 
 joined_tibble <- inner_join(all_ratios, bingnegative, by = "word")
 
+MA_titles <- c("Soil chemistry turned upside down: a meta-analysis [...]","Earthworms affect plant growth and resistance [...]","The unseen invaders: [...] in north American forests (a meta-analysis)","Earthworms increase plant production: a meta-analysis") 
+
 summary_tibble <- joined_tibble %>%
-     group_by(MA) %>%
-     summarize(
-         negativewords = n(),
-         words = word_count_tibble$word,
-         ratio = negativewords / words
-     ) %>%
-     ungroup() %>%
-     mutate(current_MA = MA, MA_number = row_number()) %>%
-     select(current_MA, MA_number, words, negativewords, ratio)
- summary_tibble
+  group_by(MA) %>%
+  summarize(
+    negativewords = n()
+  ) %>%
+  left_join(word_count_tibble, by = "MA") %>%
+  mutate(ratio = negativewords / words) %>%
+  ungroup() %>%
+  mutate(MA_title = MA_titles) %>%
+  mutate(current_MA = MA) %>%
+  select(MA_title, current_MA, words, negativewords, ratio)
+
+ summary_tibble %>%
+  kbl() %>%
+  kable_material_dark("hover", full_width = F) %>%
+  row_spec(0, bold = T, color = "black", background = "#D7261E")
+```
+<br>
+Ci-dessus un classement des métaanalyses contenant le plus de mots négatifs (MA1>MA2>MA3>MA4), normalisés en fonction du nombre de mots dans chaque métaanalyse (colonne "ratio"). On peut remarquer que les métaanalyses sont exactement en ordre décroissant (la MA1 est la plus négative, la MA4 la moins négative), ce qui est une coïncidence plutôt surprenante. On peut donc écrire, de manière synthétique, que:<br>
+* **MA1:** 3,3% des mots totaux sont des mots négatifs.<br>
+* **MA2:** 2,9% des mots totaux sont des mots négatifs.<br>
+* **MA3:** 2,6% des mots totaux sont des mots négatifs.<br>
+* **MA4:** 2% des mots totaux sont des mots négatifs.<br>
+Ces ratios permettent notamment d'expliquer par des proportions précises la différence observée plus tôt entre les nuages de mots bruts et les nuages de mots prenant en compte la valence (score de sentiment) des mots, les deux groupes étudiés étant de taille et de composition tès différente.
+
+# Approche tf-idf :
+<br>
+**Définitions:**
+<br>
+*tf*: term frequency.<br>
+*idf*: inverse document frequency. Plus élaboré que l'approche en "stop words". Diminue la fréquence des termes rencontrés très souvent et augmente la fréquence des termes rares, en jouant sur la pondération.<br>
+*tf-idf*: le produit de ces deux indices. Il premet de mesurer l'importance **de 1 mot dans 1 document** d'un corpus de documents.<br>
+
+```{r Redéfinition des formats tidy sans filtration des "stop_words"}
+unnested_tokens1 <- tibble(abstracts1) %>%
+unnest_tokens(word, abstracts1)
+unnested_tokens1<-unnested_tokens1
+unnested_tokens1<-unnested_tokens1 %>% rowwise() %>% mutate(word = singularize(word))
+
+unnested_tokens2 <- tibble(abstracts2) %>%
+  unnest_tokens(word, abstracts2)
+unnested_tokens2 <- unnested_tokens2
+unnested_tokens2 <- unnested_tokens2 %>% rowwise() %>% mutate(word = singularize(word))
+
+unnested_tokens3 <- tibble(abstracts3) %>%
+  unnest_tokens(word, abstracts3)
+unnested_tokens3 <- unnested_tokens3
+unnested_tokens3 <- unnested_tokens3 %>% rowwise() %>% mutate(word = singularize(word))
+
+unnested_tokens4 <- tibble(abstracts4) %>%
+  unnest_tokens(word, abstracts4)
+unnested_tokens4 <- unnested_tokens4
+unnested_tokens4 <- unnested_tokens4 %>% rowwise() %>% mutate(word = singularize(word))
 ```
 
-tidybook=avec une colonne mot et une colone métaanalyse (unnested token) OK
-tableau avec le nombre de mots/métaanalyse OK
-semi join 
-summarize pour compter le nombre de mots négatifs
-calcul du ratio
