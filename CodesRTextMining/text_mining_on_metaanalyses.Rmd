@@ -19,7 +19,7 @@ library(tm)
 library(knitr)
 library(SemNetCleaner)
 data("stop_words")
-custom_stop_words <- tibble(word = c("plot","wild","slug","manipulation","apple"),  
+custom_stop_words <- tibble(word = c("plot","wild","slug","manipulation","apple","significant","free","led"),  
                                       lexicon = c("custom"))
 ```
 Deuxième bloc de code : définition des variables.
@@ -493,7 +493,7 @@ ggarrange(plot_senti1,plot_senti2,plot_senti3,plot_senti4,widths = c(2,2),labels
 
 Tout d'abord, il est immportant de noter que tous les graphes n'ont pas les mêmes échelles ; les MA1 et 4 semblent avoir des échelles de sentiment comparables ([-20;10] et [-10;20]) et cela vaut aussi pour les MA2 et 3 ([-10;5] et [-5;10])
 
-On peut constater que le mot positif *"significant"* est retrouvé dans tous les corpus fournis, tandis que *"abundance"* est retrouvé dans la plupart de métaanalyses (1,2 et 3). Il serait cependant nécessaire d'inspecter des unités textuelles plus larges pour interpréter au mieux ce résultat, car la signification de ces mots peut grandement dépendre des autres mots auquels ils sont associés et du contexte. 
+On peut constater que le mot positif *"abundance"* est retrouvé dans la plupart de métaanalyses (1,2 et 3). Il serait cependant nécessaire d'inspecter des unités textuelles plus larges pour interpréter au mieux ce résultat, car la signification de ces mots peut grandement dépendre des autres mots auquels ils sont associés et du contexte. 
 le mot *"dynamic* n'est retrouvé que dans les MA1 et 3. A l'inverse, Le mot *"unaffected"* n'est quant à lui retrouvé que dans les MA2 et 4. On peut émettre l'hypothèse que les MA2 et 4 se focalisent sur les mécanismes de préservation et de résistance, alors que la 1 et la 3 sont davantage axées sur la dynamique des écosystèmes.
 
 On peut constater qu'il n'y a aucun mot négatif commun à tous les corpus. Cependant, les mots *"invasive"* ou *"invader"* sont retrouvées dans las MA 1, 3 et 4, ce qui sous-entend que la MA2 s'intéresse moins aux espèces invasives que les trois autres.
@@ -590,11 +590,12 @@ ggarrange(contrib1,contrib2,contrib3,contrib4,widths = c(2,2),labels = c("1","2"
 Tout d'abord, il faut noter que les graphiques ne sont pas à la même échelle en abscisse. Cela ne pose en théorie pas de problème pour interpréter les résultats au cas par cas, mais cela rentrera en jeux lors d'éventuelles comparaisons entre métaanalyses.
 
 <u>Les quatre mots positifs les plus importants en contribution sont: </u><br> 
-* *MA1:* "abundance", dynamic", "dominated","significant".<br>
-* *MA2:* "enhanced", "abundance", "variety","significant".<br>
-* *MA3:* "richness", "abundance", "significant","leading".<br>
-* *MA4:* "significant", "unnaffected", "enhanced","enhance".<br>
-On remarque tout d'abord que le mot *"significant"* fait partie des quatre mots qui a le plus contribué au sentiment dans tous les subsets. Le contexte semble nécessaire pour savoir s'il est employé pour décrire un phénomène positif ou négatif.<br>
+* *MA1:* "abundance", dynamic", "dominated","positive".<br>
+* *MA2:* "enhanced", "abundance", "variety","unaffected".<br>
+* *MA3:* "richness", "abundance", "leading", "dynamic".<br>
+* *MA4:* "unnaffected", "enhanced","enhance","positive".<br>
+
+Le mot *"unaffected"* compte parmi les 4 premiers dans les MA2 et 4 (qui semblent davantage s'intéresser aux plantes), là où le mot *"positive"* compte parmi les quatre premiers pour les MA1 et 4,  qui semblent se focaliser sur les sols (d'après les titres). Cela pourrait vouloir dire que, d'après ces métaanalyse, les vers de terre ont un impact plutôt positif sur les sols et les plantes. Cependant, l'approche en unités textuelles plus larges, comme les n-grames, semble souhaitable pour éviter les contresens.
 Par ailleurs, le mot *"abundance"* est dans les premiers pour les MA 1, 2 et 3, mais pas pour la MA4, ce qui pourrait signifier qu'elle est moins orientée sur la richesse écosystémique que les autres. De plus, la présence des mots *"enhanced"* et *"enhance"* semble montrer que, comme son nom l'indique, elle choisit une approche plus quantitative (étude de la **production**) que les autres.<br>
 
 <u>Les quatre mots négatifs les plus importants en contribution (en ne comptant pas "rocky", qui dans ce contexte est sans doute employé au sens propre de "rocheux/rocailleux", comme par exemple dans le groupe de mots "Rocky area".) sont: </u><br> 
@@ -890,16 +891,39 @@ ggarrange(word_freq_plot1,word_freq_plot2,widths = c(1,2))
 Ces graphiques présentent des distributions proches pour toutes les MA, avec de nombreux mots qui apparaissent rarement et moins de mots qui apparaissent fréquemment (le premier groupe de 4 graphes représentant l'intégralité des données, le deuxième groupe de 4 se focalisant uniquement sur l'intervalle [0;0.05], pour inspecter le massif de pics davantage en détail). En x, on peut voir que les mots apparaissant très souvent (à droite) sont rares, alors que les mots qui apparaissent peu souvent (à gauche) sont fréquents. Ces graphiques présentent des distributions similaires pour toutes les MA, avec de nombreux mots qui apparaissent rarement et moins de mots qui apparaissent fréquemment. 
 
 ## Loi de Zipf:
-```{r}
-freq_and_rank <-  all_freq %>%
-    group_by(MA, word) %>%
-    summarize(n = sum(n), Total = first(Total)) %>% # isoler une seule fois la valeur de "Total" pour chaque MA (on retient la première occurence). La valeur du Total pour chaque MA est constante.
-    ungroup() %>%
-    group_by(MA) %>%
+<br>
+La loi de Zipf, découverte empiriquement par Zipf (1949) pour des mots d'un corpus anglais, stipule que si *f* est la fréquence d'un mot dans le corpus et *r* le rang, alors : <br>
+$frequency \propto \frac{1}{rank}$ <br>
+(la fréquence d'un mot donné est inversement proportionnelle à son rang).
+```{r Préparation Zipf}
+freq_and_rank <-  all_freq %>% group_by(MA) %>%
+    distinct(word, .keep_all = TRUE) %>%
     arrange(desc(n)) %>%
-    mutate(rank = row_number()) %>%
+    mutate(rank = seq_len(length(word)), word_frequency = n/Total) %>% # 
     ungroup()
+
+freq_and_rank %>% 
+    ggplot(aes(rank, word_frequency, color = MA)) + 
+    geom_line(linewidth = 1.1, alpha = 0.8, show.legend = TRUE) + 
+    scale_x_log10() +
+    scale_y_log10()
+```
+<br>Les courbes de Zipf (log10(f) contre log10(r)) obtenues ci-dessus ont une pente négative. On peut visualiser graphiquement qu'il existe bel et bien une relation inversement proportionnelle entre *f* et *r* (échelle logarithmique). On peut cependant remarquer que la décroissance observée n'est pas strictement monotone. On pourrait considérer ces courbes comme des lois de puissance brisées (fonction par morceaux donnée par une séquence de lois de puissance jointes où chaque section a sa propre puissance (indice) et est définie par des "ruptures" limitatives.) et les diviser en trois sections: [1;10]/[10;100]/[100;1000]. Voyons quel est l'exposant de la loi de puissance pour la partie centrale de la plage de rangs. 
+```{r}
+rank_subset <- freq_and_rank %>% 
+  filter(rank < 100,
+         rank > 10)
+lm(log10(word_frequency) ~ log10(rank), data = rank_subset)
+
 ```
 
 
+```{r}
+freq_and_rank %>% ggplot(aes(rank, word_frequency, color = MA)) + 
+  geom_abline(intercept = -0.80, slope = -0.82, 
+              color = "gray50", linetype = 2) +
+  geom_line(linewidth = 1.1, alpha = 0.8, show.legend = TRUE) + 
+  scale_x_log10() +
+  scale_y_log10()
+```
 
