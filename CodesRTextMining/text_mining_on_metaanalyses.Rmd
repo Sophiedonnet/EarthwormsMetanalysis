@@ -392,7 +392,7 @@ MA4: "Earthworms increase plant production: a meta-analysis"</i>
 
 D'après le tableau ci-dessus, on peut voir que le choix de mots est le plus corrélé (correlation de Pearson) entre la MA2 et la MA4 (r²=0.825), tandis que le choix de mots est le moins corrélé (corrélation de Pearson) entre la MA1 et la MA2 (r²=0.671).
 
-# Analyse de sentiments entre les 4 métaanalyses:
+# Analyse de sentiment:
 
 ## Premiers graphiques.
 
@@ -582,7 +582,7 @@ contrib4<-bing_word_counts4 %>%
        y = NULL)
 ```
 
-```{r ggarrange contrib, fig.height=10,fig.width=10}
+```{r ggarrange contrib,fig.height=10, fig.width=20}
 library(egg)
 ggarrange(contrib1,contrib2,contrib3,contrib4,widths = c(2,2),labels = c("1","2","3","4"))
 ```
@@ -612,7 +612,7 @@ Da façon simpliste, il semble donc possible, à partir de ces graphiques, de pr
 - **MA2:** étude des effets des vers de terre sur la physiologie végétale.<br>
 - **MA4:** étude de l'influence des vers de terre invasifs sur la production végétale. 
 
-Cependant, il serait peut-être nécessaire d'étudier des unités textuelles plus larges, comme par exemple les phrases, pour éviter au maximum le risque de contresens.
+Cependant, il serait peut-être nécessaire d'étudier des unités textuelles plus larges, comme par exemple les phrases ou les n-grames, pour éviter au maximum le risque de contresens.
 
 <br>
 <i>MA1: "Soil chemistry turned upside down: a meta-analysis of invasive earthworm effects on soil chemical properties"<br>
@@ -812,7 +812,7 @@ Ces ratios permettent notamment d'expliquer par des proportions précises la dif
 <br>
 *tf*: term frequency.<br>
 *idf*: inverse document frequency. Plus élaboré que l'approche en "stop words". Diminue la fréquence des termes rencontrés très souvent et augmente la fréquence des termes rares, en jouant sur la pondération.<br>
-*tf-idf*: le produit de ces deux indices. Il premet de mesurer l'importance **de 1 mot dans 1 document** d'un corpus de documents.<br>
+*tf-idf*: le produit de ces deux indices. Il premet d'identifier les mots qui sont **plus importants pour un document spécifique** parmi un ensemble de documents.<br>
 
 ```{r Redéfinition des formats tidy sans filtration des "stop_words"}
 unnested_tokens1 <- tibble(abstracts1) %>%
@@ -896,6 +896,8 @@ La loi de Zipf, découverte empiriquement par Zipf (1949) pour des mots d'un cor
 $frequency \propto \frac{1}{rank}$ <br>
 (la fréquence d'un mot donné est inversement proportionnelle à son rang).
 ```{r Préparation Zipf}
+library(latex2exp)
+
 freq_and_rank <-  all_freq %>% group_by(MA) %>%
     distinct(word, .keep_all = TRUE) %>%
     arrange(desc(n)) %>%
@@ -906,7 +908,9 @@ freq_and_rank %>%
     ggplot(aes(rank, word_frequency, color = MA)) + 
     geom_line(linewidth = 1.1, alpha = 0.8, show.legend = TRUE) + 
     scale_x_log10() +
-    scale_y_log10()
+    scale_y_log10() +
+  xlab(TeX("$\\log_{10}(Rank)$")) +
+  ylab(TeX("$\\log_{10}(Word~Frequency)$"))
 ```
 <br>Les courbes de Zipf (log10(f) contre log10(r)) obtenues ci-dessus ont une pente négative. On peut visualiser graphiquement qu'il existe bel et bien une relation inversement proportionnelle entre *f* et *r* (échelle logarithmique). On peut cependant remarquer que la décroissance observée n'est pas strictement monotone. On pourrait considérer ces courbes comme des lois de puissance brisées (fonction par morceaux donnée par une séquence de lois de puissance jointes où chaque section a sa propre puissance (indice) et est définie par des "ruptures" limitatives.) et les diviser en trois sections: [1;10]/[10;100]/[100;1000]. Voyons quel est l'exposant de la loi de puissance pour la partie centrale de la plage de rangs. 
 ```{r}
@@ -918,12 +922,72 @@ lm(log10(word_frequency) ~ log10(rank), data = rank_subset)
 ```
 
 
-```{r}
+```{r Abline linear model}
+library(latex2exp)
+
 freq_and_rank %>% ggplot(aes(rank, word_frequency, color = MA)) + 
-  geom_abline(intercept = -0.80, slope = -0.82, 
+  geom_abline(intercept = -0.8048, slope = -0.8272, 
               color = "gray50", linetype = 2) +
   geom_line(linewidth = 1.1, alpha = 0.8, show.legend = TRUE) + 
   scale_x_log10() +
-  scale_y_log10()
+  scale_y_log10() +
+  xlab(TeX("$\\log_{10}(Rank)$")) +
+  ylab(TeX("$\\log_{10}(Word~Frequency)$"))
 ```
+On peut remarquer en ragardant la partie supérieure que la MA3 contient davantage de mots "rares" que la valeur prédite par le modèle linéaire, alors que toutes les autres (courbes orange, vertes et blues) en contiennent moins. La MA3 est donc celle qui contient la plus haute fréquence de mots rares. Ce résultat semble logique lorsqu'on considère que c'est aussi elle qui comprends le moins de mots totaux (MA3=1860 < MA2=2959 < MA4=4985 < MA1=5616, *voir table ci-dessous*). Pour ce qui est des mots très fréquents (quart inférieur droit sous 0.001 de fréquence), on peut constater que toutes les métaanalyses en contiennent moins que la valeur prédite. Au centre, les courbes des 4 MA sont relativement proche du modèle linéaire, ce qui n'est pas particulièrement étonnant car il a justement été ajusté pour convenir à l'intervalle correspondant à la partie centrale du graphe.
+```{r}
+word_count_tibble%>%
+  kbl() %>%
+  kable_material_dark("hover", full_width = F) %>%
+  row_spec(0, bold = T, color = "black", background = "#D7261E")
+```
+## Fonction bind_tf_idf:
+<br>
+```{r MA_tf_idf}
+MA_tf_idf <- all_freq %>%
+  distinct(word, .keep_all = TRUE) %>%
+  select(-word_frequency) %>%
+  select(-Total) %>%
+  bind_tf_idf(word, MA, n) %>%
+  arrange(desc(tf_idf))
 
+MA_tf_idf 
+```
+```{r plot MA_tf_idf,fig.height=8}
+library(forcats)
+
+MA_tf_idf %>%
+  anti_join(stop_words) %>%
+  anti_join(custom_stop_words) %>%
+  group_by(MA) %>%
+  slice_max(tf_idf, n = 15) %>%
+  ungroup() %>%
+  ggplot(aes(tf_idf, fct_reorder(word, tf_idf), fill = MA)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~MA, ncol = 2, scales = "free") +
+  labs(x = "tf-idf", y = NULL)
+```
+D'après les graphiques ci-dessus, on peut constater que:<br> 
+- Les mots *"earthworm"*, *"soil"*, *"forest"* et *"effect"* sont plus souvent employés dans la MA1 que dans les autres MA. Le mot *"invasion"* est aussi plus présent dans la MA1 que dans les autres MA.<br>
+- Les mots *"aphid*, *"nematode"*, *"organism"* et *"herbivore"* sont plus souvent employés dans la MA2 que dans les autres MA. Le mot *"parasitoid"* est aussi plus présent dans la MA2 que dans les autres MA.<br>
+- Les mots *"tim" (forme de "times" après 'singularize'?)*, *"contribute"*, *"stage"* et *"responsible"* sont plus souvent employés dans la MA3 que dans les autres MA.<br> Les mots *"canopy"* et *"aggregate"* sont aussi plus présent dans la MA3 que dans les autres MA.<br>
+- Les mots *"maize*, *"gtt"*, *"grain"* et *"herbivore"* sont plus souvent employés dans la MA4 que dans les autres MA. Les mots du champs lexical de l'agriculture, comme *"harvest"*, *"fertilizer"*, *"farmer"* et *"pb"* (probablement employé ici comme le symbole chimique du plomb) sont aussi plus présent dans la MA4 que dans les autres MA.<br>
+
+Rappelons les suppositions faites précédemment dans la partie "Analyse de sentiment":<br> 
+- **MA1/MA3:** étude de l'impact écologique des vers de terre sur les écosystèmes.<br>
+- **MA2:** étude des effets des vers de terre sur la physiologie végétale.<br>
+- **MA4:** étude de l'influence des vers de terre invasifs sur la production végétale.<br> 
+
+En prenant en compte le sujet apparent de chaque métaanalyse, on peut supposer que:<br>
+- La <u>MA1</u> se focalise plus que les autres sur l'impact écologique des vers de terre sur les forêts, sous la modalité d'une **"invasion"** biologique.<br>
+- La <u>MA2</u> se focalise plus que les autres sur les organismes herbivores comme les pucerons ("aphids"). Le mot **"parasitoid"** laisse entendre un effet parasitaire des pucerons sur les végétaux. Cela semble cohérent avec les résultats obtenus précédemment (voir "Analyse de sentiment" et "Wordcloud: coloration en fonction de la valence des mots"). D'après le titre de la métaanalyse, les vers de terre semblent par contre avoir une influence positive sur la résistance des plantes aux pucerons (id.).<br>
+- La <u>MA3</u> se focalise plus que les autres sur les effets des vers de terre sur les forêts (d'après le titre et le mot-clé *"canopy"*), et sur les aggrégats, peut-être chimiques ou biochimiques, présents dans le sol.<br>
+- La <u>MA4</u> se focalise plus que les autres sur les effets des vers de terre sur la production végétale, d'après le titre de la métaanalyse et le champs lexical abondant en lien avec le monde agricole (*"maize"*, *"grain"*, *"herbivore"*,*"harvest"*, *"fertilizer"*, *"farmer"* et *"pb"*). Le terme **"Pb"** semble indiquer que la métanalyse s'intéresse probablement aux conséquences écosystémiques des métaux lourds présents dans le sol.
+
+<br>
+<i>MA1: "Soil chemistry turned upside down: a meta-analysis of invasive  earthworm effects on soil chemical properties"<br>
+MA2: "Earthworms affect plant growth and resistance against herbivores: A meta-analysis" <br>
+MA3: "The unseen invaders: introduced earthworms as drivers of change in plant communities in North American
+forests (a meta-analysis)" <br>
+MA4: "Earthworms increase plant production: a meta-analysis"</i>
+<br>

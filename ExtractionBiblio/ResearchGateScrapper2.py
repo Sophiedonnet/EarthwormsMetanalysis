@@ -1,6 +1,5 @@
 from parsel import Selector
 from playwright.sync_api import sync_playwright
-import json
 import re
 import time
 
