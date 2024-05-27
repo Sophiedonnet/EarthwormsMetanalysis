@@ -21,6 +21,7 @@ library(SemNetCleaner)
 data("stop_words")
 custom_stop_words <- tibble(word = c("plot","wild","slug","manipulation","apple","significant","free","led"),  
                                       lexicon = c("custom"))
+combined_stop_words <- bind_rows(stop_words, custom_stop_words) # didn't find the way to combine tibbles earlier, wich is why some code chunks work with the two "stop words" dictionnaries separetly.
 ```
 Deuxième bloc de code : définition des variables.
 ```{r Variables}
@@ -982,7 +983,7 @@ En prenant en compte le sujet apparent de chaque métaanalyse, on peut supposer 
 - La <u>MA1</u> se focalise plus que les autres sur l'impact écologique des vers de terre sur les forêts, sous la modalité d'une **"invasion"** biologique.<br>
 - La <u>MA2</u> se focalise plus que les autres sur les organismes herbivores comme les pucerons ("aphids"). Le mot **"parasitoid"** laisse entendre un effet parasitaire des pucerons sur les végétaux. Cela semble cohérent avec les résultats obtenus précédemment (voir "Analyse de sentiment" et "Wordcloud: coloration en fonction de la valence des mots"). D'après le titre de la métaanalyse, les vers de terre semblent par contre avoir une influence positive sur la résistance des plantes aux pucerons (id.).<br>
 - La <u>MA3</u> se focalise plus que les autres sur les effets des vers de terre sur les forêts (d'après le titre et le mot-clé *"canopy"*), et sur les aggrégats, peut-être chimiques ou biochimiques, présents dans le sol.<br>
-- La <u>MA4</u> se focalise plus que les autres sur les effets des vers de terre sur la production végétale, d'après le titre de la métaanalyse et le champs lexical abondant en lien avec le monde agricole (*"maize"*, *"grain"*, *"herbivore"*,*"harvest"*, *"fertilizer"*, *"farmer"* et *"pb"*). Le terme **"Pb"** semble indiquer que la métanalyse s'intéresse probablement aux conséquences écosystémiques des métaux lourds présents dans le sol.
+- La <u>MA4</u> se focalise plus que les autres sur les effets des vers de terre sur la production végétale (comme semble l'indiquer le mot PLFA (acides gras phospholipidiques), un marqueur de la biomasse vivante), d'après le titre de la métaanalyse et le champs lexical abondant en lien avec le monde agricole (*"maize"*, *"grain"*, *"herbivore"*,*"harvest"*, *"fertilizer"*, *"farmer"* et *"pb"*). Le terme **"Pb"** semble indiquer que la métanalyse s'intéresse probablement aux conséquences écosystémiques des métaux lourds présents dans le sol.
 
 <br>
 <i>MA1: "Soil chemistry turned upside down: a meta-analysis of invasive  earthworm effects on soil chemical properties"<br>
@@ -991,3 +992,165 @@ MA3: "The unseen invaders: introduced earthworms as drivers of change in plant c
 forests (a meta-analysis)" <br>
 MA4: "Earthworms increase plant production: a meta-analysis"</i>
 <br>
+
+## n-grams et corrélations : 
+<br>
+```{r bigrams}
+library(dplyr)
+library(tidytext)
+
+all_abstracts_df <- rbind(data.frame(abstract = abstracts1, MA = "MA1"),
+      data.frame(abstract = abstracts2, MA = "MA2"),
+      data.frame(abstract = abstracts3, MA = "MA3"), 
+      data.frame(abstract = abstracts4, MA = "MA4"))
+
+tokens_bigrams_all <- tibble(all_abstracts_df) %>%
+  unnest_tokens(bigram, abstract, token = "ngrams", n = 2) %>%
+  filter(!is.na(bigram))
+
+tokens_bigrams1 <- tibble(abstracts1) %>%
+  unnest_tokens(bigram, abstracts1, token = "ngrams", n = 2) %>%
+  filter(!is.na(bigram))
+
+tokens_bigrams2 <- tibble(abstracts2) %>%
+  unnest_tokens(bigram, abstracts2, token = "ngrams", n = 2) %>%
+  filter(!is.na(bigram))
+
+tokens_bigrams3 <- tibble(abstracts3) %>%
+  unnest_tokens(bigram, abstracts3, token = "ngrams", n = 2) %>%
+  filter(!is.na(bigram))
+
+tokens_bigrams4 <- tibble(abstracts4) %>%
+  unnest_tokens(bigram, abstracts4, token = "ngrams", n = 2) %>%
+  filter(!is.na(bigram))
+
+tokens_bigrams1 %>% count(bigram, sort = TRUE)
+
+tokens_bigrams2 %>%
+ count(bigram, sort = TRUE)
+
+tokens_bigrams3 %>%
+ count(bigram, sort = TRUE)
+
+tokens_bigrams4 %>%
+ count(bigram, sort = TRUE)
+```
+De nombreux bigrammes sont non-informatifs ("in the", "of the" etc.). On va donc réemployer l'approche en "stop words" des étapes précédentes pour enlever ces mots.
+```{r bigrams separated}
+# bigrams ok, separated ok,  filtered ok.
+bigrams_separated_all <- tokens_bigrams_all %>%
+  separate(bigram, c("word1", "word2"), sep = " ")
+
+bigrams_separated1 <- tokens_bigrams1 %>%
+  separate(bigram, c("word1", "word2"), sep = " ")
+
+bigrams_filtered_all <- bigrams_separated_all %>% 
+  filter(!word1 %in% combined_stop_words$word) %>%
+  filter(!word2 %in% combined_stop_words$word)
+
+bigrams_filtered1 <- bigrams_separated1 %>%
+  filter(!word1 %in% combined_stop_words$word) %>%
+  filter(!word2 %in% combined_stop_words$word)
+
+# new bigram counts:
+bigram_counts_all <- bigrams_filtered_all %>%
+  count(MA, word1, word2, sort = TRUE)
+
+bigram_counts1 <- bigrams_filtered1 %>% 
+  count(word1, word2, sort = TRUE)
+
+# For bigrams_2
+bigrams_separated2 <- tokens_bigrams2 %>%
+  separate(bigram, c("word1", "word2"), sep = " ")
+
+bigrams_filtered2 <- bigrams_separated2 %>%
+  filter(!word1 %in% combined_stop_words$word) %>%
+  filter(!word2 %in% combined_stop_words$word)
+
+bigram_counts2 <- bigrams_filtered2 %>% 
+  count(word1, word2, sort = TRUE)
+
+# For bigrams_3
+bigrams_separated3 <- tokens_bigrams3 %>%
+  separate(bigram, c("word1", "word2"), sep = " ")
+
+bigrams_filtered3 <- bigrams_separated3 %>%
+  filter(!word1 %in% combined_stop_words$word) %>%
+  filter(!word2 %in% combined_stop_words$word)
+
+bigram_counts3 <- bigrams_filtered3 %>% 
+  count(word1, word2, sort = TRUE)
+
+# For bigrams_4
+bigrams_separated4 <- tokens_bigrams4 %>%
+  separate(bigram, c("word1", "word2"), sep = " ")
+
+bigrams_filtered4 <- bigrams_separated4 %>%
+  filter(!word1 %in% combined_stop_words$word) %>%
+  filter(!word2 %in% combined_stop_words$word)
+
+bigram_counts4 <- bigrams_filtered4 %>% 
+  count(word1, word2, sort = TRUE)
+
+bigrams_united_all <- bigrams_filtered_all %>%
+  unite(bigram, word1, word2, sep = " ")
+
+bigrams_united_all %>% count(MA, bigram, sort = TRUE)
+
+```
+
+
+```{r Looking at single words among bigrams}
+earthworms_bigrams <- bigrams_united_all %>%
+    filter(grepl("earthworms?", bigram, ignore.case = TRUE))
+# Count occurrences of MA and word2 combination, sorted in descending order
+count_earthworm_bigrams<- earthworms_bigrams %>%
+    count(MA, bigram, sort = TRUE) %>%
+    group_by(MA) %>%
+    filter(n>5) %>%
+    mutate(MA = factor(MA, levels = c("MA1", "MA2", "MA3", "MA4"))) %>% # Set the order of MA
+    arrange(MA, desc(n)) # Sort by MA and then by n in descending order
+count_earthworm_bigrams
+```
+```{r function to count bigrams}
+library(dplyr)
+
+# Define the function
+count_filtered_bigrams <- function(data, regex_motif,treshold) {
+  # Filter the bigrams based on the provided regex motif
+  filtered_bigrams <- data %>%
+    filter(grepl(regex_motif, bigram, ignore.case = TRUE))
+  
+  # Count occurrences of each combination of `MA` and `bigram`, sort in descending order,
+  # group by `MA`, and filter counts greater than 5 within each group
+  count_bigrams <- filtered_bigrams %>%
+    count(MA, bigram, sort = TRUE) %>%
+    group_by(MA) %>%
+    filter(n > treshold) %>%
+    mutate(MA = factor(MA, levels = c("MA1", "MA2", "MA3", "MA4"))) %>%
+    arrange(MA, desc(n)) # Sort by MA and then by n in descending order
+  
+  return(count_bigrams)
+}
+
+count_filtered_bigrams(bigrams_united_all,"earthworms?",5)
+count_filtered_bigrams(bigrams_united_all,"invasions?",5)
+count_filtered_bigrams(bigrams_united_all,"invaders?",0)
+count_filtered_bigrams(bigrams_united_all,"europeans?",0)
+```
+```{r plot des bigrammes}
+bigram_tf_idf <- bigrams_united_all %>%
+  count(MA, bigram) %>%
+  bind_tf_idf(bigram, MA, n) %>%
+  arrange(desc(tf_idf))
+
+bigram_tf_idf %>%
+    group_by(MA) %>%
+    slice_max(tf_idf, n = 15) %>%
+    ungroup() %>%
+    ggplot(aes(tf_idf, fct_reorder(bigram, tf_idf), fill = MA)) +
+    geom_col(show.legend = FALSE) +
+    facet_wrap(~MA, ncol = 2, scales = "free") +
+    labs(x = "tf-idf", y = NULL)
+```
+
