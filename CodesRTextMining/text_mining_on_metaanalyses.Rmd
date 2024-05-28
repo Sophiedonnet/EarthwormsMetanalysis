@@ -1153,4 +1153,29 @@ bigram_tf_idf %>%
     facet_wrap(~MA, ncol = 2, scales = "free") +
     labs(x = "tf-idf", y = NULL)
 ```
+<br>
+D'après les graphiques ci-dessus, on peut constater que:<br> 
+Les bigrammes *"mineral soil"*, *"earthworm invasion"*, *"exotic earthworms"* et *"forest soils"* sont plus souvent employés dans la MA1 que dans les autres MA. Le bigramme *"earthworm invaded"* est aussi plus présent dans la MA1 que dans les autres MA.<br>
+Les bigrammes *"soil organisms"*, *"plant responses"*, *"plant mediated"* et *"root herbivore"* sont plus souvent employés dans la MA2 que dans les autres MA. Le bigramme *"aphid species"* est aussi plus présent dans la MA2 que dans les autres MA.<br>
+Les bigrammes *"tree species"*, *"native plant"*, *"species richness"* et *"caterpillar density"* sont plus souvent employés dans la MA3 que dans les autres MA. Le bigramme *"earthworm invasions"* est aussi plus présent dans la MA3 que dans les autres MA.<br>
+Les bigrammes *"soil organisms"*, *"plant functionnal"*, *"dry weight"* et *"diplocardia spp"* sont plus souvent employés dans la MA4 que dans les autres MA. Le bigramme *"soil fertility"* est aussi plus présent dans la MA4 que dans les autres MA.<br>
 
+Rappelons les suppositions faites dans la section précédente:<br> 
+- La <u>MA1</u> se focalise plus que les autres sur l'impact écologique des vers de terre sur les forêts, sous la modalité d'une **"invasion"** biologique.<br>
+- La <u>MA2</u> se focalise plus que les autres sur les organismes herbivores comme les pucerons ("aphids"). Le mot **"parasitoid"** laisse entendre un effet parasitaire des pucerons sur les végétaux. Cela semble cohérent avec les résultats obtenus précédemment (voir "Analyse de sentiment" et "Wordcloud: coloration en fonction de la valence des mots"). D'après le titre de la métaanalyse, les vers de terre semblent par contre avoir une influence positive sur la résistance des plantes aux pucerons (id.).<br>
+- La <u>MA3</u> se focalise plus que les autres sur les effets des vers de terre sur les forêts (d'après le titre et le mot-clé *"canopy"*), et sur les aggrégats, peut-être chimiques ou biochimiques, présents dans le sol.<br>
+- La <u>MA4</u> se focalise plus que les autres sur les effets des vers de terre sur la production végétale (comme semble l'indiquer le mot PLFA (acides gras phospholipidiques), un marqueur de la biomasse vivante), d'après le titre de la métaanalyse et le champs lexical abondant en lien avec le monde agricole (*"maize"*, *"grain"*, *"herbivore"*,*"harvest"*, *"fertilizer"*, *"farmer"* et *"pb"*). Le terme **"Pb"** semble indiquer que la métanalyse s'intéresse probablement aux conséquences écosystémiques des métaux lourds présents dans le sol.<br>
+
+En prenant en compte le sujet apparent de chaque métaanalyse, on peut supposer que:<br>
+- La <u>MA1</u> se focalise plus que les autres sur l'impact écologique des vers de terre **"exotiques"** sur l'écosystème du **sol** forestier, sous la modalité d'une **"invasion"** biologique.<br>
+- La <u>MA2</u> se focalise plus que les autres sur l'effet des **"organismes du sol"**, et plus précisément ceux affectant les **"racines"**, sur les plantes, en observant notamment, probablement, les stratégies d'adaptation des plante face à cette source de stress biotique (*"plant responses"*). Les **"espèces de pucerons"** semblent particulièrement ciblées comme étant la source de ce stress.<br> 
+- La <u>MA3</u> se focalise plus que les autres sur l'impact écologique (*"species richness", "caterpillar density","tree species","native plants"*) des vers de terre invasifs (*"earthworm invasions"*) sur les forêts d'Amérique du nord. Le champ lexical de la richesse spécifique et de la diversité, ainsi que le wordlcoud de la partie "Wordcloud: coloration en fonction de la valence des mots (bleu: Positif / rouge: Négatif)", semble évoquer un *"déclin"*, un *"dommage"*, une *"destruction"*. On peut donc en conclure que dans cette MA, les vers de terre invasifs sont dépeints comme des nuisibles majeurs contre l'écosystème natif nord américain.<br>
+- La <u>MA4</u> se focalise plus que les autres sur les effets des vers de terre et des **organismes du sol** sur la <u>production</u> (*"dry weight"*) et la <u>physiologie</u> végétale (*"plant functionnal"*). Elle s'intéresse aussi à la **fertilité des sol**, ce qui semble cohérent avec le champ lexical agricole relevé plus tôt (*"maize"*, *"grain"*, *"herbivore"*,*"harvest"*, *"fertilizer"*, *"farmer"* et *"pb"*). Le terme **"Pb"** semble indiquer que la métanalyse s'intéresse probablement aux conséquences écosystémiques des métaux lourds présents dans le sol.<br>
+
+<br>
+<i>MA1: "Soil chemistry turned upside down: a meta-analysis of invasive  earthworm effects on soil chemical properties"<br>
+MA2: "Earthworms affect plant growth and resistance against herbivores: A meta-analysis" <br>
+MA3: "The unseen invaders: introduced earthworms as drivers of change in plant communities in North American
+forests (a meta-analysis)" <br>
+MA4: "Earthworms increase plant production: a meta-analysis"</i>
+<br>
