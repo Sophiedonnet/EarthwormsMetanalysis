@@ -1179,3 +1179,110 @@ MA3: "The unseen invaders: introduced earthworms as drivers of change in plant c
 forests (a meta-analysis)" <br>
 MA4: "Earthworms increase plant production: a meta-analysis"</i>
 <br>
+
+## n-grams et analyse de sentiment:
+<br>
+```{r Contexte des mots, fig.height=8,fig.width=12}
+ library(ggplot2)
+
+AFINN <-get_sentiments("afinn")
+
+not_words <- bigrams_separated_all %>%
+  filter(word1 == "not") %>%
+  inner_join(AFINN, by = c(word2 = "word")) %>%
+  count(word2, value, sort = TRUE)
+
+not_words %>%
+  mutate(contribution = n * value) %>%
+  arrange(desc(abs(contribution))) %>%
+  mutate(word2 = reorder(word2, contribution)) %>%
+  ggplot(aes(contribution, word2, fill = contribution > 0)) +
+  geom_col(show.legend = FALSE) +
+  labs(x = "Sentiment value * number of occurrences",
+       y = "Words preceded by \"not\"")
+```
+## 
+Les bigrammes *"not benefit"* et *"not increase"* sont les plus important facteur d'erreur d'identification, faisant paraître le texte plus **positif** qu'il ne l'est réellement.<br>
+Le bigramme *"not affected"* est le plus important facteur d'erreur d'identification, faisant paraître le texte plus **négatif** qu'il ne l'est réellement.<br>
+```{r Contexte: par métaanalyse}
+library(ggplot2)
+library(egg)
+
+AFINN <-get_sentiments("afinn")
+
+not_words1 <- bigrams_separated1 %>%
+  filter(word1 == "not") %>%
+  inner_join(AFINN, by = c(word2 = "word")) %>%
+  count(word2, value, sort = TRUE)
+
+contexte1 <- not_words1 %>%
+  mutate(contribution = n * value) %>%
+  arrange(desc(abs(contribution))) %>%
+  mutate(word2 = reorder(word2, contribution)) %>%
+  ggplot(aes(n * value, word2, fill = n * value > 0)) +
+  geom_col(show.legend = FALSE) +
+  labs(x = "Sentiment value * number of occurrences",
+       y = "Words preceded by \"not\"")
+
+not_words2 <- bigrams_separated2 %>%
+  filter(word1 == "not") %>%
+  inner_join(AFINN, by = c(word2 = "word")) %>%
+  count(word2, value, sort = TRUE)
+
+contexte2 <- not_words2 %>%
+  mutate(contribution = n * value) %>%
+  arrange(desc(abs(contribution))) %>%
+  mutate(word2 = reorder(word2, contribution)) %>%
+  ggplot(aes(n * value, word2, fill = n * value > 0)) +
+  geom_col(show.legend = FALSE) +
+  labs(x = "Sentiment value * number of occurrences",
+       y = "Words preceded by \"not\"")
+
+not_words3 <- bigrams_separated3 %>%
+  filter(word1 == "not") %>%
+  inner_join(AFINN, by = c(word2 = "word")) %>%
+  count(word2, value, sort = TRUE)
+
+contexte3 <- not_words3 %>%
+  mutate(contribution = n * value) %>%
+  arrange(desc(abs(contribution))) %>%
+  mutate(word2 = reorder(word2, contribution)) %>%
+  ggplot(aes(n * value, word2, fill = n * value > 0)) +
+  geom_col(show.legend = FALSE) +
+  labs(x = "Sentiment value * number of occurrences",
+       y = "Words preceded by \"not\"")
+
+not_words4 <- bigrams_separated4 %>%
+  filter(word1 == "not") %>%
+  inner_join(AFINN, by = c(word2 = "word")) %>%
+  count(word2, value, sort = TRUE)
+
+contexte4 <- not_words4 %>%
+  mutate(contribution = n * value) %>%
+  arrange(desc(abs(contribution))) %>%
+  mutate(word2 = reorder(word2, contribution)) %>%
+  ggplot(aes(n * value, word2, fill = n * value > 0)) +
+  geom_col(show.legend = FALSE) +
+  labs(x = "Sentiment value * number of occurrences",
+       y = "Words preceded by \"not\"")
+
+ggarrange(contexte1,contexte2,contexte3,contexte4,widths = c(5,5),labels = c("1","2","3","4"))
+
+not_words_with_factor <- bigrams_separated_all %>%
+    filter(word1 == "not") %>%
+    inner_join(AFINN, by = c(word2 = "word")) %>%
+    count(MA, word2, value, sort = TRUE)
+
+not_words_with_factor %>%
+  mutate(contribution = n * value) %>%
+  arrange(desc(abs(contribution))) %>%
+  mutate(word2 = reorder(word2, contribution)) %>%
+  ggplot(aes(contribution, word2, fill = contribution > 0)) +
+  geom_col(show.legend = FALSE) +
+  labs(x = "Sentiment value * number of occurrences",
+       y = "Words preceded by \"not\"") + 
+  coord_fixed(ratio = 0.25)+
+  facet_wrap(facets = vars(MA), ncol = 1)
+
+```
+
