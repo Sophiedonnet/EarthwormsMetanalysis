@@ -1204,70 +1204,19 @@ not_words %>%
 ## 
 Les bigrammes *"not benefit"* et *"not increase"* sont les plus important facteur d'erreur d'identification, faisant paraître le texte plus **positif** qu'il ne l'est réellement.<br>
 Le bigramme *"not affected"* est le plus important facteur d'erreur d'identification, faisant paraître le texte plus **négatif** qu'il ne l'est réellement.<br>
+
 ```{r Contexte: par métaanalyse}
 library(ggplot2)
-library(egg)
 
 AFINN <-get_sentiments("afinn")
-
-not_words1 <- bigrams_separated1 %>%
+bigrams_separated1 %>%
   filter(word1 == "not") %>%
   inner_join(AFINN, by = c(word2 = "word")) %>%
   count(word2, value, sort = TRUE)
+```
 
-contexte1 <- not_words1 %>%
-  mutate(contribution = n * value) %>%
-  arrange(desc(abs(contribution))) %>%
-  mutate(word2 = reorder(word2, contribution)) %>%
-  ggplot(aes(n * value, word2, fill = n * value > 0)) +
-  geom_col(show.legend = FALSE) +
-  labs(x = "Sentiment value * number of occurrences",
-       y = "Words preceded by \"not\"")
 
-not_words2 <- bigrams_separated2 %>%
-  filter(word1 == "not") %>%
-  inner_join(AFINN, by = c(word2 = "word")) %>%
-  count(word2, value, sort = TRUE)
-
-contexte2 <- not_words2 %>%
-  mutate(contribution = n * value) %>%
-  arrange(desc(abs(contribution))) %>%
-  mutate(word2 = reorder(word2, contribution)) %>%
-  ggplot(aes(n * value, word2, fill = n * value > 0)) +
-  geom_col(show.legend = FALSE) +
-  labs(x = "Sentiment value * number of occurrences",
-       y = "Words preceded by \"not\"")
-
-not_words3 <- bigrams_separated3 %>%
-  filter(word1 == "not") %>%
-  inner_join(AFINN, by = c(word2 = "word")) %>%
-  count(word2, value, sort = TRUE)
-
-contexte3 <- not_words3 %>%
-  mutate(contribution = n * value) %>%
-  arrange(desc(abs(contribution))) %>%
-  mutate(word2 = reorder(word2, contribution)) %>%
-  ggplot(aes(n * value, word2, fill = n * value > 0)) +
-  geom_col(show.legend = FALSE) +
-  labs(x = "Sentiment value * number of occurrences",
-       y = "Words preceded by \"not\"")
-
-not_words4 <- bigrams_separated4 %>%
-  filter(word1 == "not") %>%
-  inner_join(AFINN, by = c(word2 = "word")) %>%
-  count(word2, value, sort = TRUE)
-
-contexte4 <- not_words4 %>%
-  mutate(contribution = n * value) %>%
-  arrange(desc(abs(contribution))) %>%
-  mutate(word2 = reorder(word2, contribution)) %>%
-  ggplot(aes(n * value, word2, fill = n * value > 0)) +
-  geom_col(show.legend = FALSE) +
-  labs(x = "Sentiment value * number of occurrences",
-       y = "Words preceded by \"not\"")
-
-ggarrange(contexte1,contexte2,contexte3,contexte4,widths = c(5,5),labels = c("1","2","3","4"))
-
+```{r word1="not"}
 not_words_with_factor <- bigrams_separated_all %>%
     filter(word1 == "not") %>%
     inner_join(AFINN, by = c(word2 = "word")) %>%
@@ -1285,4 +1234,68 @@ not_words_with_factor %>%
   facet_wrap(facets = vars(MA), ncol = 1)
 
 ```
+<br>
+Lorsque l'on inspecte le jeu de données **pour chacune des MA** avec la fonction R *"facet_grid"*, on remarque que les mots ayant conduit au plus d'erreurs d'identification dans chaque MA sont:<br>
+- <u>MA1:</u> *"benefit"* et *"increase"* classés à tort en **positif** (comme le mot précédant était "not", "not benefit" et "not increase" ont une **valance négative**), pas de négatif relevé.<br>
+- <u>MA2:</u> Pas de mot positif relevé. *"affected"* classé à tort en **négatif** (comme le mot précédent était "not", "not affected" a une **valence positive**).<br>
+- <u>MA3:</u> Pas de mot positif relevé. *"affected"* classé à tort en **négatif** (comme le mot précédent était "not", "not affected" a une **valence positive**). On remarque cependant que l'effet observé est moindre comparé à la MA2.<br>
+- <u>MA4:</u> *"responsible"* (donc, le bigramme "not responsible"), est classé positif par le dictionnaire AFINN, mais ces seuls deux mots ne suffisent pas à déterminer la valence (positive ou négative), de l'expression. Elles traduisent au contraire une forme de neutralité (quelque-chose qui est **non responsable** d'un effet est à priori neutre). Une analyse plus détaillée du contexte d'utilisation serait requise pour pouvoir décider. Dans AFINN (dictionnaire), *"prevent"* est classé négatif (c'est pourquoi "not prevent" a une valence positive), mais en écologie, "not prevent" semble bel et bien <u>négatif</u> (il n'y a donc pas d'erreur d'identification dans cas précis). Par contre, classé à tort en **négatif**, on retrouve là-aussi *"affected"*, dans ce cas précédé par *"not"*, et donc de valence plutôt **positive**. <br>
+Cependant, d'autres mots négatifs (comme *"never"* etc.) n'ont pas été pris en compte dans l'analyse ci-dessus. La prochaine étape à donc pour but de prendre davantage de mots de négation en considération dans l'analyse de sentiment.
+<br>
+
+```{r}
+negation_words <- c("ain't", "aren't", "can't", "couldn't", "didn't", "doesn't", "don't", "hasn't", 
+                    "isn't", "mightn't", "mustn't", "neither", "never", "no", "nobody", "nor", 
+                    "not", "shan't", "shouldn't", "wasn't", "weren't", "won't", "wouldn't","without")
+bigrams_separated_all %>%
+    filter(word1 %in% negation_words) %>%
+    inner_join(AFINN, by = c(word2 = "word"))
+```
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+
+negation_words_with_factor <- bigrams_separated_all %>%
+    filter(word1 %in% negation_words) %>%
+    inner_join(AFINN, by = c(word2 = "word")) %>%
+    count(MA, word1, word2, value, sort = TRUE)
+```
+
+```{r, out.height="200%", out.width="200%"}
+negation_words_with_factor %>%
+   mutate(contribution = n * value) %>%
+   arrange(desc(abs(contribution))) %>%
+   mutate(word2 = reorder(word2, contribution)) %>%
+   ggplot(aes(contribution, word2, fill = contribution > 0)) +
+   geom_col(show.legend = FALSE) +
+   labs(x = "Sentiment value * number of occurrences",
+        y = "Words preceded by negation word") + 
+   coord_fixed(ratio = 0.25)+
+   facet_wrap(facets = vars(word1), ncol = 2)
+```
+<br>
+Le fig.height agrandit l'espace blanc nul mais pas la figure. What the fuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuck, comme dirait le Big E.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
