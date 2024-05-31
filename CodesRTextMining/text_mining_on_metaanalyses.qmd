@@ -2,6 +2,10 @@
 title: "Rapport Text Mining Earthworms"
 output: html_document
 date: "`r format(Sys.time(), '%d/%m/%y')`"
+execute: 
+  echo: false
+fig-width: 10
+fig-height: 8
 ---
 
 ```{r setup,include=FALSE}
@@ -178,9 +182,14 @@ ordre4=unnested_tokens4 %>%
 
 Quels sont les mots les plus communs dans chacunes des MA?
 
-```{r ggarrange 4 plots,, fig.height=10,fig.width=10}
+```{r ggarrange 4 plots, fig.height=10,fig.width=10}
+#| layout-ncol: 2
 library(egg)
-ggarrange(plot1,plot2,plot3,plot4,widths = c(5,5),labels = c("1","2","3","4"))
+#ggarrange(plot1,plot2,plot3,plot4,widths = c(5,5),labels = c("1","2","3","4"))
+plot1
+plot2
+plot3
+plot4
 ```
 <br>On remarque que les mots les plus fréquents dans les articles des métaanalyses sont:
 - *earthworm*, *soil* et *forest* pour la MA1 (qui semble donc s'intéresser plus particulièrement à l'écosystème forestier).
@@ -593,29 +602,27 @@ ggarrange(contrib1,contrib2,contrib3,contrib4,widths = c(2,2),labels = c("1","2"
 Tout d'abord, il faut noter que les graphiques ne sont pas à la même échelle en abscisse. Cela ne pose en théorie pas de problème pour interpréter les résultats au cas par cas, mais cela rentrera en jeux lors d'éventuelles comparaisons entre métaanalyses.
 
 <u>Les quatre mots positifs les plus importants en contribution sont: </u><br> 
-* *MA1:* "strong", profound", "enrich","rapid".<br>
-* *MA2:* "strong", "prefer", "enrich","benefit".<br>
-* *MA3:* "rich", "support", "strong", "protect".<br>
-* *MA4:* "success", "fine","strong","top".<br>
+* *MA1:* "abundance", dynamic", "dominated","positive".<br>
+* *MA2:* "enhanced", "abundance", "variety","unaffected".<br>
+* *MA3:* "richness", "abundance", "leading", "dynamic".<br>
+* *MA4:* "unnaffected", "enhanced","enhance","positive".<br>
 
-<u>MA1 et 2:</u> Le mot *"enrich"* est le troisième plus grand contributeurs positif aux scores de sentiment des MA1 et 2. Par ailleurs, le terme évoque un processus dynamique, et la présence de *"rich"* (MA1), ou encore de *"benefit"* et *"boost"* (MA2) semble évoquer un processus écologique bénéfique, peut-être en terme de richesse spécifique et écosystémique. <br>
-<u>MA2 et 3:</u>Le *"rich"* en première position de la MA3 semble pointer aussi vers une étude écosystémique, mais cette-fois, ce mot seul n'indique pas la direction du changement (là où *"enrich"* désigne une croissance de richesse à lui seul, le sens de *"rich"* dépend grandement du contexte, car le mot seul ne donne aucune indication sur le sens de la variation). Cependant, le terme *"protect"* semble indiquer un effet positif du vers de terre sur les végétaux. La présence de *"benefit"* semble rapprocher la MA2 de la MA3 (*"protect"*).<br>
-Dans la MA4, les mots *"success", "fine"* et *"strong"* dégagent une impression positive. Avec *"gain"* et *"benefit"*, et en s'appuyant sur le titre de la métaanalyse, il semble raisonnable de penser que les vers de terre ont une influence positive ("strong", "gain", "benefit") sur la production végétale.<br>
+Le mot *"unaffected"* compte parmi les 4 premiers dans les MA2 et 4 (qui semblent davantage s'intéresser aux plantes), là où le mot *"positive"* compte parmi les quatre premiers pour les MA1 et 4,  qui semblent se focaliser sur les sols (d'après les titres). Cela pourrait vouloir dire que, d'après ces métaanalyse, les vers de terre ont un impact plutôt positif sur les sols et les plantes. Cependant, l'approche en unités textuelles plus larges, comme les n-grames, semble souhaitable pour éviter les contresens.
+Par ailleurs, le mot *"abundance"* est dans les premiers pour les MA 1, 2 et 3, mais pas pour la MA4, ce qui pourrait signifier qu'elle est moins orientée sur la richesse écosystémique que les autres. De plus, la présence des mots *"enhanced"* et *"enhance"* semble montrer que, comme son nom l'indique, elle choisit une approche plus quantitative (étude de la **production**) que les autres.<br>
 
-<u>Les quatre mots négatifs les plus importants en contribution sont: </u><br> 
-* *MA1:* "loss", "temper", "poor", "disturb".<br>
-* *MA2:* "drought", "infest", "dead","complex".<br>
-* *MA3:* "disturb", "burn", "sever","temper".<br>
-* *MA4:* "infest", "sever", "loss","pest".<br>
-<u>MA2 et 4:</u>On remarque la présence du mot *"infest"*, respectivement en deuxième et première positions pour les MA2 et 4. Son association à *"dead"* (MA2) et à *"loss"* et *"pest"* (MA4) traduit une vision probablement négative du vers de terre dans ces métaanalyse, avec probablement des dommages écosystémiques importants.<br>
-<u>MA1 et 4:</u>Dans les MA1 et 4, la présence de *"loss"* et *"disturb"*(MA1), ou bien *"loss"* et *"pest"* (MA4) va aussi dans ce sens, présentant le vers de terre comme un problème, qui, sans forcément détruire totalement l'environnement natif, le **perturbe** (MA1) ou est perçu comme un **nuisible** (MA4).<br>
-La MA2 semble légèrement différente des autres dans son approche, <u>avec des mots uniques qui lui sont propres</u> tels que *"drought"* ou bien *"dead"*. D'autres mots comme *"stress"* ou *"inhibit"*, au vu du titre de la métaanalyse, semblent relever des effets négatifs sur les plantes.<br>
-**De manière générale, pour chaque MA toutes proportions gardées (voir l'échelle des plots sur l'axe Ox), les mots négatifs semblent plus importants en contribution que les mots positifs. Dans ce corpus, le sentiment négatif semble donc plus prononcé que le sentiment positif.**<br>
+<u>Les quatre mots négatifs les plus importants en contribution (en ne comptant pas "rocky", qui dans ce contexte est sans doute employé au sens propre de "rocheux/rocailleux", comme par exemple dans le groupe de mots "Rocky area".) sont: </u><br> 
+* *MA1:* "loss", "invasive", "negative", "poorly".<br>
+* *MA2:* "drought", "negative", "dead","absence".<br>
+* *MA3:* "invasive", "burned", "severity","negative".<br>
+* *MA4:* "invader", "severity", "infested","absence".<br>
+On remarque d'abord qu'aucun des mots négatifs relevés n'est présent dans les quatre premiers de toutes les métaanalyses. Cela dit, le mot *"negative"* semble être le mieux réparti, car présent dans 3 MA sur les 4 (1,2 et 3). De la même façon, on peut aussi noter que les mots *"invasive"* et *"invader"* sont aussi présents dans les 4 premiers de 3 MA sur les 4 (1,3 et 4, respectivement en 2e et 1er position pour *"invasive"* et 1er position pour *"invader"*).<br>
+On peut aussi noter que *"invasive"* semble souvent dans le même groupe que *"negative* (MA1,3), tandis que le mot *"invader"*, lui, semble plutôt associé avec *"infested"* (MA4).<br>
+La MA2 semble sortir du lot, avec des mots uniques comme *"drought"* et *"dead"*. Cela pourrait indiquer que l'étude s'intéresse davantage aux effets des vers de terre sur la physiologie végétale en tant que telle plutôt qu'à leurs aoports écologiques ou de production, ce qui semble en accord avec le titre donné à cette métaanalyse.<br>
 
 Da façon simpliste, il semble donc possible, à partir de ces graphiques, de proposer une première catégorisation comme suit:<br>
-- **MA1/MA2:** étude de l'impact écologique des vers de terre sur les écosystèmes (richesse spécifique).<br>
-- **MA2/MA3:** étude des effets **positifs** (protection et bénéfices) des vers de terre sur la physiologie végétale MAIS nuance car vision négative des vers de terre (espèce invasive) pour la MA2.<br>
-- **MA4:** étude de l'influence des vers de terre invasifs sur la production végétale MAIS nuance car vision négative des vers de terre (espèce invasive).
+- **MA1/MA3:** étude de l'impact écologique des vers de terre sur les écosystèmes.<br>
+- **MA2:** étude des effets des vers de terre sur la physiologie végétale.<br>
+- **MA4:** étude de l'influence des vers de terre invasifs sur la production végétale. 
 
 Cependant, il serait peut-être nécessaire d'étudier des unités textuelles plus larges, comme par exemple les phrases ou les n-grames, pour éviter au maximum le risque de contresens.
 
@@ -1267,7 +1274,7 @@ negation_words_with_factor <- bigrams_separated_all %>%
     count(MA, word1, word2, value, sort = TRUE)
 ```
 
-```{r plot negation words, out.height="200%", out.width="200%"}
+```{r plot negation words}
 negation_words_with_factor %>%
    mutate(contribution = n * value) %>%
    arrange(desc(abs(contribution))) %>%
