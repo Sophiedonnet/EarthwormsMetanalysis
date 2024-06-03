@@ -631,7 +631,7 @@ MA4: "Earthworms increase plant production: a meta-analysis"</i>
 
 ## Wordcloud MA1: "Soil chemistry turned upside down: a meta-analysis of invasive earthworm effects on soil chemical properties"
 
-Visuellement, on peut voir sur le nuage de mots que les termes prépondérants dans la MA1 sont : *"earthworm","soil","forest"* et *"effect"*. On peut remarquer aussi que le mot *"invasion"* semble aussi relativement fréquent, ce qui est cohérent avec le titre de l'article ("invasive earthworms"). La prépondérance du mot *"earthworm"* sur les autres semble confirmer que les vers de terre sont le sujet principal de cette métaanalyse.
+Visuellement, on peut voir sur le nuage de mots que les termes prépondérants dans la MA1 sont : *"earthworm","soil","forest"*,*"increase"* et *"effect"*. On peut remarquer aussi que le mot *"invasion"* semble aussi relativement fréquent, ce qui est cohérent avec le titre de l'article ("invasive earthworms"). La prépondérance du mot *"earthworm"* sur les autres semble confirmer que les vers de terre sont le sujet principal de cette métaanalyse.
 
 ```{r Wordcloud 1}
 library(wordcloud)
@@ -646,7 +646,7 @@ cloud1 <- recordPlot()
 
 ## Wordcloud MA2: "Earthworms affect plant growth and resistance against herbivores: A meta-analysis"
 
-Visuellement, on peut voir sur le nuage de mots que les termes prépondérants dans la MA2 sont : *"plant","earthworm","aphid", "soil"* et *"effect"*. D'autres mots tel que *"increased", "community", "interaction", "presence" ou "biomass"* semblent décrire un processus biologique dynamique. La prépondérance de *"plant"* sur les autres semble confirmer que la biologie végétale en lien avec les vers de terre est le thème principal de cette métaanalyse.
+Visuellement, on peut voir sur le nuage de mots que les termes prépondérants dans la MA2 sont : *"plant","earthworm","aphid", "soil"*,*"increase"* et *"effect"*. D'autres mots tel que *"community", "interaction", "presence","affect"* ou *"biomass"* semblent décrire un processus biologique dynamique. La prépondérance de *"plant"* sur les autres semble confirmer que la biologie végétale en lien avec les vers de terre est le thème principal de cette métaanalyse.
 
 ```{r Wordcloud 2}
 unnested_tokens2 %>%
@@ -658,7 +658,7 @@ cloud2 <- recordPlot()
 
 ## Wordcloud MA3: "The unseen invaders: introduced earthworms as drivers of change in plant communities in North American forests (a meta-analysis)"
 
-Visuellement, on peut voir sur le nuage de mots que les termes prépondérants dans la MA3 sont : *"earthworm","specie", "plant"* et *"forest"*. La prépondérance des mots *"earthworm"* et *"specie"* sur les autres semble confirmer que la métaanlyse s'intéresse en particulier à la façon dont les différentes **espèces** de vers de terre (natives ou introduite) influent sur l'écosystème global (et notamment l'écosystème **forestier**). D'autres mots tel que *"invasion", "community", "interaction", "presence"* ou *"biomass"* semblent décrire un processus écologique dynamique.
+Visuellement, on peut voir sur le nuage de mots que les termes prépondérants dans la MA3 sont : *"earthworm","specie", "plant"* et *"forest"*. La prépondérance des mots *"earthworm"* et *"specie"* sur les autres semble confirmer que la métaanlyse s'intéresse en particulier à la façon dont les différentes **espèces** de vers de terre (natives ou introduite) influent sur l'écosystème global (et notamment l'écosystème **forestier**). D'autres racines telles que *"invasion", "community", "density", "native"* ou *"increase"* semblent décrire un processus écologique dynamique.
 
 ```{r Wordcloud 3}
 unnested_tokens3 %>%
@@ -670,7 +670,7 @@ cloud3 <- recordPlot()
 
 ## Wordcloud MA4: "Earthworms increase plant production: a meta-analysis"
 
-Visuellement, on peut voir sur le nuage de mots que les termes prépondérants dans la MA4 sont : *"earthworm","soil", "plant"* et *"increased"*. La prépondérance de ces mots semble confirmer que cette métaanalyse montre un effet positif ("increased" et "production") des vers de terre sur les plantes, via, probablement, une amélioration de la qualité des sols (voir des mots comme "decomposer", "nurient", "growth", "organic", qui sont souvent utilisés pour décrire les sols favorables à la croissance végétale).
+Visuellement, on peut voir sur le nuage de mots que les termes prépondérants dans la MA4 sont : *"earthworm","soil", "plant"*, *"effect"* et *"increase"*. Les mots *"presence"*, *"community"*, *"product"*, *"biomass"* et *"growth"* laissent entendre un effet plutôt positif des vers de terre sur le développement végatal.
 
 ```{r Wordcloud 4}
 unnested_tokens4 %>%
@@ -754,14 +754,17 @@ sentences4 <- tibble(text = abstracts4) %>%
   unnest_tokens(sentence, text, token = "sentences")
 ```
 
-## Ratios de mots positifs / négatifs pour chaque métaanalyse:  
-```{r Ratio}
+## Ratios de mots positifs / négatifs pour chaque métaanalyse:
+```{r}
 library(dplyr)
 library(purrr)
 library(kableExtra)
 
 bingnegative <- get_sentiments("bing") %>% 
   filter(sentiment == "negative")
+
+bingpositive <- get_sentiments("bing") %>%
+  filter(sentiment == "positive")
 
 unnested_tokens1 <- unnested_tokens1 %>%
   mutate(MA = "MA1")
@@ -782,21 +785,80 @@ word_count_tibble <- tibble(
 
 all_ratios <- bind_rows(unnested_tokens1,unnested_tokens2,unnested_tokens3,unnested_tokens4)
 
-joined_tibble <- inner_join(all_ratios, bingnegative, by = "word")
+joined_tibble <- rbind(inner_join(all_ratios, bingnegative, by = "word"),inner_join(all_ratios, bingpositive, by= "word"))
+# Assuming joined_tibble is already defined
+sentiment_counts <- joined_tibble %>%
+    group_by(MA, sentiment) %>%
+    summarise(count = n())
+# Transpose the summarized counts
+sentiment_counts <- sentiment_counts %>%
+    pivot_wider(names_from = sentiment, values_from = count)
+```
 
-MA_titles <- c("Soil chemistry turned upside down: a meta-analysis [...]","Earthworms affect plant growth and resistance [...]","The unseen invaders: [...] in north American forests (a meta-analysis)","Earthworms increase plant production: a meta-analysis") 
+
+```{r Ratio}
+library(dplyr)
+library(purrr)
+library(kableExtra)
+
+bingnegative <- get_sentiments("bing") %>% 
+  filter(sentiment == "negative")
+
+bingpositive <- get_sentiments("bing") %>%
+  filter(sentiment == "positive")
+
+unnested_tokens1 <- unnested_tokens1 %>%
+  mutate(MA = "MA1")
+unnested_tokens2 <- unnested_tokens2 %>%
+  mutate(MA = "MA2")
+unnested_tokens3 <- unnested_tokens3 %>%
+  mutate(MA = "MA3")
+unnested_tokens4 <- unnested_tokens4 %>%
+  mutate(MA = "MA4")
+
+MA_labels <- c("MA1", "MA2", "MA3", "MA4")
+word_counts_MA <- c(length(unnested_tokens1$word), length(unnested_tokens2$word), length(unnested_tokens3$word), length(unnested_tokens4$word))
+
+word_count_tibble <- tibble(
+  MA = MA_labels,
+  words = word_counts_MA
+)
+
+all_ratios <- bind_rows(unnested_tokens1,unnested_tokens2,unnested_tokens3,unnested_tokens4)
+
+joined_tibble <- rbind(inner_join(all_ratios, bingnegative, by = "word"),inner_join(all_ratios, bingpositive, by= "word"))
+
+MA_titles <- c("Soil chemistry turned upside down: a meta-analysis [...]","Earthworms affect plant growth and resistance [...]","The unseen invaders: [...] in north American forests (a meta-analysis)","Earthworms increase plant production: a meta-analysis")
+
+positive_count=c(sentiment_counts$positive[1], sentiment_counts$positive[2], sentiment_counts$positive[3], sentiment_counts$positive[4])
+negative_count=c(sentiment_counts$negative[1], sentiment_counts$negative[2], sentiment_counts$negative[3], sentiment_counts$negative[4])
 
 summary_tibble <- joined_tibble %>%
   group_by(MA) %>%
   summarize(
-    negativewords = n()
+    positivewords = positive_count,
+    negativewords = negative_count,
+    sentimentwords=positive_count + negative_count
   ) %>%
   left_join(word_count_tibble, by = "MA") %>%
-  mutate(ratio = negativewords / words) %>%
-  ungroup() %>%
+  mutate(positive_ratio = signif(positivewords / sentimentwords,digits = 2)) %>%
+  mutate(negative_ratio = signif(negativewords / sentimentwords,digits = 2)) 
+
+summary_tibble <- data.frame(
+    MA = unique(summary_tibble$MA),
+    positivewords = unique(summary_tibble$positivewords),
+    negativewords = unique(summary_tibble$negativewords),
+    words = unique(summary_tibble$sentimentwords),
+    positive_ratio = unique(summary_tibble$positive_ratio),
+    negative_ratio = unique(summary_tibble$negative_ratio)
+) %>%head(4)
+
+summary_tibble <- as_tibble(summary_tibble)
+
+summary_tibble %>%
   mutate(MA_title = MA_titles) %>%
   mutate(current_MA = MA) %>%
-  select(MA_title, current_MA, words, negativewords, ratio)
+  select(MA_title, current_MA, words, positivewords, negativewords, positive_ratio, negative_ratio)
 
  summary_tibble %>%
   kbl() %>%
@@ -804,12 +866,20 @@ summary_tibble <- joined_tibble %>%
   row_spec(0, bold = T, color = "black", background = "#D7261E")
 ```
 <br>
-Ci-dessus un classement des métaanalyses contenant le plus de mots négatifs (MA1>MA2>MA3>MA4), normalisés en fonction du nombre de mots dans chaque métaanalyse (colonne "ratio"). On peut remarquer que les métaanalyses sont exactement en ordre décroissant (la MA1 est la plus négative, la MA4 la moins négative), ce qui est une coïncidence plutôt surprenante. On peut donc écrire, de manière synthétique, que:<br>
+Le tablau ci-dessus présente, pour chaque MA, le rapport mot positifs / total sentiment (colonne "positive ratio") et le le rapport mot négatifs / total sentiment (colonne "negative ratio"). On peut donc classer les ma On peut donc écrire, de manière synthétique, que:<br>
 * **MA1:** 3,3% des mots totaux sont des mots négatifs.<br>
 * **MA2:** 2,9% des mots totaux sont des mots négatifs.<br>
 * **MA3:** 2,6% des mots totaux sont des mots négatifs.<br>
 * **MA4:** 2% des mots totaux sont des mots négatifs.<br>
 Ces ratios permettent notamment d'expliquer par des proportions précises la différence observée plus tôt entre les nuages de mots bruts et les nuages de mots prenant en compte la valence (score de sentiment) des mots, les deux groupes étudiés étant de taille et de composition tès différente.
+
+<br>
+<i>MA1: "Soil chemistry turned upside down: a meta-analysis of invasive  earthworm effects on soil chemical properties"<br>
+MA2: "Earthworms affect plant growth and resistance against herbivores: A meta-analysis" <br>
+MA3: "The unseen invaders: introduced earthworms as drivers of change in plant communities in North American
+forests (a meta-analysis)" <br>
+MA4: "Earthworms increase plant production: a meta-analysis"</i>
+<br>
 
 # Approche tf-idf :
 <br>
@@ -1280,7 +1350,6 @@ negation_words_with_factor %>%
    facet_wrap(facets = vars(word1), ncol = 2)
 ```
 <br>
-Le fig.height agrandit l'espace blanc nul mais pas la figure ????
 
 
 
