@@ -22,9 +22,9 @@ library(textstem)
 library(SnowballC)
 # WARNING : some libraries are not used but kept here at hand if the code were to be modified back (those libraries were used in previous versions of the script).
 data("stop_words")
-custom_stop_words <- tibble(word = c("plot","wild","slug","manipulation","apple","significant","free","led","lead","warm","fresh"),  
+custom_stop_words <- tibble(word = c("plot","wild","slug","manipulation","apple","significant","significative","signific","free","led","lead","warm","fresh","like"),  
                                       lexicon = c("custom")) # remove words that does not have the same connotation in science compared to common language.
-combined_stop_words <- bind_rows(stop_words, custom_stop_words) # didn't find the way to combine tibbles earlier, wich is why some code chunks work with the two "stop words" dictionnaries separetly.
+combined_stop_words <- bind_rows(stop_words, custom_stop_words) # didn't find the way to combine tibbles earlier, which is why some code chunks work with the two "stop words" dictionnaries separetly.
 ```
 Deuxième bloc de code : définition des variables.
 ```{r Variables}
@@ -184,7 +184,7 @@ ggarrange(plot1,plot2,plot3,plot4,widths = c(5,5),labels = c("1","2","3","4"))
 ```
 <br>On remarque que les mots les plus fréquents dans les articles des métaanalyses sont:
 - *earthworm*, *soil* et *forest* pour la MA1 (qui semble donc s'intéresser plus particulièrement à l'écosystème forestier).
-- *plant*, *earthworm* et *effect* pour la MA2 (qui semble donc vouloir étudier précisément les effets des vers de terre sur les plantes).
+- *plant*, *earthworm* et *increase* pour la MA2 (qui semble donc vouloir étudier précisément les effets des vers de terre sur les plantes).
 - *earthworm*, *specie*, et *plant* pour la MA3 (qui semble donc s'intéresser plus particulièrement à certaines espèces de vers de terre et leurs relations avec les plantes).
 - *earthworm*, *plant* et *soil* pour la MA4 (qui semble donc étudier l'influence des vers de terre sur les sols et les plantes).
 <br>
@@ -405,6 +405,7 @@ On commence par construire des Tibbles contenant chaque mot exprimant un sentime
 ```{r Construction Tibbles Senti, message=FALSE}
 library(tidytext)
 bing<-get_sentiments("bing")
+bingStem <- bing %>% mutate(word = wordStem(word)) %>% unique()
 
 senti1<-unnested_tokens1 %>%
   inner_join(bing) %>%
@@ -460,7 +461,7 @@ library(ggplot2)
 
 plot_sentiment_subset <- function(senti) {
   MA_senti <- senti %>%
-    inner_join(get_sentiments("bing")) %>%
+    inner_join(bingStem) %>%
     pivot_wider(names_from = sentiment, values_from = n, values_fill = 0) %>% 
     mutate(sentiment = positive - negative)
   
@@ -495,12 +496,18 @@ library(egg)
 ggarrange(plot_senti1,plot_senti2,plot_senti3,plot_senti4,widths = c(2,2),labels = c("1","2","3","4"))
 ```
 
-Tout d'abord, il est immportant de noter que tous les graphes n'ont pas les mêmes échelles ; les MA1 et 4 semblent avoir des échelles de sentiment comparables ([-20;10] et [-10;20]) et cela vaut aussi pour les MA2 et 3 ([-10;5] et [-5;10])
+Tout d'abord, il est immportant de noter que tous les graphes n'ont pas les mêmes échelles ; les MA1 et 4 semblent avoir des échelles de sentiment comparables ([-20;10] et [-10;15]) et cela vaut aussi pour les MA2 et 3 ([-10;5] et [-5;10]).<br>
 
-Le terme *"strong"* est commun à toutes les métaanlayses. Cependant, sa valence peut grandement dépendre du contexte de son utilisation. On peut constater que le mot positif *"rich/enrich"* est retrouvé dans la plupart de métaanalyses (1,2 et 3). le mot *"lead"* n'est retrouvé que dans les MA1, 3 et 4. Le mot *"benefit"* n'est retrouvé que dans les MA2 et 4. Le mot *"protect"* n'est retrouvé que dans la MA3. Le mot *"benefit"* n'est retrouvé que dans les MA2 et 4.
+Le terme *"strong"* est commun à toutes les métaanalyses. Cependant, sa valence peut grandement dépendre du contexte de son utilisation.<br>
+On peut constater que le mot positif *"rich/enrich"* est retrouvé dans la plupart de métaanalyses (1,2 et 3).<br>
+Le mot *"benefit"* n'est retrouvé que dans les MA2 et 4.<br>
+Le mot *"protect"* n'est retrouvé que dans la MA3. <br>
 
-On peut constater qu'il n'y a aucun mot négatif commun à tous les corpus. Le mot *"disturb"* n'est retrouvé que dans les MA 1 et 3, et le mot *"infest"* seulement dans les MA 2 et 4.
-On peut aussi remarquer que le mot *"loss"* n'est retrouvé que dans les MA1 et 4, ce qui semble indiquer que les effets négatifs relevés ne sont pas forcément liés à des pertes de caractéristiques. Le mot *"sever"*, à l'inverse, n'est retrouvé que dans les MA3 et 4, ce qui signifie peut-être qu'elles sont plus "quantitatives" que les deux autres. 
+On peut constater qu'il n'y a aucun mot négatif commun à tous les corpus.<br>
+Le mot *"disturb"* n'est retrouvé que dans les MA 1 et 3.<br>
+Le mot *"infest"* est seulement présent dans les MA2 et 4.<br>
+Le mot *"loss"* n'est retrouvé que dans les MA1 et 4, ce qui semble indiquer que les effets négatifs relevés ne sont pas forcément liés à des pertes de caractéristiques.<br>
+Le mot *"sever"* n'est retrouvé que dans les MA3 et 4, ce qui signifie peut-être qu'elles sont plus "quantitatives" que les deux autres.<br>
 On peut enfin constater que le mot *"loss"* est le mot avec le score négatif le plus important des quatre graphiques, représenté dans la MA1. 
 
 <br>
@@ -514,22 +521,22 @@ MA4: "Earthworms increase plant production: a meta-analysis"</i>
 ## Contribution de chaque terme au score final de sentiment.
 ```{r Contribution sentiment, message=FALSE}
 bing_word_counts1 <- unnested_tokens1 %>%
-  inner_join(get_sentiments("bing")) %>%
+  inner_join(bingStem) %>%
   count(word, sentiment, sort = TRUE) %>%
   mutate(MA="MA1") %>%
   ungroup() 
 bing_word_counts2 <- unnested_tokens2 %>%
-  inner_join(get_sentiments("bing")) %>%
+  inner_join(bingStem) %>%
   count(word, sentiment, sort = TRUE) %>%
   mutate(MA="MA2") %>%
   ungroup()
 bing_word_counts3 <- unnested_tokens3 %>%
-  inner_join(get_sentiments("bing")) %>%
+  inner_join(bingStem) %>%
   count(word, sentiment, sort = TRUE) %>%
   mutate(MA="MA3") %>%
   ungroup() 
 bing_word_counts4 <- unnested_tokens4 %>%
-  inner_join(get_sentiments("bing")) %>%
+  inner_join(bingStem) %>%
   count(word, sentiment, sort = TRUE) %>%
   mutate(MA="MA4") %>%
   ungroup()
@@ -590,32 +597,54 @@ library(egg)
 ggarrange(contrib1,contrib2,contrib3,contrib4,widths = c(2,2),labels = c("1","2","3","4"))
 ```
 
-Tout d'abord, il faut noter que les graphiques ne sont pas à la même échelle en abscisse. Cela ne pose en théorie pas de problème pour interpréter les résultats au cas par cas, mais cela rentrera en jeux lors d'éventuelles comparaisons entre métaanalyses.
+```{r}
+bingStem %>% filter(word=="domin")
+```
+```{r}
+library(stringr)
+bing %>% filter(str_detect(word, "^domin"))
+```
+
+```{r}
+library(stringr)
+unnested_tokens <- tibble(abstracts) %>%
+unnest_tokens(word, abstracts)
+unnested_tokens %>% filter(str_detect(word, "^domin")) %>% distinct() %>% print()
+
+# Append the unnested tokens to the list
+unnested_tokens<-unnested_tokens%>%anti_join(stop_words)
+unnested_tokens<-unnested_tokens %>% rowwise() %>% mutate(word = wordStem(word, language = "en"))
+```
+<br>
+Comme on peur le voir, dans le corpus de texte, *"domin"* a donc une valence **positive** et non négative. Dans la suite de cette analyse, les occurences négatives de ce mot seront donc négligées. <br>
+
+Tout d'abord, il faut noter que les graphiques ne sont pas à la même échelle en abscisse. Cela ne pose en théorie pas de problème pour interpréter les résultats au cas par cas, mais cela rentrera en jeux lors d'éventuelles comparaisons entre métaanalyses.<br>
 
 <u>Les quatre mots positifs les plus importants en contribution sont: </u><br> 
-* *MA1:* "strong", profound", "enrich","rapid".<br>
-* *MA2:* "strong", "prefer", "enrich","benefit".<br>
-* *MA3:* "rich", "support", "strong", "protect".<br>
-* *MA4:* "success", "fine","strong","top".<br>
+* *MA1:* "effect", affect", "abundant","dominate".<br>
+* *MA2:* "effect", "affect", "response","enhance".<br>
+* *MA3:* "effect", "rich", "abundant", "affect".<br>
+* *MA4:* "effect", "product","affect","fertilize".<br>
 
-<u>MA1 et 2:</u> Le mot *"enrich"* est le troisième plus grand contributeurs positif aux scores de sentiment des MA1 et 2. Par ailleurs, le terme évoque un processus dynamique, et la présence de *"rich"* (MA1), ou encore de *"benefit"* et *"boost"* (MA2) semble évoquer un processus écologique bénéfique, peut-être en terme de richesse spécifique et écosystémique. <br>
-<u>MA2 et 3:</u>Le *"rich"* en première position de la MA3 semble pointer aussi vers une étude écosystémique, mais cette-fois, ce mot seul n'indique pas la direction du changement (là où *"enrich"* désigne une croissance de richesse à lui seul, le sens de *"rich"* dépend grandement du contexte, car le mot seul ne donne aucune indication sur le sens de la variation). Cependant, le terme *"protect"* semble indiquer un effet positif du vers de terre sur les végétaux. La présence de *"benefit"* semble rapprocher la MA2 de la MA3 (*"protect"*).<br>
-Dans la MA4, les mots *"success", "fine"* et *"strong"* dégagent une impression positive. Avec *"gain"* et *"benefit"*, et en s'appuyant sur le titre de la métaanalyse, il semble raisonnable de penser que les vers de terre ont une influence positive ("strong", "gain", "benefit") sur la production végétale.<br>
+Les mots *"effect"* et *"affect"* sont présents dans toutes les métaanalyses. Leur sens précis, cependant, dépend du contexte.<br>
+<u>MA1: </u> Les mots *"abundant"* et *"dominate"* évoquent l'écologie et les écosystèmes. La présence, dans le graphe, de mots comme *"content"*, *"dynamic"*, *"available"* ou encore *"survive"* laissent penser que le texte étudie la dynamique des ressources disponibles dans le sol, en lien avec des problématiques de survie.<br>
+<u>MA2: </u> Les mots *"response"* et *"enhance"* semblent décrire des mécanismes physiologiques de réponse à l'environnement, ainsi qu'une augmentation, probablement de la croissance ou de la résistance de la plante, d'après le titre de la métaanalyse. Dans cet intervalle, il y a plus de mots positifs que de mots négatifs.<br>
+<u>MA3: </u> Les mots *"rich"* et *"abundant"* semblent évoquer la richesse écosystémique, ainsi que la *"dynamique"*, probablement des écosystèmes, face à l'arrivée des vers de terre invasifs. <br>
+<u>MA4: </u> Les mots *"product"* et *"fertilize"* font partie du champs lexical de l'agriculture. Avec *"enhance"*, ils semblent montrer un impact plutôt positif des vers de terre sur la production des plantes. Dans cet intervalle, il y a plus de mots positifs que de mots négatifs.<br>
 
-<u>Les quatre mots négatifs les plus importants en contribution sont: </u><br> 
-* *MA1:* "loss", "temper", "poor", "disturb".<br>
-* *MA2:* "drought", "infest", "dead","complex".<br>
-* *MA3:* "disturb", "burn", "sever","temper".<br>
-* *MA4:* "infest", "sever", "loss","pest".<br>
+<u>Les quatre mots négatifs les plus importants (en ignorant "content", "domin" et "floor") en contribution sont: </u><br> 
+* *MA1:* "invasive", "invade", "loss", "negative".<br>
+* *MA2:* "drought", "infest", "negative","dead".<br>
+* *MA3:* "invasive", "disturb", "burn","negative".<br>
+* *MA4:* "infest", "invade", "sever","negative".<br>
 <u>MA2 et 4:</u>On remarque la présence du mot *"infest"*, respectivement en deuxième et première positions pour les MA2 et 4. Son association à *"dead"* (MA2) et à *"loss"* et *"pest"* (MA4) traduit une vision probablement négative du vers de terre dans ces métaanalyse, avec probablement des dommages écosystémiques importants.<br>
-<u>MA1 et 4:</u>Dans les MA1 et 4, la présence de *"loss"* et *"disturb"*(MA1), ou bien *"loss"* et *"pest"* (MA4) va aussi dans ce sens, présentant le vers de terre comme un problème, qui, sans forcément détruire totalement l'environnement natif, le **perturbe** (MA1) ou est perçu comme un **nuisible** (MA4).<br>
-La MA2 semble légèrement différente des autres dans son approche, <u>avec des mots uniques qui lui sont propres</u> tels que *"drought"* ou bien *"dead"*. D'autres mots comme *"stress"* ou *"inhibit"*, au vu du titre de la métaanalyse, semblent relever des effets négatifs sur les plantes.<br>
-**De manière générale, pour chaque MA toutes proportions gardées (voir l'échelle des plots sur l'axe Ox), les mots négatifs semblent plus importants en contribution que les mots positifs. Dans ce corpus, le sentiment négatif semble donc plus prononcé que le sentiment positif.**<br>
+<u>MA1 et 4:</u>Dans les MA1 et 4, la présence de *"invade"* et *"negative"*, présentant le vers de terre comme un problème, qui, sans forcément détruire totalement l'environnement natif, le **perturbe ("disturb")** (MA1) ou est perçu comme un **nuisible ("pest")** (MA4).<br>
+<u>MA1 et 3:</u> Les mots *"invasive"* (1er positions dans les deux MA) et *"negative"* sont communs (dernière position dans les deux MA). La MA1 se focalise davantage sur l'**invasion** en tant que telle et la **perte**, et la MA3 sur la **perturbation** et la perte (**"burn"**). On constate donc que les thèses défendues semblent concordantes et négatives sur la question des vers de terre.<br> 
+La MA2 semble légèrement différente des autres dans son approche, <u>avec des mots uniques qui lui sont propres</u> tels que *"drought"* ou bien *"dead"*. D'autres mots comme *"stress"* ou *"parasite"*, au vu du titre de la métaanalyse, semblent décrire des effets négatifs sur les plantes.<br>
 
 Da façon simpliste, il semble donc possible, à partir de ces graphiques, de proposer une première catégorisation comme suit:<br>
-- **MA1/MA2:** étude de l'impact écologique des vers de terre sur les écosystèmes (richesse spécifique).<br>
-- **MA2/MA3:** étude des effets **positifs** (protection et bénéfices) des vers de terre sur la physiologie végétale MAIS nuance car vision négative des vers de terre (espèce invasive) pour la MA2.<br>
-- **MA4:** étude de l'influence des vers de terre invasifs sur la production végétale MAIS nuance car vision négative des vers de terre (espèce invasive).
+- **MA1/MA3: Métaanalyses globalement défavorables aux vers de terre. Si certains bénéfices, pour la santé des sols notamment, semblent être reconnus, le vers de terre est perçu comme une espèce invasive perturbant les écosystèmes natifs.**<br>
+- **MA2/MA4: Métaanalyses globalement favorables au vers de terre, mettant en avant les bienfaits physiologiques des vers de terre pour la plante et les avantages de ces interactions pour favoriser la productivité. Cependant, le vers de terre peut malgré tout rester nuisible, car c'est une espèce invasive qui risque de déséquilibrer l'écosystème natif.**<br>
 
 Cependant, il serait peut-être nécessaire d'étudier des unités textuelles plus larges, comme par exemple les phrases ou les n-grames, pour éviter au maximum le risque de contresens.
 
@@ -691,7 +720,7 @@ library(reshape2)
 
 unnested_tokens1 %>%
   anti_join(custom_stop_words, by = c("word")) %>%
-  inner_join(get_sentiments("bing")) %>%
+  inner_join(bingStem) %>%
   count(word, sentiment, sort = TRUE) %>%
   acast(word ~ sentiment, value.var = "n", fill = 0) %>%
   comparison.cloud(colors = c("red", "blue"),
@@ -706,7 +735,7 @@ Visuellement, on peut voir sur le nuage de mots que les termes positfs prépond�
 ```{r Wordcloud senti2, warning=FALSE}
 unnested_tokens2 %>%
   anti_join(custom_stop_words, by = c("word")) %>%
-  inner_join(get_sentiments("bing")) %>%
+  inner_join(bingStem) %>%
   count(word, sentiment, sort = TRUE) %>%
   acast(word ~ sentiment, value.var = "n", fill = 0) %>%
   comparison.cloud(colors = c("red", "blue"),
@@ -721,7 +750,7 @@ Visuellement, on peut voir sur le nuage de mots que les termes positfs prépond�
 ```{r Wordcloud senti3, warning=FALSE}
 unnested_tokens3 %>%
   anti_join(custom_stop_words, by = c("word")) %>%
-  inner_join(get_sentiments("bing")) %>%
+  inner_join(bingStem) %>%
   count(word, sentiment, sort = TRUE) %>%
   acast(word ~ sentiment, value.var = "n", fill = 0) %>%
   comparison.cloud(colors = c("red", "blue"),
@@ -736,7 +765,7 @@ Visuellement, on peut voir sur le nuage de mots que les termes positfs prépond�
 ```{r Wordcloud senti4, warning=FALSE}
 unnested_tokens4 %>%
   anti_join(custom_stop_words, by = c("word")) %>%
-  inner_join(get_sentiments("bing")) %>%
+  inner_join(bingStem) %>%
   count(word, sentiment, sort = TRUE) %>%
   acast(word ~ sentiment, value.var = "n", fill = 0) %>%
   comparison.cloud(colors = c("red", "blue"),
@@ -866,12 +895,13 @@ summary_tibble %>%
   row_spec(0, bold = T, color = "black", background = "#D7261E")
 ```
 <br>
-Le tablau ci-dessus présente, pour chaque MA, le rapport mot positifs / total sentiment (colonne "positive ratio") et le le rapport mot négatifs / total sentiment (colonne "negative ratio"). On peut donc classer les ma On peut donc écrire, de manière synthétique, que:<br>
-* **MA1:** 3,3% des mots totaux sont des mots négatifs.<br>
-* **MA2:** 2,9% des mots totaux sont des mots négatifs.<br>
-* **MA3:** 2,6% des mots totaux sont des mots négatifs.<br>
-* **MA4:** 2% des mots totaux sont des mots négatifs.<br>
-Ces ratios permettent notamment d'expliquer par des proportions précises la différence observée plus tôt entre les nuages de mots bruts et les nuages de mots prenant en compte la valence (score de sentiment) des mots, les deux groupes étudiés étant de taille et de composition tès différente.
+Le tablau ci-dessus présente, pour chaque MA, le rapport mot positifs / total sentiment (colonne "positive ratio") et le le rapport mot négatifs / total sentiment (colonne "negative ratio"). On peut donc classer les MA dans cet ordre, la plus positive en dernier: MA2, MA1, MA4, MA3. On peut donc écrire, de manière synthétique, que:<br>
+* **MA1:** 35% des mots connotés sont positifs, 65% sont négatifs.<br>
+* **MA2:** 21% des mots connotés sont positifs, 79% sont négatifs.<br>
+* **MA3:** 44% des mots connotés sont positifs, 56% sont négatifs.<br>
+* **MA4:** 41% des mots connotés sont positifs, 59% sont négatifs.<br>
+Ces ratios semblent plutôt surprenants, car des métaanalyses au titre paraissant plutôt négatif (comme la MA3), ont finalement le ratio de mots positifs le plus élévé des quatre. A l'inverse, la MA2 semble être la plus négative alors que son titre paraît plutôt optimiste. Une analyse plus approfondie des textes permettrait probablement de résoudre cet apparent paradoxe.<br>
+Cependant, le ratio de mots négatifs est dans tous les cas > 50%, ce qui semble indiquer que la vision du vers de terre présentée dans ces articles est majoritairement négative.<br>
 
 <br>
 <i>MA1: "Soil chemistry turned upside down: a meta-analysis of invasive  earthworm effects on soil chemical properties"<br>
