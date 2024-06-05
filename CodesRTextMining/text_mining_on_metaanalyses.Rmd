@@ -20,6 +20,8 @@ library(knitr)
 library(SemNetCleaner)
 library(textstem)
 library(SnowballC)
+library(gridExtra)
+library(grid)
 # WARNING : some libraries are not used but kept here at hand if the code were to be modified back (those libraries were used in previous versions of the script).
 data("stop_words")
 custom_stop_words <- tibble(word = c("plot","wild","slug","manipulation","apple","significant","significative","signific","free","led","lead","warm","fresh","like"),  
@@ -712,8 +714,7 @@ cloud4 <- recordPlot()
 # Wordcloud: coloration en fonction de la valence des mots (bleu: Positif / rouge: Négatif)
 ## Wordcloud MA1: "Soil chemistry turned upside down: a meta-analysis of invasive earthworm effects on soil chemical properties"
 
-Visuellement, on peut voir sur le nuage de mots que les termes positfs prépondérants dans la MA1 sont *"abundance", "dynamic"* et *dominated*, tandis que les termes négatifs prépondérants sont *"loss","invasive"* et *"negative"*. On remarque tout d'abord que ces résultats sont très différents de ceux trouvés dans la partie précédente pour la même métaanalyse (Wordclouds: Wordcloud MA1) à cause de l'ajout de la variable "sentiment". On peut aussi constater grâce à la taille de chaque mot du nuage et à la quantité de mots négatifs et positifs que la métaanalyse 1 semble porter un avis plutôt négatif sur son sujet d'étude (ici, l'impact des vers de terre sur les écosystèmes).
-
+Visuellement, on peut remarquer sur le nuage de mots que les termes positfs prépondérants dans la MA1 sont *"effect", "affect"* et *abundant*, tandis que les termes négatifs prépondérants sont *"invasive"*, *"invade"* et *"loss"*. On remarque tout d'abord que ces résultats sont très différents de ceux trouvés dans la partie précédente pour la même métaanalyse (Wordclouds: Wordcloud MA1) à cause de l'ajout de la variable "sentiment". Grâce à ce nuage de points, on retrouve de manière sythétique les résultats obtenues dans la partie précédante, "Contribution de chaque terme au score final de sentiment", pour la MA1.
 
 ```{r Wordcloud senti1, warning=FALSE}
 library(reshape2)
@@ -730,7 +731,7 @@ cloud_senti1<-recordPlot()
 
 ## Wordcloud MA2: "Earthworms affect plant growth and resistance against herbivores: A meta-analysis" 
 
-Visuellement, on peut voir sur le nuage de mots que les termes positfs prépondérants dans la MA2 sont *"enhanced", "abundance"* et *variety*, tandis que les termes négatifs prépondérants sont *"drought","negative"* et *"dead"*. On remarque tout d'abord que ces résultats sont très différents de ceux trouvés dans la partie précédente pour la même métaanalyse (Wordclouds: Wordcloud MA2) à cause de l'ajout de la variable "sentiment". On peut aussi constater grâce à la taille de chaque mot du nuage et à la quantité de mots négatifs et positifs que la métaanalyse 2 semble porter un jugement moins tranché que la précédente sur son sujet d'étude, sans dominance claire des mots positifs ou des mots négatifs (même si le mot le plus représenté, "drought", est un mot à valence négative).
+Visuellement, on peut remarquer sur le nuage de mots que les termes positfs prépondérants dans la MA1 sont *"effect", "affect"*, *"response"* / *enhance* (approximativement de même taille), tandis que les termes négatifs prépondérants sont *"drought"*, *"infest"* et *"negative"*/*"dead"* ("complex" n'étant pas nécessairement connoté négativement dans un contexte scientifique). On remarque tout d'abord que ces résultats sont très différents de ceux trouvés dans la partie précédente pour la même métaanalyse (Wordclouds: Wordcloud MA2) à cause de l'ajout de la variable "sentiment". Grâce à ce nuage de points, on retrouve de manière sythétique les résultats obtenues dans la partie précédante, "Contribution de chaque terme au score final de sentiment", pour la MA2.
 
 ```{r Wordcloud senti2, warning=FALSE}
 unnested_tokens2 %>%
@@ -745,7 +746,7 @@ cloud_senti2<-recordPlot()
 
 ## Wordcloud MA3: "The unseen invaders: introduced earthworms as drivers of change in plant communities in North American forests (a meta-analysis)"
 
-Visuellement, on peut voir sur le nuage de mots que les termes positfs prépondérants dans la MA3 sont *"richness", "abundance"* et *significant*, tandis que les termes négatifs prépondérants sont *"invasive","burned"* et *"negative"*. On remarque tout d'abord que ces résultats sont très différents de ceux trouvés dans la partie précédente pour la même métaanalyse (Wordclouds: Wordcloud MA3) à cause de l'ajout de la variable "sentiment". On peut aussi constater grâce à la taille de chaque mot du nuage et à la quantité de mots négatifs et positifs que la métaanalyse 3 semble aussi porter jugement nuancé sur son sujet d'étude, sans dominance claire des mots positifs ou des mots négatifs (même si le mot le plus représenté, "richness", est un mot à valence positive). On peut cependant constater par la présence du mot "invasive" **et** du mot "invader" dans le même nuage que cette métaanalyse semble davantage parler d'invasion biologique que les autres.
+Visuellement, on peut remarquer sur le nuage de mots que les termes positfs prépondérants dans la MA1 sont *"effect"*, *"rich"*, et *"abundant"* tandis que les termes négatifs prépondérants sont *"invasive"*, *"disturb"* et *"burn"*. On remarque tout d'abord que ces résultats sont très différents de ceux trouvés dans la partie précédente pour la même métaanalyse (Wordclouds: Wordcloud MA3) à cause de l'ajout de la variable "sentiment". Grâce à ce nuage de points, on retrouve de manière sythétique les résultats obtenus dans la partie précédante, "Contribution de chaque terme au score final de sentiment", pour la MA3.
 
 ```{r Wordcloud senti3, warning=FALSE}
 unnested_tokens3 %>%
@@ -760,7 +761,7 @@ cloud_senti3<-recordPlot()
 
 ## Wordcloud MA4: "Earthworms increase plant production: a meta-analysis"
 
-Visuellement, on peut voir sur le nuage de mots que les termes positfs prépondérants dans la MA4 sont *"significant", "unaffected" et "enhance"*, tandis que les termes négatifs prépondérants sont *"invader","severity"* et *"infested"*. On remarque tout d'abord que ces résultats sont très différents de ceux trouvés dans la partie précédente pour la même métaanalyse (Wordclouds: Wordcloud MA4) à cause de l'ajout de la variable "sentiment". On peut cependant constater par la présence des mots "infested", "severity", "absence" et "invader" que la métaanalyse semble porter un jugement plutôt négatif, ce qui semble étonnant au vu du titre de la métaanalyse. Par ailleurs, même si le mot central, **"significant"**, est théoriquement le plus fréquent, on pourrait penser que la métaanalyse contient plus de mots positifs que de mots négatifs. Cependant, nous avons déjà vu que dans un contexte scientifique, la valence de ce mot dépend beaucoup du groue de mots auquel il est associé.
+Visuellement, on peut remarquer sur le nuage de mots que les termes positfs prépondérants dans la MA1 sont *"effect"*, *"product"*, et *"affect"* tandis que les termes négatifs prépondérants sont *"infest"*, *"invade"* et *"sever"*. On remarque tout d'abord que ces résultats sont très différents de ceux trouvés dans la partie précédente pour la même métaanalyse (Wordclouds: Wordcloud MA3) à cause de l'ajout de la variable "sentiment". Grâce à ce nuage de points, on retrouve de manière sythétique les résultats obtenus dans la partie précédante, "Contribution de chaque terme au score final de sentiment", pour la MA4.
 
 ```{r Wordcloud senti4, warning=FALSE}
 unnested_tokens4 %>%
@@ -900,7 +901,7 @@ Le tablau ci-dessus présente, pour chaque MA, le rapport mot positifs / total s
 * **MA2:** 21% des mots connotés sont positifs, 79% sont négatifs.<br>
 * **MA3:** 44% des mots connotés sont positifs, 56% sont négatifs.<br>
 * **MA4:** 41% des mots connotés sont positifs, 59% sont négatifs.<br>
-Ces ratios semblent plutôt surprenants, car des métaanalyses au titre paraissant plutôt négatif (comme la MA3), ont finalement le ratio de mots positifs le plus élévé des quatre. A l'inverse, la MA2 semble être la plus négative alors que son titre paraît plutôt optimiste. Une analyse plus approfondie des textes permettrait probablement de résoudre cet apparent paradoxe.<br>
+Ces ratios semblent plutôt surprenants, car des métaanalyses au titre paraissant négatif (comme la MA3), ont finalement le ratio de mots positifs le plus élévé des quatre. A l'inverse, la MA2 semble être la plus négative alors que son titre paraît plutôt optimiste. Une analyse plus approfondie des textes permettrait probablement de résoudre cet apparent paradoxe.<br>
 Cependant, le ratio de mots négatifs est dans tous les cas > 50%, ce qui semble indiquer que la vision du vers de terre présentée dans ces articles est majoritairement négative.<br>
 
 <br>
@@ -1074,20 +1075,17 @@ MA_tf_idf %>%
 ```
 D'après les graphiques ci-dessus, on peut constater que:<br> 
 - Les mots *"earthworm"*, *"soil"*, *"forest"* et *"effect"* sont plus souvent employés dans la MA1 que dans les autres MA. Le mot *"invasion"* est aussi plus présent dans la MA1 que dans les autres MA.<br>
-- Les mots *"aphid*, *"nematode"*, *"organism"* et *"herbivore"* sont plus souvent employés dans la MA2 que dans les autres MA. Le mot *"parasitoid"* est aussi plus présent dans la MA2 que dans les autres MA.<br>
-- Les mots *"tim" (forme de "times" après 'wordStem(word, language = "en")'?)*, *"contribute"*, *"stage"* et *"responsible"* sont plus souvent employés dans la MA3 que dans les autres MA.<br> Les mots *"canopy"* et *"aggregate"* sont aussi plus présent dans la MA3 que dans les autres MA.<br>
-- Les mots *"maize*, *"gtt"*, *"grain"* et *"herbivore"* sont plus souvent employés dans la MA4 que dans les autres MA. Les mots du champs lexical de l'agriculture, comme *"harvest"*, *"fertilizer"*, *"farmer"* et *"pb"* (probablement employé ici comme le symbole chimique du plomb) sont aussi plus présent dans la MA4 que dans les autres MA.<br>
+- Les mots *"aphid*, *"nematode"*, *"herbivore"* et *"legum"* sont plus souvent employés dans la MA2 que dans les autres MA. Le mot *"parasitoid"* est aussi plus présent dans la MA2 que dans les autres MA.<br>
+- Les mots *"require"*, *"na"*, *"every"* et *"april"* sont plus souvent employés dans la MA3 que dans les autres MA.<br> Les mots *"eastern"*, *"canopy"* et *"arthropod"* sont aussi plus présent dans la MA3 que dans les autres MA.<br>
+- Les mots *"maize*, *"gtt"*, *"grain"* et *"diplocardia"* sont plus souvent employés dans la MA4 que dans les autres MA. Les mots du champs lexical de l'agriculture, comme *"earth"*, *"plfa"*, *"pb"* (probablement employé ici comme le symbole chimique du plomb) et *"cu"* (symbole chimique du cuivre) sont aussi plus présents dans la MA4 que dans les autres MA.<br>
 
 Rappelons les suppositions faites précédemment dans la partie "Analyse de sentiment":<br> 
-- **MA1/MA3:** étude de l'impact écologique des vers de terre sur les écosystèmes.<br>
-- **MA2:** étude des effets des vers de terre sur la physiologie végétale.<br>
-- **MA4:** étude de l'influence des vers de terre invasifs sur la production végétale.<br> 
+- **MA1/MA3:** Métaanalyses globalement défavorables aux vers de terre. Si certains bénéfices, pour la santé des sols notamment, semblent être reconnus, le vers de terre est perçu comme une espèce invasive perturbant les écosystèmes natifs.<br>
+- **MA2/MA4:** Métaanalyses globalement favorables au vers de terre, mettant en avant les bienfaits physiologiques des vers de terre pour la plante et les avantages de ces interactions pour favoriser la productivité. Cependant, le vers de terre peut malgré tout rester nuisible, car c'est une espèce invasive qui risque de déséquilibrer l'écosystème natif.<br>
 
 En prenant en compte le sujet apparent de chaque métaanalyse, on peut supposer que:<br>
-- La <u>MA1</u> se focalise plus que les autres sur l'impact écologique des vers de terre sur les forêts, sous la modalité d'une **"invasion"** biologique.<br>
-- La <u>MA2</u> se focalise plus que les autres sur les organismes herbivores comme les pucerons ("aphids"). Le mot **"parasitoid"** laisse entendre un effet parasitaire des pucerons sur les végétaux. Cela semble cohérent avec les résultats obtenus précédemment (voir "Analyse de sentiment" et "Wordcloud: coloration en fonction de la valence des mots"). D'après le titre de la métaanalyse, les vers de terre semblent par contre avoir une influence positive sur la résistance des plantes aux pucerons (id.).<br>
-- La <u>MA3</u> se focalise plus que les autres sur les effets des vers de terre sur les forêts (d'après le titre et le mot-clé *"canopy"*), et sur les aggrégats, peut-être chimiques ou biochimiques, présents dans le sol.<br>
-- La <u>MA4</u> se focalise plus que les autres sur les effets des vers de terre sur la production végétale (comme semble l'indiquer le mot PLFA (acides gras phospholipidiques), un marqueur de la biomasse vivante), d'après le titre de la métaanalyse et le champs lexical abondant en lien avec le monde agricole (*"maize"*, *"grain"*, *"herbivore"*,*"harvest"*, *"fertilizer"*, *"farmer"* et *"pb"*). Le terme **"Pb"** semble indiquer que la métanalyse s'intéresse probablement aux conséquences écosystémiques des métaux lourds présents dans le sol.
+- **MA1/MA3:** Métaanalyses globalement défavorables aux vers de terre. Si certains bénéfices, pour la santé des sols notamment, semblent être reconnus, le vers de terre est perçu comme une espèce invasive perturbant les écosystèmes natifs. Les mots "soil", "forest" et "effect" (MA1) et "canopy" (MA3), donnent une idée des environnements où se sont déroulées les études (sols forestiers, forêt). Les mots "exotic" (MA1) et "eastern" (MA3) semblent montrer que les espèces invasives viennent probablement d'Europe ou d'Asie.<br>
+- **MA2/MA4:** Métaanalyses globalement favorables au vers de terre, mettant en avant les bienfaits physiologiques des vers de terre pour la plante et les avantages de ces interactions pour favoriser la productivité. Cependant, le vers de terre peut malgré tout rester nuisible, car c'est une espèce invasive qui risque de déséquilibrer l'écosystème natif. La MA2 semble plus se focaliser sur les effets observées sur les plantes en tant que telles (pucerons, harbivores) alors que la 4 semble davantage axée sur la pollution des sols, notamment par les métaux lourds (Cu, Pb).<br>
 
 <br>
 <i>MA1: "Soil chemistry turned upside down: a meta-analysis of invasive  earthworm effects on soil chemical properties"<br>
@@ -1265,16 +1263,12 @@ Les bigrammes *"tree species"*, *"native plant"*, *"species richness"* et *"cate
 Les bigrammes *"soil organisms"*, *"plant functionnal"*, *"dry weight"* et *"diplocardia spp"* sont plus souvent employés dans la MA4 que dans les autres MA. Le bigramme *"soil fertility"* est aussi plus présent dans la MA4 que dans les autres MA.<br>
 
 Rappelons les suppositions faites dans la section précédente:<br> 
-- La <u>MA1</u> se focalise plus que les autres sur l'impact écologique des vers de terre sur les forêts, sous la modalité d'une **"invasion"** biologique.<br>
-- La <u>MA2</u> se focalise plus que les autres sur les organismes herbivores comme les pucerons ("aphids"). Le mot **"parasitoid"** laisse entendre un effet parasitaire des pucerons sur les végétaux. Cela semble cohérent avec les résultats obtenus précédemment (voir "Analyse de sentiment" et "Wordcloud: coloration en fonction de la valence des mots"). D'après le titre de la métaanalyse, les vers de terre semblent par contre avoir une influence positive sur la résistance des plantes aux pucerons (id.).<br>
-- La <u>MA3</u> se focalise plus que les autres sur les effets des vers de terre sur les forêts (d'après le titre et le mot-clé *"canopy"*), et sur les aggrégats, peut-être chimiques ou biochimiques, présents dans le sol.<br>
-- La <u>MA4</u> se focalise plus que les autres sur les effets des vers de terre sur la production végétale (comme semble l'indiquer le mot PLFA (acides gras phospholipidiques), un marqueur de la biomasse vivante), d'après le titre de la métaanalyse et le champs lexical abondant en lien avec le monde agricole (*"maize"*, *"grain"*, *"herbivore"*,*"harvest"*, *"fertilizer"*, *"farmer"* et *"pb"*). Le terme **"Pb"** semble indiquer que la métanalyse s'intéresse probablement aux conséquences écosystémiques des métaux lourds présents dans le sol.<br>
+- **MA1/MA3:** Métaanalyses globalement défavorables aux vers de terre. Si certains bénéfices, pour la santé des sols notamment, semblent être reconnus, le vers de terre est perçu comme une espèce invasive perturbant les écosystèmes natifs. Les mots "soil", "forest" et "effect" (MA1) et "canopy" (MA3), donnent une idée des environnements où se sont déroulées les études (sols forestiers, forêt). Les mots "exotic" (MA1) et "eastern" (MA3) semblent montrer que les espèces invasives viennent probablement d'Europe ou d'Asie.<br>
+- **MA2/MA4:** Métaanalyses globalement favorables au vers de terre, mettant en avant les bienfaits physiologiques des vers de terre pour la plante et les avantages de ces interactions pour favoriser la productivité. Cependant, le vers de terre peut malgré tout rester nuisible, car c'est une espèce invasive qui risque de déséquilibrer l'écosystème natif. La MA2 semble plus se focaliser sur les effets observées sur les plantes en tant que telles (pucerons, harbivores) alors que la 4 semble davantage axée sur la pollution des sols, notamment par les métaux lourds (Cu, Pb).<br>
 
 En prenant en compte le sujet apparent de chaque métaanalyse, on peut supposer que:<br>
-- La <u>MA1</u> se focalise plus que les autres sur l'impact écologique des vers de terre **"exotiques"** sur l'écosystème du **sol** forestier, sous la modalité d'une **"invasion"** biologique.<br>
-- La <u>MA2</u> se focalise plus que les autres sur l'effet des **"organismes du sol"**, et plus précisément ceux affectant les **"racines"**, sur les plantes, en observant notamment, probablement, les stratégies d'adaptation des plante face à cette source de stress biotique (*"plant responses"*). Les **"espèces de pucerons"** semblent particulièrement ciblées comme étant la source de ce stress.<br> 
-- La <u>MA3</u> se focalise plus que les autres sur l'impact écologique (*"species richness", "caterpillar density","tree species","native plants"*) des vers de terre invasifs (*"earthworm invasions"*) sur les forêts d'Amérique du nord. Le champ lexical de la richesse spécifique et de la diversité, ainsi que le wordlcoud de la partie "Wordcloud: coloration en fonction de la valence des mots (bleu: Positif / rouge: Négatif)", semble évoquer un *"déclin"*, un *"dommage"*, une *"destruction"*. On peut donc en conclure que dans cette MA, les vers de terre invasifs sont dépeints comme des nuisibles majeurs contre l'écosystème natif nord américain.<br>
-- La <u>MA4</u> se focalise plus que les autres sur les effets des vers de terre et des **organismes du sol** sur la <u>production</u> (*"dry weight"*) et la <u>physiologie</u> végétale (*"plant functionnal"*). Elle s'intéresse aussi à la **fertilité des sol**, ce qui semble cohérent avec le champ lexical agricole relevé plus tôt (*"maize"*, *"grain"*, *"herbivore"*,*"harvest"*, *"fertilizer"*, *"farmer"* et *"pb"*). Le terme **"Pb"** semble indiquer que la métanalyse s'intéresse probablement aux conséquences écosystémiques des métaux lourds présents dans le sol.<br>
+- **MA1/MA3:** Métaanalyses globalement défavorables aux vers de terre. Si certains bénéfices, pour la santé des sols notamment, semblent être reconnus, le vers de terre est perçu comme une espèce invasive perturbant les écosystèmes natifs. Les mots "soil", "forest" et "effect" (MA1) et "canopy" (MA3), donnent une idée des environnements où se sont déroulées les études (sols forestiers, forêt). Les mots "exotic" (MA1) et "eastern" (MA3) semblent montrer que les espèces invasives viennent probablement d'Europe ou d'Asie. Les bigrammes "forest soils" (MA1) et "tree species" (MA3) confirment que les études s'intéressent aux environnements forestiers. Les bigrammes "earthworm invasion" (MA1) et "earthworm invasions" (MA3) confirment que les **vers de terre asiatiques et européens sont perçus comme des espèces invasives**. <br>
+- **MA2/MA4:** Métaanalyses globalement favorables au vers de terre, mettant en avant les bienfaits physiologiques des vers de terre pour la plante et les avantages de ces interactions pour favoriser la productivité. Cependant, le vers de terre peut malgré tout rester nuisible, car c'est une espèce invasive qui risque de déséquilibrer l'écosystème natif. La MA2 semble plus se focaliser sur les effets observées sur les plantes en tant que telles (pucerons, harbivores) alors que la 4 semble davantage axée sur la pollution des sols, notamment par les métaux lourds (Cu, Pb). Le bigramme "soil organisms" est le plus représenté dans les deux métaanalyses, reforçant encore le lien thématique (écologie des sols) commun aux MA2 et 4. Par ailleurs, de nombreuses références aux plantes (*"plant responses"*, *"plant mediated"* et *"root herbivore"* pour la MA2 et *"plant functionnal"*, *"dry weight"* et *"diplocardia spp"* pour la MA4) montrent que les deux MA s'intéressent spécifiquement au **rôle des plantes dans l'écologie des sols**.<br>
 
 <br>
 <i>MA1: "Soil chemistry turned upside down: a meta-analysis of invasive  earthworm effects on soil chemical properties"<br>
@@ -1305,7 +1299,6 @@ not_words %>%
   labs(x = "Sentiment value * number of occurrences",
        y = "Words preceded by \"not\"")
 ```
-## 
 Les bigrammes *"not benefit"* et *"not increase"* sont les plus important facteur d'erreur d'identification, faisant paraître le texte plus **positif** qu'il ne l'est réellement.<br>
 Le bigramme *"not affected"* est le plus important facteur d'erreur d'identification, faisant paraître le texte plus **négatif** qu'il ne l'est réellement.<br>
 
@@ -1318,8 +1311,6 @@ bigrams_separated1 %>%
   inner_join(AFINN, by = c(word2 = "word")) %>%
   count(word2, value, sort = TRUE)
 ```
-
-
 ```{r word1="not"}
 not_words_with_factor <- bigrams_separated_all %>%
     filter(word1 == "not") %>%
@@ -1340,10 +1331,16 @@ not_words_with_factor %>%
 ```
 <br>
 Lorsque l'on inspecte le jeu de données **pour chacune des MA** avec la fonction R *"facet_grid"*, on remarque que les mots ayant conduit au plus d'erreurs d'identification dans chaque MA sont:<br>
-- <u>MA1:</u> *"benefit"* et *"increase"* classés à tort en **positif** (comme le mot précédant était "not", "not benefit" et "not increase" ont une **valance négative**), pas de négatif relevé.<br>
-- <u>MA2:</u> Pas de mot positif relevé. *"affected"* classé à tort en **négatif** (comme le mot précédent était "not", "not affected" a une **valence positive**).<br>
-- <u>MA3:</u> Pas de mot positif relevé. *"affected"* classé à tort en **négatif** (comme le mot précédent était "not", "not affected" a une **valence positive**). On remarque cependant que l'effet observé est moindre comparé à la MA2.<br>
-- <u>MA4:</u> *"responsible"* (donc, le bigramme "not responsible"), est classé positif par le dictionnaire AFINN, mais ces seuls deux mots ne suffisent pas à déterminer la valence (positive ou négative), de l'expression. Elles traduisent au contraire une forme de neutralité (quelque-chose qui est **non responsable** d'un effet est à priori neutre). Une analyse plus détaillée du contexte d'utilisation serait requise pour pouvoir décider. Dans AFINN (dictionnaire), *"prevent"* est classé négatif (c'est pourquoi "not prevent" a une valence positive), mais en écologie, "not prevent" semble bel et bien <u>négatif</u> (il n'y a donc pas d'erreur d'identification dans cas précis). Par contre, classé à tort en **négatif**, on retrouve là-aussi *"affected"*, dans ce cas précédé par *"not"*, et donc de valence plutôt **positive**. <br>
+- <u>MA1:</u> *"benefit"* et *"increase"* classés à tort en **positif** (comme le mot précédant était "not", "not benefit" et "not increase" ont une **valance négative**), pas de négatif relevé. **La MA1 est moins positive que les analyses précédentes le laissaient penser.**<br>
+- <u>MA2:</u> Pas de mot positif relevé. *"affected"* classé à tort en **négatif** (comme le mot précédent était "not", "not affected" a une **valence positive**). **La MA2 est plus positive que les analyses précédentes le laissaient penser.**<br>
+- <u>MA3:</u> Pas de mot positif relevé. *"affected"* classé à tort en **négatif** (comme le mot précédent était "not", "not affected" a une **valence positive**). On remarque cependant que l'effet observé est moindre comparé à la MA2. **La MA3 est plus positive que les analyses précédentes le laissaient penser**.<br>
+- <u>MA4:</u> *"responsible"* (donc, le bigramme "not responsible"), est classé positif par le dictionnaire AFINN, mais ces seuls deux mots ne suffisent pas à déterminer la valence (positive ou négative), de l'expression. Elles traduisent au contraire une forme de neutralité (quelque-chose qui est **non responsable** d'un effet est à priori neutre). Une analyse plus détaillée du contexte d'utilisation serait requise pour pouvoir décider.
+```{r}
+AFINN %>% filter(word %in% c("responsible", "prevent"))
+```
+
+Dans AFINN (dictionnaire), *"prevent"* est classé négatif (c'est pourquoi "not prevent" a une valence positive), mais en écologie, "not prevent" semble bel et bien <u>négatif</u> (il n'y a donc pas d'erreur d'identification dans cas précis). Par contre, classé à tort en **négatif**, on retrouve là-aussi *"affected"*, dans ce cas précédé par *"not"*, et donc de valence plutôt **positive**. **La MA4 est plus positive que les analyses précédentes le laissaient penser**. <br>
+
 Cependant, d'autres mots négatifs (comme *"never"* etc.) n'ont pas été pris en compte dans l'analyse ci-dessus. La prochaine étape à donc pour but de prendre davantage de mots de négation en considération dans l'analyse de sentiment.
 <br>
 
@@ -1380,14 +1377,146 @@ negation_words_with_factor %>%
    facet_wrap(facets = vars(word1), ncol = 2)
 ```
 <br>
+Rappelons les suppositions faites dans la section précédente:<br> 
+- **MA1/MA3:** Métaanalyses globalement défavorables aux vers de terre. Si certains bénéfices, pour la santé des sols notamment, semblent être reconnus, le vers de terre est perçu comme une espèce invasive perturbant les écosystèmes natifs. Les mots "soil", "forest" et "effect" (MA1) et "canopy" (MA3), donnent une idée des environnements où se sont déroulées les études (sols forestiers, forêt). Les mots "exotic" (MA1) et "eastern" (MA3) semblent montrer que les espèces invasives viennent probablement d'Europe ou d'Asie. Les bigrammes "forest soils" (MA1) et "tree species" (MA3) confirment que les études s'intéressent aux environnements forestiers. Les bigrammes "earthworm invasion" (MA1) et "earthworm invasions" (MA3) confirment que les vers de terre asiatiques et européens sont perçus comme des espèces invasives. <br>
+- **MA2/MA4:** Métaanalyses globalement favorables au vers de terre, mettant en avant les bienfaits physiologiques des vers de terre pour la plante et les avantages de ces interactions pour favoriser la productivité. Cependant, le vers de terre peut malgré tout rester nuisible, car c'est une espèce invasive qui risque de déséquilibrer l'écosystème natif. La MA2 semble plus se focaliser sur les effets observées sur les plantes en tant que telles (pucerons, harbivores) alors que la 4 semble davantage axée sur la pollution des sols, notamment par les métaux lourds (Cu, Pb). Le bigramme "soil organisms" est le plus représenté dans les deux métaanalyses, reforçant encore le lien thématique (écologie des sols) commun aux MA2 et 4. Par ailleurs, de nombreuses références aux plantes (*"plant responses"*, *"plant mediated"* et *"root herbivore"* pour la MA2 et *"plant functionnal"*, *"dry weight"* et *"diplocardia spp"* pour la MA4) montrent que les deux MA s'intéressent spécifiquement au rôle des plantes dans l'écologie des sols.<br>
+
+En prenant en compte le sujet apparent de chaque métaanalyse, on peut supposer que:<br>
+- **MA1/MA3:** Métaanalyses globalement défavorables aux vers de terre. Si certains bénéfices, pour la santé des sols notamment, semblent être reconnus, le vers de terre est perçu comme une espèce invasive perturbant les écosystèmes natifs. Les mots "soil", "forest" et "effect" (MA1) et "canopy" (MA3), donnent une idée des environnements où se sont déroulées les études (sols forestiers, forêt). Les mots "exotic" (MA1) et "eastern" (MA3) semblent montrer que les espèces invasives viennent probablement d'Europe ou d'Asie. Les bigrammes "forest soils" (MA1) et "tree species" (MA3) confirment que les études s'intéressent aux environnements forestiers. Les bigrammes "earthworm invasion" (MA1) et "earthworm invasions" (MA3) confirment que les vers de terre asiatiques et européens sont perçus comme des espèces invasives. La MA1 étant plus négative que prévu, sachant que la MA3 (plus positive que prévu) ne semble pas compenser totalement cet effet (cf. "words preceded by not"), on en déduit que ces deux métaanalyses sont un peu plus négatives que présenté précedemment, en raison de l'effet du mot "not" sur le mot suivant.<br>
+- **MA2/MA4:** Métaanalyses globalement favorables au vers de terre, mettant en avant les bienfaits physiologiques des vers de terre pour la plante et les avantages de ces interactions pour favoriser la productivité. Cependant, le vers de terre peut malgré tout rester nuisible, car c'est une espèce invasive qui risque de déséquilibrer l'écosystème natif. La MA2 semble plus se focaliser sur les effets observées sur les plantes en tant que telles (pucerons, harbivores) alors que la 4 semble davantage axée sur la pollution des sols, notamment par les métaux lourds (Cu, Pb). Le bigramme "soil organisms" est le plus représenté dans les deux métaanalyses, reforçant encore le lien thématique (écologie des sols) commun aux MA2 et 4. Par ailleurs, de nombreuses références aux plantes (*"plant responses"*, *"plant mediated"* et *"root herbivore"* pour la MA2 et *"plant functionnal"*, *"dry weight"* et *"diplocardia spp"* pour la MA4) montrent que les deux MA s'intéressent spécifiquement au rôle des plantes dans l'écologie des sols. La MA2 étant plus positive que prévu, sachant que la MA4 est aussi plus positive que prévu (cf. "words preceded by not"), on en déduit que ces deux métaanalyses sont un peu plus positives que présenté précedemment, en raison de l'effet du mot "not" sur le mot suivant.<br>
+- **Faux positifs / faux négatifs:** On peut remarquer que le mot le plus important dans les faux négatifs est "not", et que le plus important dans les faux positfs est "no". Le terme "neither" a lui-aussi engendré quelques faux négatifs.
+
+<br>
+<i>MA1: "Soil chemistry turned upside down: a meta-analysis of invasive  earthworm effects on soil chemical properties"<br>
+MA2: "Earthworms affect plant growth and resistance against herbivores: A meta-analysis" <br>
+MA3: "The unseen invaders: introduced earthworms as drivers of change in plant communities in North American
+forests (a meta-analysis)" <br>
+MA4: "Earthworms increase plant production: a meta-analysis"</i>
+<br>
+
+## Réseaux de bigrammes (ggraph)
+
+Visualiser les relations entre tous les mots simultanément, sous la forme d'un graphe noeuds / arrêtes. Un graphe est une combinaison de noeuds (mots) connectés, c'est à dire que leurs occurrences sont, dans le texte, proches les unes des autres. C'est une façon d'aller encore plus loin que de simplement regarder le mot précédant (bigrammes).
+
+```{r réseau bigram_count_all,fig.height=8,fig.width=12}
+library(igraph)
+library(ggraph)
+
+bigram_counts_all_noMA <- bigram_counts_all %>% select(-MA)
+
+bigram_graph <- bigram_counts_all_noMA %>%
+  filter(n > 10) %>%
+  graph_from_data_frame()
+
+ggraph(bigram_graph, layout = "fr") +
+  geom_edge_link() +
+  geom_node_point() +
+  geom_node_text(aes(label = name), vjust = 1, hjust = 1)
+```
+
+```{r réseau plus joli,fig.height=8,fig.width=12}
+a <- grid::arrow(type = "closed", length = unit(.15, "inches"))
+
+ggraph(bigram_graph, layout = "fr") +
+  geom_edge_link(aes(edge_alpha = n), show.legend = FALSE,
+                 arrow = a, end_cap = circle(.07, 'inches')) +
+  geom_node_point(color = "lightblue", size = 5) +
+  geom_node_text(aes(label = name), vjust = 1, hjust = 1) +
+  theme_void()
+```
 
 
+```{r réseau bigram_count_chaque_MA, fig.height=10,fig.width=10}
+library(igraph)
+library(ggraph)
+library(egg)
+library(ggpubr)
+library(ggplot2)
 
+bigram_graph1 <- bigram_counts1 %>%
+  filter(n > 10) %>%
+  graph_from_data_frame()
 
+network1 <- ggraph(bigram_graph1, layout = "fr") +
+  geom_edge_link(aes(edge_alpha = n), show.legend = FALSE,
+                 arrow = a, end_cap = circle(.07, 'inches')) +
+  geom_node_point(color = "lightblue", size = 5) +
+  geom_node_text(aes(label = name), vjust = 1, hjust = 1) +
+  labs(title = "MA1")
 
+bigram_graph2 <- bigram_counts2 %>%
+  filter(n > 10) %>%
+  graph_from_data_frame()
 
+network2 <- ggraph(bigram_graph2, layout = "fr") +
+  geom_edge_link(aes(edge_alpha = n), show.legend = FALSE,
+                 arrow = a, end_cap = circle(.07, 'inches')) +
+  geom_node_point(color = "lightblue", size = 5) +
+  geom_node_text(aes(label = name), vjust = 1, hjust = 1) +
+  labs(title = "MA2")
 
+bigram_graph3 <- bigram_counts3 %>%
+  filter(n > 10) %>%
+  graph_from_data_frame()
 
+network3 <- ggraph(bigram_graph3, layout = "fr") +
+  geom_edge_link(aes(edge_alpha = n), show.legend = FALSE,
+                 arrow = a, end_cap = circle(.07, 'inches')) +
+  geom_node_point(color = "lightblue", size = 5) +
+  geom_node_text(aes(label = name), vjust = 1, hjust = 1) +
+  labs(title = "MA3")
+
+bigram_graph4 <- bigram_counts4 %>%
+  filter(n > 10) %>%
+  graph_from_data_frame()
+
+network4 <- ggraph(bigram_graph4, layout = "fr") +
+  geom_edge_link(aes(edge_alpha = n), show.legend = FALSE,
+                 arrow = a, end_cap = circle(.07, 'inches')) +
+  geom_node_point(color = "lightblue", size = 5) +
+  geom_node_text(aes(label = name), vjust = 1, hjust = 1) +
+  labs(title = "MA4")
+```
+
+```{r}
+library(patchwork)
+networks <- network1 + network2 + network3 + network4 + plot_layout(nrow = 4)
+```
+<style>
+  .superbigimage{
+      overflow:scroll;
+      white-space: nowrap;
+  }
+
+  .superbigimage img{
+     max-width: none;
+  }
+
+</style>
+
+<div class="superbigimage">
+```{r, echo = FALSE, fig.width=20,fig.height=5}
+network1
+```
+</div>
+
+<div class="superbigimage">
+```{r, echo = FALSE, fig.width=20,fig.height=5}
+network2
+```
+</div>
+
+<div class="superbigimage">
+```{r, echo = FALSE, fig.width=20,fig.height=5}
+network3
+```
+</div>
+
+<div class="superbigimage">
+```{r, echo = FALSE, fig.width=20,fig.height=5}
+network4
+```
+</div>
 
 
 
