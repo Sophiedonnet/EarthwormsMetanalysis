@@ -17,12 +17,8 @@ Premier bloc de code : importation des librairies.
 library(dplyr)
 library(ggplot2)
 library(tidytext)
-library(tm)
 library(knitr)
-library(SemNetCleaner)
-library(textstem)
 library(SnowballC)
-library(gridExtra)
 library(grid)
 # WARNING : some libraries are not used but kept here at hand if the code were 
 # to be modified back (those libraries were used in
@@ -2084,3 +2080,5 @@ network4
 <br>
 
 En conclusion, on remarque que les centres retrouvés pour l'ensemble des quatres MA ("earthworm", "plant", "soil"), sont souvent retrouvés dans les MA individuellement (1- "earthworm", 2- "plant"). Le cas de "soil" est remarquable, car il est un centre global, sans pour autant être un centre local dans aucune des quatre MA.<br>
+
+installed.packages()[names(sessionInfo()$otherPkgs), "Version"] = permet de visualiser les packages R non-natifs installés dans une session R.

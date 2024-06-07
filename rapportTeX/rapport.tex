@@ -239,11 +239,10 @@
 \noindent
 \large{J'aimerais remercier mes encadrants pour ce stage, Mme Sophie DONNET et
     M. David MAKOWSKI, pour avoir accepté ma candidature et acceuilli au sein de
-    leur équipe. Je tiens aussi à remercier mes vaillants collègues de bureau Emré
-    ANAKOK et Caroline COGNOT, pour leur compagnie perpétuelle et leurs très bons
+    leur équipe. Je tiens aussi à adresser un mot particulier à mes vaillants collègues de bureau Emré ANAKOK et Caroline COGNOT, pour leur compagnie perpétuelle et leurs très bons
     conseils.}
 \par % Nouveau paragraphe
-{Je remercie aussi ...}
+{Je remercie aussi Louis LACOSTE, pour ses excellents conseils en R et en cinématographie, ainsi que François VICTOR, pour ses généreuses explications en statistiques théoriques auxquelles je n'ai pas compris grand-chose. }
 % Ne pas mettre le texte "Chapitre 1" de l'en-tête
 \thispagestyle{fancy}
 \clearpage % Aller à la page suivante
@@ -329,11 +328,15 @@
         (source: https://bility.fr/definition-markdown/).
 
     \item[N-gram:] Suite de mots consécutifs de taille n (une des possibilités
-        de tokenisation). Utile pour comprendre les relations logiques entre les mots.
+        de tokenisation). Utile pour comprendre les relations logiques entre les mots. Les bigrammes sont un cas particulier de n-gram (n-gram de longueur 2).
+
+    \item [Racinisation (linguistique):] Obtention du radical, par exemple par dépréfixation ou désuffixation (\textit{Exemple:}"enhance", "enhances" et "enhancement" deviennent "enhanc").
+    
+    \item [Réseau de n-grams:] Figure permettant de visualiser toutes les relations entre les différents tokens simultanément, plutôt que deux par deux. Cela permet d'aller plus loin que l'analyse de bigrammes séparés les uns des autres.
 
     \item[Sélecteurs CSS:] Les sélecteurs définissent les éléments sur
         lesquelles s'applique un ensemble de règles CSS. Ils peuvent être employés en
-        Web scrapping pour cibler et isoler des éléments d'intérêt.
+        Web scrapping pour cibler et isoler certains éléments d'intérêt.
 
     \item[Token:] Unité textuelle souvent réduite, voire ne comprenant qu'un
         seul mot, issue du processus de tokenisation.
@@ -345,7 +348,7 @@
     \item[Text-mining:] Processus d'analyse textuelle consistant à transformer
         un texte non structuré en données structurées pour ensuite procéder à
         l’analyse. Cette pratique repose sur la technologie de « Natural Language
-        Processing » (traitement naturel du langage), permettant aux machines de
+        Processing » (traitement du langage naturel), permettant aux machines de
         comprendre et de traiter le langage humain automatiquement (source :
         https://datascientest.com/text-mining-definition).
 
@@ -353,6 +356,8 @@
         grandes quantités d’informations d’un site Web, sans intervention humaine
         directe, via un script informatique (source:
         https://moncoachdata.com/blog/web-scraping-pratique/).
+
+    \item[Format "wide" / "long":]
 
 \end{description}
 \thispagestyle{fancy}
@@ -616,37 +621,39 @@ utilisé Python, la langage de scripts avec lequel je suis le plus à l'aise.
         non-ASCII. Certaines corrections sont imparfaites et retirent quelques lettres.
 
     \item[RGS2:] Sous-module codé localement à partir d'un exemple trouvé en
-        ligne\footnote{\url{https://www.reddit.com/r/Python/comments/v2bxyl/script_scraping_researchgate_all_publications/}}
+        ligne\footnote{citation url à mettre ici (scrape publications from RG)}
         , par la suite adapté pour récupérer directement les informations
         voulues dans le code source du site scientifique ResearchGate, les autres
         options potentielles (comme Google Scholar) ayant souvent un système de
         détection et de blocage des bots. Seule la deuxième version du sous-module a
         été retenue dans le projet final. Il dépend des modules suivants :
-        \begin{enumerate}
-            \item Module \textbf{Parsel}, fonction \textit{Selector}: Module
-                  facilitant l'extraction des données pour les formats HTML, JSON et XML. Dans le
-                  code, il est utilisé pour trouver les données recherchées directement dans le
-                  code source de la page (web scrapping) en s'appuyant sur des sélecteurs CSS.
-                  \vspace{\baselineskip}
-            \item Module \textbf{playwright.sync\_api}, fonction
-                  \textit{sync\_playwright}: Module permettant de lancer une session navigateur
-                  depuis un script Python. Dans le code, il est utilisé pour se rendre sur le
-                  site de ResearchGate via une session Chromium, un navigateur libre développé
-                  par Google.
-                  \vspace{\baselineskip}
-            \item Module \textbf{re}: Module fournissant des opérations sur les
-                  expressions rationnelles utilisable dans un code Python, ce qui peut s'avérer
-                  nécessaire pour sélectionner très précisément les informations voulues dans une
-                  structure de données complexes. Dans le code Python, il est utilisé pour
-                  filtrer les résultats HTML bruts issus du Web scrapping.
-                  \vspace{\baselineskip}
-            \item Module \textbf{time}, fonction \textit{sleep}: Module
-                  fournissant différentes fonctions liées au temps. Dans le script, la fonction
-                  "sleep(t)" est utilisée pour forcer le système à ne rien faire pendant t
-                  secondes, évitant de cette façon de surcharcher le serveur cible de requêtes
-                  trop rapides et trop nombreuses.
-        \end{enumerate}
+        
+    \begin{enumerate}
+        \item Module \textbf{Parsel}, fonction \textit{Selector}: Module
+                facilitant l'extraction des données pour les formats HTML, JSON et XML. Dans le
+                code, il est utilisé pour trouver les données recherchées directement dans le
+                code source de la page (web scrapping) en s'appuyant sur des sélecteurs CSS.
+                \vspace{\baselineskip}
+        \item Module \textbf{playwright.sync\_api}, fonction
+                \textit{sync\_playwright}: Module permettant de lancer une session navigateur
+                depuis un script Python. Dans le code, il est utilisé pour se rendre sur le
+                site de ResearchGate via une session Chromium, un navigateur libre développé
+                par Google.
+                \vspace{\baselineskip}
+        \item Module \textbf{re}: Module fournissant des opérations sur les
+                expressions rationnelles utilisable dans un code Python, ce qui peut s'avérer
+                nécessaire pour sélectionner très précisément les informations voulues dans une
+                structure de données complexes. Dans le code Python, il est utilisé pour
+                filtrer les résultats HTML bruts issus du Web scrapping.
+                \vspace{\baselineskip}
+        \item Module \textbf{time}, fonction \textit{sleep}: Module
+                fournissant différentes fonctions liées au temps. Dans le script, la fonction
+                "sleep(t)" est utilisée pour forcer le système à ne rien faire pendant t
+                secondes, évitant de cette façon de surcharcher le serveur cible de requêtes
+                trop rapides et trop nombreuses.
+    \end{enumerate}
 
+\end{description}
         \vspace{\baselineskip}
         \noindent
         Dans un deuxième temps, pour déveloper mon code de text mining comme ma
@@ -656,7 +663,17 @@ utilisé Python, la langage de scripts avec lequel je suis le plus à l'aise.
         \vspace{\baselineskip}
         \noindent
         \underline{Modules employés pour l'élaboration du code R:}
-
+\begin{description}
+    \item[Librairie dplyr:] Librairie R conçue pour faciliter la manipulation de larges jeux de données (DataFrame et Tibble), avec des fonctions spacialisées comme \textit{mutate} (ajout de variables), \textit{select} (sélectionner les variables à partir de leurs noms), \textit{filter} (filtrer des cellules selon leur valeur), \textit{summarise} (résumer les informations d'un tibble dans un format très synthétique) et \textit{arrange} (pour réordonner les lignes selon l'ordre / la variable voulue.)
+    \item[Librairie ggplot2:] Librairie R pour créer déclarativement des graphiques divers et variés (barplots, histogrammes, scatter plots, etc.)
+    \item[Librairie tidytext:] Librairie R conçue pour faciliter l'analyse de texte (Silge, Julia, and David Robinson. 2016. "tidytext: Text Mining and Analysis Using Tidy Data Principles in R."\footnote{ref Silge/Robinson à mettre à la place}), se fondant sur le paradigme d'analyse de données "tidy", où chaque variable est une colonne, chaque observation une ligne et chaque ensemble d'observations est un tableau. La fonction la plus utilisée dans le cadre de cette analyse est \textit{unnest\_tokens}, qui permet de transformer un texte donné en une tables d'unités textuelles plus réduites (tokens), comme des phrases ou des mots.
+    \item[Librairie Knitr:] Librairie R conçue pour récupérer automatiquement l'output d'un code R (par exemple, pour produire une figure) afin de l'inclure dans un autre document (par exemple, format Word, HTML ou PDF) qui contiendra aussi la prose écrite par l'auteur du document, souvent pour interpréter ou commenter des résultats. Cette librairie permet notamment de moduler plus finement l'affichage des résultats, en permettant par exemple de ne pas afficher certaines figures dans un format de sortie donné (pour masquer une figure interactive au format HTML que l'on ne souhaite pas forcément voir apparaître dans un document PDF, par exemple).
+    \item[Librairie SnowballC:] Librairie R implémentant Snowball, un langage conçu pour gérer les chaînes de caractères, les nombres entiers et les booléens. Dans le script R de Text Mining, il a surtout servi à transformer les tokens pour ne garder que la racine de chaque mot (processus de \textit{racination}), afin de ne compter qu'un seul exemplaire de chaque mot (si, pour un humain, "enhance" et "enhancement" sont deux mots ayant approximativement le même sens, informatiquement ce sont deux chaînes de caractères distinctes).
+    \item[Librairie grid:] Librarie R implémentant les fonctions graphiques primitives qui sous-tendent le package ggplot2. Elles permettent de modifier certains détails des graphes produits grâce à ggplot2, offrant ainsi un meilleur contrôle du rendu visuel du résulat obtenu. Dans le script, il est employé, par exemple, pour spécifier exactement l'aspect des flèches composant le réseau de bigrammes. 
+    \item[Librairie ggraph:] Librairie R formant une extension de ggplot2, conçue pour permettre de supporter les structures de données relationnelles comme les réseaux, les graphes et les arbres. Dans le script, elle est notamment employée pour produire les réseaux de bigrammes.
+    \item[Librairie igraph:] fonction \textit{graph\_from\_data\_frame():} Cette fonction appartient à la librairie igraph. Elle crée un objet graphe à partir d'un data frame, où le data frame représente les arêtes entre les nœuds.
+    \item[Librairie egg:] fonction \textit{ggarrange():} Librairie servant à organiser différents graphes sur une seule et même figure. Dans le script, c'est l'une des librairies employées pour comparer les quatre MA entre elles.
+    \item[Librairie tidyr:] Librairie R implémentant des méthodes utiles pour manipuler des objets de type "tidy". Elle comprend des fonction telles que \textit{pivot\_wider} et \textit{pivot\_longer} (pour convertir le dataFrame d'un format "wide" en format "long"), ou encore \textit{bind\_rows()}, pour combiner des DataFrames par lignes.
 \end{description}
 \noindent
 
