@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.5.28)  7 JUN 2024 17:52
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.5.28)  10 JUN 2024 17:58
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -702,170 +702,76 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.1638pt}.
 
 [8]
-Overfull \hbox (7.04185pt too wide) in paragraph at lines 317--320
+Overfull \hbox (7.04185pt too wide) in paragraph at lines 319--322
 []\T1/cmr/m/n/12 Un bot informatique est un agent logiciel automatique ou semi-automatique qui interagit
  []
 
 
-Overfull \hbox (40.40173pt too wide) in paragraph at lines 333--334
-[]\T1/cmr/m/n/12 Obtention du radical, par exemple par dépréfixation ou désuffixation
+Underfull \hbox (badness 1509) in paragraph at lines 337--338
+[]\T1/cmr/m/n/12 Figure permettant de visualiser toutes les relations entre les
  []
 
 
-Overfull \hbox (0.51152pt too wide) in paragraph at lines 335--336
-[]\T1/cmr/m/n/12 Figure permettant de visualiser toutes les relations entre les différents
+Underfull \hbox (badness 1072) in paragraph at lines 339--342
+[]\T1/cmr/m/n/12 Les sélecteurs définissent les éléments sur lesquelles s'applique un
  []
 
 
-Overfull \hbox (3.67876pt too wide) in paragraph at lines 337--340
-[]\T1/cmr/m/n/12 Les sélecteurs définissent les éléments sur lesquelles s'applique un ensemble
- []
-
-
-Overfull \hbox (5.6251pt too wide) in paragraph at lines 348--354
-\T1/cmr/m/n/12 permettant aux machines de comprendre et de traiter le langage humain automatiquement
- []
-
-
-Overfull \hbox (9.14742pt too wide) in paragraph at lines 355--359
-\T1/cmr/m/n/12 d'informations d'un site Web, sans intervention humaine directe, via un script informatique
+Underfull \hbox (badness 1264) in paragraph at lines 357--361
+\T1/cmr/m/n/12 d'informations d'un site Web, sans intervention humaine directe, via un script
  []
 
 [9
 
 ] [10]
 Chapitre 1.
-
-Overfull \hbox (8.84149pt too wide) in paragraph at lines 380--390
-\T1/cmr/m/n/12 INteractive modelINg for understandINg and decisiOn makINg in dINamic Complexe Systems),
- []
-
-
-Overfull \hbox (5.20143pt too wide) in paragraph at lines 391--396
-\T1/cmr/m/n/12 informatiques et statistiques pour l'analyse textuelle d'abstracts d'articles scientifiques. L'unité
- []
-
-
-Package lipsum Warning: Unknown language 'latin'. Hyphenation patterns for
-(lipsum)                'french' will be used instead.
-
-
-Overfull \hbox (9.48578pt too wide) in paragraph at lines 398--398
-\T1/cmr/m/n/12 placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu libero, nonummy
- []
-
-
-Overfull \hbox (8.70372pt too wide) in paragraph at lines 398--398
-\T1/cmr/m/n/12 tristique, libero. Vivamus viverra fermentum felis. Donec nonummy pellentesque ante. Phasellus
- []
-
+<organigrammeEquipe.png, id=245, 1625.07124pt x 1135.24126pt>
+File: organigrammeEquipe.png Graphic file (type png)
+<use organigrammeEquipe.png>
+Package pdftex.def Info: organigrammeEquipe.png  used on input line 386.
+(pdftex.def)             Requested size: 455.24408pt x 318.02129pt.
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.398 
-       [1
+l.391 \newpage
+               [1
 
-]
-<organigrammeEquipe.png, id=250, 1625.07124pt x 1135.24126pt>
-File: organigrammeEquipe.png Graphic file (type png)
-<use organigrammeEquipe.png>
-Package pdftex.def Info: organigrammeEquipe.png  used on input line 401.
-(pdftex.def)             Requested size: 455.24408pt x 318.02129pt.
+ <./organigrammeEquipe.png>]
+Underfull \hbox (badness 6063) in paragraph at lines 393--400
+\T1/cmr/m/n/12 sélection de modèle...), et algorithmiques (généralisation, transfert de domaine,
+ []
 
-Overfull \hbox (9.48578pt too wide) in paragraph at lines 408--408
-\T1/cmr/m/n/12 placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu libero, nonummy
+
+Underfull \hbox (badness 3977) in paragraph at lines 393--400
+\T1/cmr/m/n/12 représentation des connaissances). L'unité développe des méthodes statistiques et
  []
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.408 
-       [2 <./organigrammeEquipe.png>]
-Overfull \hbox (9.48578pt too wide) in paragraph at lines 420--420
-\T1/cmr/m/n/12 placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu libero, nonummy
- []
-
-
-Overfull \hbox (8.70372pt too wide) in paragraph at lines 420--420
-\T1/cmr/m/n/12 tristique, libero. Vivamus viverra fermentum felis. Donec nonummy pellentesque ante. Phasellus
- []
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has been already used, duplicate ignored
+l.446 
+       [2]pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.436 
-       [3]
-Overfull \hbox (9.48578pt too wide) in paragraph at lines 436--436
-\T1/cmr/m/n/12 placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu libero, nonummy
- []
-
-
-Overfull \hbox (8.70372pt too wide) in paragraph at lines 436--436
-\T1/cmr/m/n/12 tristique, libero. Vivamus viverra fermentum felis. Donec nonummy pellentesque ante. Phasellus
- []
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has been already used, duplicate ignored
+l.453 \chapter
+              [Ressources]{\label{Second Chapitre}Ressources: pratiques [3]pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.439 \chapter
-              [Ressources]{\label{Second Chapitre}Ressources : pratiques [4]
-Chapitre 2.
-
-Overfull \hbox (9.48578pt too wide) in paragraph at lines 452--457
-\T1/cmr/m/n/12 placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu libero, nonummy
- []
-
-
-Overfull \hbox (6.37088pt too wide) in paragraph at lines 468--472
-[]\T1/cmr/m/n/12 Grâce à la fonctionnalité Knitr de Rmd, j'ai pu rendre compte de ma progression quotidienne
- []
-
-
-Overfull \hbox (9.48578pt too wide) in paragraph at lines 474--479
-\T1/cmr/m/n/12 placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu libero, nonummy
- []
-
-[5
+l.453 \chapter
+              [Ressources]{\label{Second Chapitre}Ressources: pratiques [4
 
 ]
-Overfull \hbox (5.9028pt too wide) in paragraph at lines 521--534
-[]\T1/cmr/m/n/12 Afin de filtrer les mots d'intérêt seulement, deux stratégies ont été employées: Premièrement,
+Chapitre 2.
+[5]
+Underfull \hbox (badness 1168) in paragraph at lines 538--551
+[]\T1/cmr/m/n/12 Afin de filtrer les mots d'intérêt seulement, deux stratégies ont été employées :
  []
 
 [6] [7] [8
 
 ]
 Chapitre 3.
-
-Overfull \hbox (19.1777pt too wide) in paragraph at lines 595--603
-[]\T1/cmr/m/n/12 Module implémentant des outils Python pour maîtriser plus subtilement les itérations.
- []
-
-
-Overfull \hbox (14.29008pt too wide) in paragraph at lines 615--622
-[]\T1/cmr/m/n/12 Module contenant des fonctions (comme la fonction éponyme 'unidecode' employée
- []
-
-
-Overfull \hbox (3.46169pt too wide) in paragraph at lines 615--622
-\T1/cmr/m/it/12 unidecode \T1/cmr/m/n/12 est employée pour rendre l'affichage des noms d'auteur contenant des caractères
- []
-
 [9]
-Overfull \hbox (10.24957pt too wide) in paragraph at lines 643--649
-[]\T1/cmr/m/n/12 Module \T1/cmr/bx/n/12 re\T1/cmr/m/n/12 : Module fournissant des opérations sur les expressions rationnelles utilisable
- []
-
-
-Overfull \hbox (9.25298pt too wide) in paragraph at lines 643--649
-\T1/cmr/m/n/12 dans un code Python, ce qui peut s'avérer nécessaire pour sélectionner très précisément
- []
-
-
-Overfull \hbox (4.4112pt too wide) in paragraph at lines 667--668
-\T1/cmr/m/n/12 (DataFrame et Tibble), avec des fonctions spacialisées comme \T1/cmr/m/it/12 mutate \T1/cmr/m/n/12 (ajout de variables),
- []
-
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 12.1638pt, for example:
@@ -874,17 +780,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.1638pt}.
 
 [10]
-Overfull \hbox (1.7334pt too wide) in paragraph at lines 672--673
-[]\T1/cmr/m/n/12 Librarie R implémentant les fonctions graphiques primitives qui sous-tendent
- []
-
-
-Overfull \hbox (9.60345pt too wide) in paragraph at lines 674--675
-[]\T1/cmr/m/n/12 fonction \T1/cmr/m/it/12 graph_from_data_frame(): \T1/cmr/m/n/12 Cette fonction appartient à la librairie
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 6842) has occurred while \output is active []
 
 
 
@@ -905,14 +801,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 [12]
 Chapitre 4.
 
-Overfull \hbox (2.16272pt too wide) in paragraph at lines 694--704
-\T1/cmr/m/n/12 rentable en temps, même si je suis satisfait d'avoir commencé à apprendre comment développer
- []
-
-
-Overfull \hbox (9.48578pt too wide) in paragraph at lines 706--706
-\T1/cmr/m/n/12 placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu libero, nonummy
- []
+Package lipsum Warning: Unknown language 'latin'. Hyphenation patterns for
+(lipsum)                'french' will be used instead.
 
 [13
 
@@ -923,33 +813,28 @@ Chapitre 5.
 [15]
 No file rapport.bbl.
 
-LaTeX Warning: Citation `clef1' on page 16 undefined on input line 724.
+LaTeX Warning: Citation `clef1' on page 16 undefined on input line 732.
 
-[16] [17]
-Overfull \hbox (16.44402pt too wide) in paragraph at lines 743--749
-\T1/cmr/m/n/12 Python (pour la veille bibliographique) et du Text Mining avec R pour chercher automatiquement
- []
-
-[18] (./rapport.aux)
+[16] [17] [18] (./rapport.aux)
 
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `rapport.out' has not changed.
-(rerunfilecheck)             Checksum: 27D96EF56794BE81991D25389693E456;5058.
+(rerunfilecheck)             Checksum: 954D1381E0580A1EA2BA397DBA713E26;5063.
  ) 
 Here is how much of TeX's memory you used:
- 20441 strings out of 480247
- 354306 string characters out of 5896106
+ 20444 strings out of 480247
+ 354364 string characters out of 5896106
  787840 words of memory out of 5000000
- 37998 multiletter control sequences out of 15000+600000
- 481732 words of font info for 52 fonts, out of 8000000 for 9000
+ 38000 multiletter control sequences out of 15000+600000
+ 482069 words of font info for 53 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 91i,12n,91p,1229b,503s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2488.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfcc1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on rapport.pdf (32 pages, 1134294 bytes).
+ 91i,11n,91p,1317b,497s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2488.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfcc1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb>
+Output written on rapport.pdf (32 pages, 1134515 bytes).
 PDF statistics:
- 397 PDF objects out of 1000 (max. 8388607)
- 323 compressed objects within 4 object streams
+ 401 PDF objects out of 1000 (max. 8388607)
+ 326 compressed objects within 4 object streams
  67 named destinations out of 1000 (max. 500000)
  292 words of extra memory for PDF output out of 10000 (max. 10000000)
 

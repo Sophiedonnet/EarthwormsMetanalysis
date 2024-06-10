@@ -118,7 +118,7 @@
 
 \begin{center}
     \vspace{0.5cm}
-    \large{Encadrants :} \\
+    \large{Encadrants:} \\
     \vspace{0.5cm}
     \large{David Makowski} \\
     \large{Sophie Donnet}
@@ -237,12 +237,14 @@
 \addcontentsline{toc}{chapter}{Remerciements}
 
 \noindent
-\large{J'aimerais remercier mes encadrants pour ce stage, Mme Sophie DONNET et
+\large{En premier lieu, j'aimerais remercier mes encadrants pour ce stage, Mme Sophie DONNET et
     M. David MAKOWSKI, pour avoir accepté ma candidature et acceuilli au sein de
     leur équipe. Je tiens aussi à adresser un mot particulier à mes vaillants collègues de bureau Emré ANAKOK et Caroline COGNOT, pour leur compagnie perpétuelle et leurs très bons
     conseils.}
 \par % Nouveau paragraphe
 {Je remercie aussi Louis LACOSTE, pour ses excellents conseils en R et en cinématographie, ainsi que François VICTOR, pour ses généreuses explications en statistiques théoriques auxquelles je n'ai pas compris grand-chose. }
+
+
 % Ne pas mettre le texte "Chapitre 1" de l'en-tête
 \thispagestyle{fancy}
 \clearpage % Aller à la page suivante
@@ -312,8 +314,8 @@
 \fancyhead[LE,RO]{GLOSSAIRE}
 \chapter*{Glossaire}
 \addcontentsline{toc}{chapter}{Glossaire}
-\begin{description}
 
+\begin{description}
     \item[Bot:] Un bot informatique est un agent logiciel automatique ou
         semi-automatique qui interagit avec des serveurs informatiques sans supervision
         humaine.
@@ -330,7 +332,7 @@
     \item[N-gram:] Suite de mots consécutifs de taille n (une des possibilités
         de tokenisation). Utile pour comprendre les relations logiques entre les mots. Les bigrammes sont un cas particulier de n-gram (n-gram de longueur 2).
 
-    \item [Racinisation (linguistique):] Obtention du radical, par exemple par dépréfixation ou désuffixation (\textit{Exemple:}"enhance", "enhances" et "enhancement" deviennent "enhanc").
+    \item [Racinisation (linguistique):] Obtention du radical, par exemple par dépréfixation ou \sloppy désuffixation (\textit{Exemple:}"enhance", "enhances" et "enhancement" deviennent tous "enhanc").
     
     \item [Réseau de n-grams:] Figure permettant de visualiser toutes les relations entre les différents tokens simultanément, plutôt que deux par deux. Cela permet d'aller plus loin que l'analyse de bigrammes séparés les uns des autres.
 
@@ -356,10 +358,8 @@
         grandes quantités d’informations d’un site Web, sans intervention humaine
         directe, via un script informatique (source:
         https://moncoachdata.com/blog/web-scraping-pratique/).
-
-    \item[Format "wide" / "long":]
-
 \end{description}
+
 \thispagestyle{fancy}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%          13          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Verso Glossaire %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -378,11 +378,21 @@
 
 \section{Structure d'accueil}
 \noindent
-Mon stage s'est déroulé dans l'Unité MIA (mathématique et informatique
-appliqués), à l'INRAE du Campus Agro Paris Saclay, sur le plateau de Saclay.
-Cette UMR (Unité Mixte de Recherhe) est dirigée par Julien CHIQUET et Sophie
-DONNET, et comprends deux équipes distinctes spacialisées dans la modélisation
-et l'apprentissage statistique pour la biologie : l'équipe SOLsTIS (Statistical
+Mon stage s'est déroulé au sein de l'Unité MIA (mathématique et informatique
+appliqués), à l'INRAE du Campus Agro Paris Saclay, sur le plateau de Saclay. L’UMR MIA Paris-Saclay, associée aux tutelles AgroParisTech, INRAE et Université Paris Saclay, regroupe des statisticiens et des informaticiens spécialisés dans la modélisation et l’apprentissage statistique et informatique pour la biologie, l’écologie, l’environnement, l’agronomie et l’agro-alimentaire. 
+
+\begin{figure}[h] %le h entre crochet signifie je veux la figure à cet emplacement
+    \begin{center} %centrer la figure
+        \includegraphics[width=16cm]{organigrammeEquipe.png}
+        \caption{Organigramme de l'UMR MIA Paris-Saclay}
+        %legende
+    \end{center}
+\end{figure}
+\newpage
+
+Les compétences mises en oeuvre portent sur les méthodes d’inférences statistiques (modèles complexes, modèles à variables latentes, inférence bayésienne, apprentissage, sélection de modèle…), et algorithmiques \sloppy (généralisation, transfert de domaine, représentation des connaissances). L’unité développe des méthodes statistiques et informatiques originales, génériques ou motivées par des problèmes précis en science du vivant. Ses activités s’appuient sur une bonne culture dans les disciplines destinatrices: écologie, environnement, agro-alimentaire, biologie moléculaire et biologie des systèmes.
+L'unité MIA est dirigée par Julien CHIQUET et Sophie
+DONNET, et comprends deux équipes distinctes: l'équipe SOLsTIS (Statistical
 mOdeling and Learning for environnemenT and Life Science) dirigée par Sophie
 DONNET et Pierre BARBILLON, et l'équipe EkiNocs (Expert Knowledge, INteractive
 modelINg for understandINg and decisiOn makINg in dINamic Complexe Systems),
@@ -392,55 +402,62 @@ En tant que stagiaire, j'ai ainsi pu intégrer SOLsTIS pour mettre au point des
 méthodes informatiques et statistiques pour l'analyse textuelle d'abstracts
 d'articles scientifiques. L'unité comprends 63 membres tous statuts et équipes
 confondus, dont 40 appartiennent à l'équipe SOLsTIS, 19 à l'équipe EkiNocs et 4
-membres d'appui.
-
-\lipsum[1-4]
-
-\begin{figure}[h] %le h entre crochet signifie je veux la figure à cet emplacement
-    \begin{center} %centrer la figure
-        \includegraphics[width=16cm]{organigrammeEquipe.png}
-        \caption{Organigramme de l'UMR MIA Paris-Saclay}
-        %legende
-    \end{center}
-\end{figure}
-
-\lipsum[1-2]
+membres d'appui. 
 
 \thispagestyle{fancy}
 
 \section{Contexte Scientifique}
 
 \noindent
-Ce stage s'inscrit dans un projet de recherche visant à étudier la littérature
-scientifique, par des méthodes de web scrapping (sous Python) et de Text Mining
-(sous R), afin d'analyser la perception du vers de terre dans la littérature
-scientifique.
+Selon la perception des spécialistes du sujet en Europe, les services écosystémiques rendus par les vers de terre sont multiples:
 
-\lipsum[1-4]
-
-\section{Objectif de mon travail}
+{
+\renewcommand{\labelitemi}{\textbullet}
+\begin{itemize}
+    \item Ils permettent une meilleure aération des sols.
+    \item Ils favorisent le recyclage des éléments nutritifs, du carbone, et du phosphore.
+    \item Ils jouent un rôle important dans le recyclage de la matière organique des sols.
+    \item Leur activité de décomposeurs (minéralisation de la matière organique) favorise la croissance d'autres organismes de l'environment, augmentant de ce fait la productivité des plantes.
+    \item Ils sont essentiels pour la structuration, l’entretien et la productivité des sols, forestiers, prairiaux et agricoles.
+\end{itemize}
+} % the "%" aims to define an environment where bullets are set to textbullet.
 
 \noindent
-Ma mission c'est déroulée en deux parties: premièrement, il m'a fallu
-construire une base de données d'articles scientifique (au sujet des vers de
-terre), en m'appuyant sur le requêtage à des bases de métadonnées sur chaque
-article. Les informations ont été récupérées via l'API Crossref.
-Ensuite, il me faudra mettre en place des scripts de Text Mining sous R pour
-analyser les textes extraits d'Internet.
-Au départ, j'avais conçu un script visant à Webscrapper des articles sur la
-base PubMed, mais il m'a vite fallu repenser ce script pour interroger une base
-de données différente,la base de données PubMed ne correspondant pas aux
-besoins de mes encadrants de stage.
+Cependant, la perception des vers de terre en Amérique du Nord est très différente, pour ne pas dire opposée. On peut résumer la perception nord-américaine comme suis: 
 
-\lipsum[1-4]
+{
+\renewcommand{\labelitemi}{\textbullet}
+\begin{itemize}
+    \item Les vers de terre exotiques (venus d'Europe et d'Asie) sont des espèces invasives suceptibles de perturber les écosystèmes natifs.
+    \item Leur présence dans les sols modifie durablement les propriétés physico-chimiques des écosystèmes sousterrains.
+    \item Les modifications physico-chimiques induites par les espèces exotiques causent une baisse globale de la biodiversité chez les espèces natives du milieu.
+    \item L'impact de ces espèces exotiques sur les émissions de gaz à effet de serre est également sujet à controverse.
+\end{itemize}
+} 
+
+Ce stage s'inscrit dans un projet de recherche visant à étudier la littérature
+scientifique, par des méthodes de web scrapping (sous Python) et de Text Mining
+(sous R), afin d'analyser la perception du vers de terre dans les 116 abstracts présents dans la base de données et pouvoir proposer une solution argumentée à cette controverse.
+
+\section{Objectifs de mon travail}
+
+\noindent
+Ma mission reposant principalement sur de l'analyse textuelle, mon premier objectif a été de réunir, si possible automatiquement, l'ensemble des métadonnées disponibles à propos des articles mis à ma disposition pour réaliser l'analyse. Ces métadonnées comprennent par exemple l'abstract (le plus important pour le Text-mining), les auteurs, la date de publication, le DOI (\textit{Digital Object Identifier}) ou encore le lien vers la page ResearchGate correspondante. Une fois cette base de données correctement établie et complétée (parfois manuellement), il a été possible de passer à l'étape d'analyse proprement dite, à travers l'élaboration d'un script de Text-mining.
+
+Le script de Text-mining a été conçu dans le but de transformer les données lisibles par un humain dans le corpus de texte (mots, phases, paragraphes) en données statistiques analysables automatiquement par ordinateur. Pour cela, le corpus a donc été transformé en tibble (table de données R) contenant différents types de \textit{tokens} (principalement des mots et des n-grams) aisément quantifiables, et donc, représentables sous formes de figures mathématiques. Ainsi, des informations comme la fréquence globale des mots, les mots les plus fréquents à l'intérieur de chaque métaanalyse, en encore la composition de chaque bigrammes (groupes de deux mots), entre autres, permettent une bonne compréhension générale du sujet, mais aussi de l'avis scientifique émis par chaque groupe d'auteurs au sujet des vers de terre. Par ailleurs, l'aspect quantitatif de l'analyse permet de s'affranchir en partie du ressenti subjectif qui vient inévitablement lors de la lecture et l'interprétation d'un texte. En automatisant totalement le calcul de ressenti, il devient alors possible de tirer des conclusions d'odre statistique, reposant uniquement sur des scores chiffrés calculés informatiquement.
+
+Grâce à ces deux phases de construction d'une base de données et d'analyse textuelle, il devient donc possible de comprendre les idées générales présentes dans un corpus textuel important (ici, 116 abstracts) sans avoir besoin de les lires un par un pour en faire une synthèse collective.
 
 \thispagestyle{fancy}
 
-\chapter[Ressources]{\label{Second Chapitre}Ressources : pratiques
+\chapter[Ressources]{\label{Second Chapitre}Ressources: pratiques
   professionnelles, environnement informatique, outils informatiques et
   statistiques, données}
 \section{Environnement informatique}
 \noindent
+Le matériel qui m'a été fourni par le laboratoire est un ordinateur fixe HP Elite SFF 800 G9 Desktop PC, numéro de série CZC2479ZXS - 4G087AV, avec 31 Go de mémoire vive et un processeur 12th Gen Intel® Core™ i7-12700 × 20, ainsi qu'un processeur graphique Mesa Intel® UHD Graphics 770.
+
+Il est géré par un système d'exploitation Ubuntu 22.04 64-bits (distribution Linux), sous la version 42.9 de GNOME (GNU Network Object Model Environment) fournissant une interface utilisateur ergonomique pour interagir avec le système d'exploitation GNU  (\textit{GNU's Not Unix}). Il est ainsi composé d'un noyeau Linux et de GNU, qui ensemble forment le système d'exploitation communément connu sous le nom "Linux". Le système de fenêtrage est "Wayland", un système chargé de l'affichage et du placement des fenêtres durant l'usage du système d'exploitation par l'utiisateur.
 
 \section{Pratique Professionnelle}
 \noindent
@@ -527,19 +544,10 @@ significatifs (savoir que le mot "le" est le plus fréquent dans un corpus de
 texte français ne signifie rien sur le plan biologique). Deuxièmement, une
 autre approche a été de considérer la fréquence de chaque mot par rapport au
 nombre total de mots présents dans le corpus (n mot / N mots). De cette façon,
-on peut visualiser la fréquence des termes sous forme d'histogramme, sans même
+les mots les plus fréquents perdent une partie de leur poids statistique, tandis que les mots plus rares en gagnent. On peut ainsi visualiser facilement les mots les plus importants d'un texte, sans même
 avoir besoin de modifier les données au préalable avec une liste de stop words.
 Cela permet de conserver le texte dans son ensemble, évitant ainsi un potentiel
 biais pouvant perturber l'analyse.
-
-basé sur des méthodes de LDA et de DTM. LDA est une méthode de topic modeling
-conçue pour déterminer les thèmes sous-jacents dans un corpus de texte. Les
-matrices DTM (Document Term Matrix) sont aussi utilisées pour l'analyse de
-texte: ce sont des tableaux en 2 dimensions (les lignes contiennent la liste
-des documents / les colonnes représentent les mots-clé) représentant la
-fréquence de chaque mot-clé dans chaque document. Grâce à ces méthodes, nous
-analyserons le corpus de texte fourni pour étudier la littérature scientifique
-sur le sujet des vers de terre. (POUR LA FIN DU STAGE).
 
 \subsection{Ressource 3}
 \noindent
@@ -602,7 +610,7 @@ utilisé Python, la langage de scripts avec lequel je suis le plus à l'aise.
         pas forcément égales (à cause des valeurs manquantes).
 
     \item[Habanero:] Module client de bas niveau pour interroger l'API
-        Crossref, une base de données contenant les métadata des articles de tous les
+        Crossref, une base de données contenant les métadonnées des articles de tous les
         membres (des informations comme le titre, le nom d'auteur, le DOI etc.). Dans
         le code Python, elle est employée surtout pour rechercher les noms d'auteurs,
         les autres champs testés n'étant pas assez fiables pour automatiser
