@@ -292,6 +292,7 @@
     \item[CSS] Cascade Style Sheet
     \item[DOI] Digital Object Identifier
     \item[HTML] Hypertext Markup Language
+    \item[IDE] De l'anglais, Environnement de Développement Intégré
     \item[MA] Métaanalyse
     \item[MIA] Mathématiques et Informatique Appliquée
     \item[Rmd] R Markdown
@@ -321,6 +322,8 @@
         humaine.
 
     \item[CSS:] Langage de code utilisé pour mettre en forme une page web.
+    
+    \item[JSON:] JSON (JavaScript Object Notation) est un format de fichier textuel conçu pour la structuration et l’échange de données (https://www.hostinger.fr/tutoriels/quest-ce-que-json).
 
     \item[Markdown:] Markdown est un langage de balisage léger qui permet de
         formater du texte de manière simple et rapide. Il utilise des caractères
@@ -338,7 +341,7 @@
 
     \item[Sélecteurs CSS:] Les sélecteurs définissent les éléments sur
         lesquelles s'applique un ensemble de règles CSS. Ils peuvent être employés en
-        Web scrapping pour cibler et isoler certains éléments d'intérêt.
+        Web scraping pour cibler et isoler certains éléments d'intérêt.
 
     \item[Token:] Unité textuelle souvent réduite, voire ne comprenant qu'un
         seul mot, issue du processus de tokenisation.
@@ -354,7 +357,7 @@
         comprendre et de traiter le langage humain automatiquement (source :
         https://datascientest.com/text-mining-definition).
 
-    \item[Web scrapping:] Technique permettant d’extraire automatiquement de
+    \item[Web scraping:] Technique permettant d’extraire automatiquement de
         grandes quantités d’informations d’un site Web, sans intervention humaine
         directe, via un script informatique (source:
         https://moncoachdata.com/blog/web-scraping-pratique/).
@@ -414,11 +417,11 @@ Selon la perception des spécialistes du sujet en Europe, les services écosyst�
 {
 \renewcommand{\labelitemi}{\textbullet}
 \begin{itemize}
-    \item Ils permettent une meilleure aération des sols.
-    \item Ils favorisent le recyclage des éléments nutritifs, du carbone, et du phosphore.
-    \item Ils jouent un rôle important dans le recyclage de la matière organique des sols.
-    \item Leur activité de décomposeurs (minéralisation de la matière organique) favorise la croissance d'autres organismes de l'environment, augmentant de ce fait la productivité des plantes.
-    \item Ils sont essentiels pour la structuration, l’entretien et la productivité des sols, forestiers, prairiaux et agricoles.
+    \item Ils permettent une meilleure aération des sols. (PREMIERE REF DU BIBTEX)
+    \item Ils favorisent le recyclage des éléments nutritifs, du carbone, et du phosphore. (DEUXIEME REF DU BIBTEX)
+    \item Ils jouent un rôle important dans le recyclage de la matière organique des sols (3e).
+    \item Leur activité de décomposeurs (minéralisation de la matière organique) favorise la croissance d'autres organismes de l'environment, augmentant de ce fait la productivité des plantes (4e).
+    \item Ils sont essentiels pour la structuration, l’entretien et la productivité des sols, forestiers, prairiaux et agricoles (5e).
 \end{itemize}
 } % the "%" aims to define an environment where bullets are set to textbullet.
 
@@ -428,15 +431,15 @@ Cependant, la perception des vers de terre en Amérique du Nord est très diffé
 {
 \renewcommand{\labelitemi}{\textbullet}
 \begin{itemize}
-    \item Les vers de terre exotiques (venus d'Europe et d'Asie) sont des espèces invasives suceptibles de perturber les écosystèmes natifs.
-    \item Leur présence dans les sols modifie durablement les propriétés physico-chimiques des écosystèmes sousterrains.
-    \item Les modifications physico-chimiques induites par les espèces exotiques causent une baisse globale de la biodiversité chez les espèces natives du milieu.
-    \item L'impact de ces espèces exotiques sur les émissions de gaz à effet de serre est également sujet à controverse.
+    \item Les vers de terre exotiques (venus d'Europe et d'Asie) sont des espèces invasives suceptibles de perturber les écosystèmes natifs (6e).
+    \item Leur présence dans les sols modifie durablement les propriétés physico-chimiques des écosystèmes sousterrains (7e).
+    \item Les modifications physico-chimiques induites par les espèces exotiques causent une baisse globale de la biodiversité chez les espèces natives du milieu (8e).
+    \item L'impact de ces espèces exotiques sur les émissions de gaz à effet de serre est également sujet à controverse (9e).
 \end{itemize}
 } 
 
 Ce stage s'inscrit dans un projet de recherche visant à étudier la littérature
-scientifique, par des méthodes de web scrapping (sous Python) et de Text Mining
+scientifique, par des méthodes de web scraping (sous Python) et de Text Mining
 (sous R), afin d'analyser la perception du vers de terre dans les 116 abstracts présents dans la base de données et pouvoir proposer une solution argumentée à cette controverse.
 
 \section{Objectifs de mon travail}
@@ -460,10 +463,6 @@ Le matériel qui m'a été fourni par le laboratoire est un ordinateur fixe HP E
 Il est géré par un système d'exploitation Ubuntu 22.04 64-bits (distribution Linux), sous la version 42.9 de GNOME (GNU Network Object Model Environment) fournissant une interface utilisateur ergonomique pour interagir avec le système d'exploitation GNU  (\textit{GNU's Not Unix}). Il est ainsi composé d'un noyeau Linux et de GNU, qui ensemble forment le système d'exploitation communément connu sous le nom "Linux". Le système de fenêtrage est "Wayland", un système chargé de l'affichage et du placement des fenêtres durant l'usage du système d'exploitation par l'utiisateur.
 
 \section{Pratique Professionnelle}
-\noindent
-Donec varius orci eget risus. Duis nibh mi, congue eu, accumsan eleifend,
-sagittis quis, diam. Duis eget
-orci sit amet orci dignissim rutrum
 
 \subsection{Veille bibliographique et technologique}
 \noindent
@@ -471,119 +470,56 @@ Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit,
 vestibulum ut, placerat ac,
 adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu libero,
 nonummy eget, consectetuer
+REVENIR DESSUS APRES LA RÉDACTION DE LA PARTIE "Discussion".
 
 \subsection[Bonnes pratiques]{Bonne pratique de programmation informatique et
     de developpement logiciel}
 \noindent
-En concertation avec mes encadrants, j'ai utilisé un dépôt GitHub spécialement
-mis en place pour le projet entre eux et moi, où mon travail de chaque jour a
-pu être sauvegardé grâce à un mécanisme de Push/Pull. Pour faciliter
-l'utilisation de cet outil, le logiciel GitHub Desktop m'a été présenté, une
-interface utilisateur graphique facilitant grandement la visualisation et
-l'usage du dépôt mis en place pour le projet.
+Pour l'écriture du code Python, j'ai utilisé l'éditeur de code Visual Studio Code (VScode). Pour la conception du script Rmd, j'ai travaillé sous l'IDE RStudio. Conformément aux bonnes pratiques, l'intégralité des scripts (Python et R) ont été commentés en anglais, pour faciliter la relecture du code. Pour tester le fonctionnement de chaque script, deux approches différentes ont été mises en place: 
+\begin{enumerate}
+    \item Pour le script de Web-scraping en Python, les tests de fonctionnement effectués durant le développement ont été réalisées sur des jeux de données réduits (comprenant le plus souvent seulement les dix premiers articles) afin de pouvoir détecter rapidement si la sortie renvoyée est correcte par rapport à la tâche initiale. Pour la récupération de données via Crossref, des tests ont aussi été réalisées, notamment pour l'exploration des structures JSON renvoyées par la fonction works() de l'API. Une fois les données recherchées obtenues en sortie de tests ponctuels, il a été possible de généraliser la méthode, en l'appliquant dans l'ensemble du script principal. Enfin, afin d'éviter la régression du code (perte de fonctionnalité), j'ai souvent travaillé sur deux scripts identiques mais distincts, le premier servant de script principal, tandis que le deuxième était davantage un support pour le développement de nouvelles fonctionnalités. De cette façon, le script principal n'était mis à jour que lorsque le script secondaire était considéré comme fonctionnel. Un dépôt GitHub personnel aurait aussi pu jouer ce rôle, mais comme je travaillais seul sur cette partie, je n'en ai pas ressenti l'utlité.
 
-Grâce à la fonctionnalité Knitr de Rmd, j'ai pu rendre compte de ma progression
-quotidienne en produisant automatiquement un fichier rapport au format HTML,
-directement issue de mon code (figures produites sous R, titres et
-intérprétation rédigées en Markdown).
+    \item Pour le script de Text-mining en Rmd sous RStudio, la plupart des tests de fonctionnement au cours du dévéloppement ont été réalisés dans la console R directement, afin d'éviter d'ajouter de nouveaux objets inutiles "test" à l'environnement R. Les processus n'ont été intégrés au script Rmd proprement dit qu'une fois leur fonctionnement testé et validé dans la console. Dans cette démarche, le fonctionnement de l'environnement R a été très utile, car cela a permis de réemployer certains objets stockés en mémoire sans avoir à les redéfinir seulement pour effectuer le test.
+    
+
+\end{enumerate} 
 
 \subsection{Communication des travaux}
 \noindent
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit,
-vestibulum ut, placerat ac,
-adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu libero,
-nonummy eget, consectetuer
+En concertation avec mes encadrants, j'ai aussi utilisé un dépôt GitHub spécialement
+mis en place pour le projet entre eux et moi, où mon travail de chaque jour a
+pu être sauvegardé grâce à un mécanisme de Push/Pull. De cette façon, mes encadrants ont pu facilement suivre l'évolution de mon travail et évaluer la qualité des solutions proposées.
+
+Pour faciliter l'utilisation de cet outil, le logiciel GitHub Desktop m'a été présenté, une
+interface utilisateur graphique facilitant grandement la visualisation et
+l'usage du dépôt GitHub mis en place pour le projet.
+
+Grâce à la fonctionnalité Knitr de Rmd, j'ai pu rendre compte de ma progression
+quotidienne en produisant automatiquement un fichier rapport au format HTML,
+directement issu de mon code (figures produites sous R, titres et
+intérprétation rédigées en Markdown ou HTML).
+
+Les réunions avec mes encadrants, le plus souvent hebdomadaires, ont été fixées par échange de mails ou bien organisées de vive voix sur site. Elles m'ont permis de rester bien focalisé sur la mission en me fournissant des objectifs hebdomadaires clairs et précis, tout en permettant à mes encadrants d'être régulièrement informés de ma progression par rapport aux objectifs fixés.
 
 \thispagestyle{fancy}
 
 \section[Outils informatiques et statistiques]{Outils informatiques et
   statistiques pour les différentes phases de vos travaux}
-
-\subsection{Récupération des abstracts et métadonnées avec Python}
+  
+\subsection{Récupération des abstracts et des métadonnées avec Python}
 \noindent
-J'ai travaillé sous Python, notamment sous VScode et Spyder (pour le code
-Python). J'ai surtout utilisé le package Python Habanero Crossref pour requêter
-(en utilisant une API) la base de données Crossref, qui contient une grande
+Pour l'élaboration du script Python, j'ai surtout utilisé le package Python Habanero Crossref pour requêter (en utilisant une API) la base de données Crossref, qui contient une grande
 quantité de métadonnées (donnés sur les articles en tant que tel, comme
 l'abstract, les auteurs, etc.), afin de récupérer les informations voulue à
 propos d'un ensemble de titres d'articles scientifiques défini au préalable sur
 le sujet des vers de terre. Pour compléter les données récupérées (la base de
 Crossref comprenant de nombreuses données manquantes), j'ai aussi développé en
 parallèle un module pour récupérer les données d'intérêt dans le code source de
-ResearchGate (web scrapping), comme le \textit{DOI (Digital Object Identifier)}
+ResearchGate (web scraping), comme le \textit{DOI (Digital Object Identifier)}
 de chaque publication, la date de chargement sur la base de RG ou encore le
-lien vers la page RG correspondante.
-
-\subsection{Text Mining avec R}
-\noindent
-Pour réaliser le text-mining, j'ai utilisé un script R (développé sous Rstudio
-en Rmd) pour traiter le texte et l'analyser sous forme de figures. L'approche
-choisie est une approche "tidy" reposant sur la \textit{tokenisation} du corpus
-de texte en unitées textuelles (appelées \textit{"tokens"}) plus petite, comme
-des mots, des phrases ou des \textit{n-grams}. J'ai pour cela pu m'inspirer du
-livre rédigé par Julia Slige (data scientist) et David Robinson (Directeur de
-Data Scientist de la plateforme Heap), disponible en ligne à l'adresse:
-https://www.tidytextmining.com/. Mon travail a donc consisté à adapter les
-codes R montrés en exemple sur des livres à mes propres données (abstracts
-d'articles scientifiques), structurées différemment. Les analyses portaient par
-exemple sur la fréquence des mots, au global et pour chaque MA, ou encore sur
-l'analyse de sentiment (Pour répondre à la question : Quel est le sentiment
-global exprimé par le texte à la lecture ?), reposant sur l'attribution d'un
-score positif (+1) ou négatif (-1) à chaque mot du corpus. Cette attribution de
-sentiment a pu être réalisée grâce à un dictionnaire R conçu pour relier un
-token donné à la valence (positive ou négative) qui lui correspond. Afin de
-mieux visualiser les résultats, différentes figures ont été réalisées, comme
-des diagrammes en barre ou des nuages de mots.
-
-Afin de filtrer les mots d'intérêt seulement, deux stratégies ont été
-employées: Premièrement, un filtrage brut de tous les mots de liaisons sans
-rapport direct avec le sujet (nommés "stop words" en text-mining, des mots tels
-que "the", "and", "is", "of" etc. en anglais) pour ne conserver que les mots
-sur lesquels les analyses pourront donner des résultats scientifiques
-significatifs (savoir que le mot "le" est le plus fréquent dans un corpus de
-texte français ne signifie rien sur le plan biologique). Deuxièmement, une
-autre approche a été de considérer la fréquence de chaque mot par rapport au
-nombre total de mots présents dans le corpus (n mot / N mots). De cette façon,
-les mots les plus fréquents perdent une partie de leur poids statistique, tandis que les mots plus rares en gagnent. On peut ainsi visualiser facilement les mots les plus importants d'un texte, sans même
-avoir besoin de modifier les données au préalable avec une liste de stop words.
-Cela permet de conserver le texte dans son ensemble, évitant ainsi un potentiel
-biais pouvant perturber l'analyse.
-
-\subsection{Ressource 3}
-\noindent
-
-\subsection{Ressource 4}
-\noindent
-
-\section{Données}
-\noindent
-
-\subsection{Données 1}
-\noindent
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit,
-vestibulum ut, placerat ac,
-
-\subsection{Données 2}
-\noindent
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit,
-vestibulum ut, placerat ac,
-
-\subsection{Données 3}
-\noindent
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit,
-vestibulum ut, placerat ac,
-
-\chapter{\label{Troisième Chapitre}Résultats}
-
-\section{Choix et sélection des outils}
-\noindent
-Pour déveloper mon code de Web scrapping comme ma mission l'exigeait, j'ai
-utilisé Python, la langage de scripts avec lequel je suis le plus à l'aise.
-
-\vspace{\baselineskip}
+lien vers la page RG correspondante. Pour parvenir à cette solution, voici la liste des modules qui ont été utilisés:
 
 \noindent
-\underline{Modules employés pour l'élaboration du code Python:}
 
 \begin{description}
     \item[Pandas:] Pandas est un module qui permet de manipuler facilement des
@@ -620,11 +556,11 @@ utilisé Python, la langage de scripts avec lequel je suis le plus à l'aise.
         seule la méthode works() a été employée pour envoyer une requête à partir du
         titre de chaque article.
 
-    \item[Unidecode:] Module contenant des fonctions (comme la fonction éponyme
-        'unidecode' employée dans le script) conçue pour transformer les chaînes de
+    \item[Unidecode:] Module contenant entre autres la fonction éponyme
+        \textit{unidecode} (employée dans le script) conçue pour transformer les chaînes de
         caractères contenant des caractères non-ASCII (comme par exemple des
         idéogrammes chinois) pour les traduire en chaînes de caractères contenant
-        uniquement des caractères ASCII. Dans le code, la méthode \textit{unidecode}
+        uniquement des caractères ASCII. Dans le code, la fonction \textit{unidecode}
         est employée pour rendre l'affichage des noms d'auteur contenant des caractères
         non-ASCII. Certaines corrections sont imparfaites et retirent quelques lettres.
 
@@ -640,7 +576,7 @@ utilisé Python, la langage de scripts avec lequel je suis le plus à l'aise.
         \item Module \textbf{Parsel}, fonction \textit{Selector}: Module
                 facilitant l'extraction des données pour les formats HTML, JSON et XML. Dans le
                 code, il est utilisé pour trouver les données recherchées directement dans le
-                code source de la page (web scrapping) en s'appuyant sur des sélecteurs CSS.
+                code source de la page (web scraping) en s'appuyant sur des sélecteurs CSS.
                 \vspace{\baselineskip}
         \item Module \textbf{playwright.sync\_api}, fonction
                 \textit{sync\_playwright}: Module permettant de lancer une session navigateur
@@ -652,7 +588,7 @@ utilisé Python, la langage de scripts avec lequel je suis le plus à l'aise.
                 expressions rationnelles utilisable dans un code Python, ce qui peut s'avérer
                 nécessaire pour sélectionner très précisément les informations voulues dans une
                 structure de données complexes. Dans le code Python, il est utilisé pour
-                filtrer les résultats HTML bruts issus du Web scrapping.
+                filtrer les résultats HTML bruts issus du Web scraping.
                 \vspace{\baselineskip}
         \item Module \textbf{time}, fonction \textit{sleep}: Module
                 fournissant différentes fonctions liées au temps. Dans le script, la fonction
@@ -662,28 +598,76 @@ utilisé Python, la langage de scripts avec lequel je suis le plus à l'aise.
     \end{enumerate}
 
 \end{description}
-        \vspace{\baselineskip}
-        \noindent
-        Dans un deuxième temps, pour déveloper mon code de text mining comme ma
-        mission l'exigeait, j'ai utilisé R, la langage informatique utilisé dans le
-        livre qui m'a été fourni en exemple.
 
-        \vspace{\baselineskip}
-        \noindent
-        \underline{Modules employés pour l'élaboration du code R:}
-\begin{description}
-    \item[Librairie dplyr:] Librairie R conçue pour faciliter la manipulation de larges jeux de données (DataFrame et Tibble), avec des fonctions spacialisées comme \textit{mutate} (ajout de variables), \textit{select} (sélectionner les variables à partir de leurs noms), \textit{filter} (filtrer des cellules selon leur valeur), \textit{summarise} (résumer les informations d'un tibble dans un format très synthétique) et \textit{arrange} (pour réordonner les lignes selon l'ordre / la variable voulue.)
-    \item[Librairie ggplot2:] Librairie R pour créer déclarativement des graphiques divers et variés (barplots, histogrammes, scatter plots, etc.)
-    \item[Librairie tidytext:] Librairie R conçue pour faciliter l'analyse de texte (Silge, Julia, and David Robinson. 2016. "tidytext: Text Mining and Analysis Using Tidy Data Principles in R."\footnote{ref Silge/Robinson à mettre à la place}), se fondant sur le paradigme d'analyse de données "tidy", où chaque variable est une colonne, chaque observation une ligne et chaque ensemble d'observations est un tableau. La fonction la plus utilisée dans le cadre de cette analyse est \textit{unnest\_tokens}, qui permet de transformer un texte donné en une tables d'unités textuelles plus réduites (tokens), comme des phrases ou des mots.
-    \item[Librairie Knitr:] Librairie R conçue pour récupérer automatiquement l'output d'un code R (par exemple, pour produire une figure) afin de l'inclure dans un autre document (par exemple, format Word, HTML ou PDF) qui contiendra aussi la prose écrite par l'auteur du document, souvent pour interpréter ou commenter des résultats. Cette librairie permet notamment de moduler plus finement l'affichage des résultats, en permettant par exemple de ne pas afficher certaines figures dans un format de sortie donné (pour masquer une figure interactive au format HTML que l'on ne souhaite pas forcément voir apparaître dans un document PDF, par exemple).
-    \item[Librairie SnowballC:] Librairie R implémentant Snowball, un langage conçu pour gérer les chaînes de caractères, les nombres entiers et les booléens. Dans le script R de Text Mining, il a surtout servi à transformer les tokens pour ne garder que la racine de chaque mot (processus de \textit{racination}), afin de ne compter qu'un seul exemplaire de chaque mot (si, pour un humain, "enhance" et "enhancement" sont deux mots ayant approximativement le même sens, informatiquement ce sont deux chaînes de caractères distinctes).
-    \item[Librairie grid:] Librarie R implémentant les fonctions graphiques primitives qui sous-tendent le package ggplot2. Elles permettent de modifier certains détails des graphes produits grâce à ggplot2, offrant ainsi un meilleur contrôle du rendu visuel du résulat obtenu. Dans le script, il est employé, par exemple, pour spécifier exactement l'aspect des flèches composant le réseau de bigrammes. 
-    \item[Librairie ggraph:] Librairie R formant une extension de ggplot2, conçue pour permettre de supporter les structures de données relationnelles comme les réseaux, les graphes et les arbres. Dans le script, elle est notamment employée pour produire les réseaux de bigrammes.
-    \item[Librairie igraph:] fonction \textit{graph\_from\_data\_frame():} Cette fonction appartient à la librairie igraph. Elle crée un objet graphe à partir d'un data frame, où le data frame représente les arêtes entre les nœuds.
-    \item[Librairie egg:] fonction \textit{ggarrange():} Librairie servant à organiser différents graphes sur une seule et même figure. Dans le script, c'est l'une des librairies employées pour comparer les quatre MA entre elles.
-    \item[Librairie tidyr:] Librairie R implémentant des méthodes utiles pour manipuler des objets de type "tidy". Elle comprend des fonction telles que \textit{pivot\_wider} et \textit{pivot\_longer} (pour convertir le dataFrame d'un format "wide" en format "long"), ou encore \textit{bind\_rows()}, pour combiner des DataFrames par lignes.
-\end{description}
+\subsection{Text Mining avec R}
 \noindent
+Pour réaliser le text-mining, j'ai utilisé un script R (développé sous Rstudio
+en Rmd) pour traiter le texte et l'analyser sous forme de figures. L'approche
+choisie est une approche "tidy" reposant sur la \textit{tokenisation} du corpus
+de texte en unitées textuelles (appelées \textit{"tokens"}) plus petite, comme
+des mots, des phrases ou des \textit{n-grams}. J'ai pour cela pu m'inspirer du
+livre rédigé par Julia Slige (data scientist) et David Robinson (Directeur de
+Data Scientist de la plateforme Heap), disponible en ligne à l'adresse:
+https://www.tidytextmining.com/. Mon travail a donc consisté à adapter les
+codes R montrés en exemple sur des livres à mes propres données (abstracts
+d'articles scientifiques), structurées différemment. Les analyses portaient par
+exemple sur la fréquence des mots, au global et pour chaque MA, ou encore sur
+l'analyse de sentiment (Pour répondre à la question : Quel est le sentiment
+global exprimé par le texte à la lecture ?), reposant sur l'attribution d'un
+score positif (+1) ou négatif (-1) à chaque mot du corpus. Cette attribution de
+sentiment a pu être réalisée grâce à un dictionnaire R conçu pour relier un
+token donné à la valence (positive ou négative) qui lui correspond. Afin de
+mieux visualiser les résultats, différentes figures ont été réalisées, comme
+des diagrammes en barre ou des nuages de mots.
+
+Afin de filtrer les mots d'intérêt seulement, deux stratégies ont été
+employées: Premièrement, un filtrage brut de tous les mots de liaisons sans
+rapport direct avec le sujet (nommés "stop words" en text-mining, des mots tels
+que "the", "and", "is", "of" etc. en anglais) pour ne conserver que les mots
+sur lesquels les analyses pourront donner des résultats scientifiques
+significatifs (savoir que le mot "le" est le plus fréquent dans un corpus de
+texte français ne signifie rien sur le plan biologique). Deuxièmement, une
+autre approche a été de considérer la fréquence de chaque mot par rapport au
+nombre total de mots présents dans le corpus (n mot / N mots). De cette façon,
+les mots les plus fréquents perdent une partie de leur poids statistique, tandis que les mots plus rares en gagnent. On peut ainsi visualiser facilement les mots les plus importants d'un texte, sans même
+avoir besoin de modifier les données au préalable avec une liste de stop words.
+Cela permet de conserver le texte dans son ensemble, évitant ainsi un potentiel
+biais pouvant perturber l'analyse. Le script R développé repose sur les librairies suivantes:
+
+  \begin{description}
+      \item[Librairie dplyr:] Librairie R conçue pour faciliter la manipulation de larges jeux de données (DataFrame et Tibble), avec des fonctions spacialisées comme \textit{mutate} (ajout de variables), \textit{select} (sélectionner les variables à partir de leurs noms), \textit{filter} (filtrer des cellules selon leur valeur), \textit{summarise} (résumer les informations d'un tibble dans un format très synthétique) et \textit{arrange} (pour réordonner les lignes selon l'ordre / la variable voulue.)
+      \item[Librairie ggplot2:] Librairie R pour créer déclarativement des graphiques divers et variés (barplots, histogrammes, scatter plots, etc.)
+      \item[Librairie tidytext:] Librairie R conçue pour faciliter l'analyse de texte (Silge, Julia, and David Robinson. 2016. "tidytext: Text Mining and Analysis Using Tidy Data Principles in R."\footnote{ref Silge/Robinson à mettre à la place}), se fondant sur le paradigme d'analyse de données "tidy", où chaque variable est une colonne, chaque observation une ligne et chaque ensemble d'observations est un tableau. La fonction la plus utilisée dans le cadre de cette analyse est \textit{unnest\_tokens}, qui permet de transformer un texte donné en une tables d'unités textuelles plus réduites (tokens), comme des phrases ou des mots.
+      \item[Librairie Knitr:] Librairie R conçue pour récupérer automatiquement l'output d'un code R (par exemple, pour produire une figure) afin de l'inclure dans un autre document (par exemple, format Word, HTML ou PDF) qui contiendra aussi la prose écrite par l'auteur du document, souvent pour interpréter ou commenter des résultats. Cette librairie permet notamment de moduler plus finement l'affichage des résultats, en permettant par exemple de ne pas afficher certaines figures dans un format de sortie donné (pour masquer une figure interactive au format HTML que l'on ne souhaite pas forcément voir apparaître dans un document PDF, par exemple).
+      \item[Librairie SnowballC:] Librairie R implémentant Snowball, un langage conçu pour gérer les chaînes de caractères, les nombres entiers et les booléens. Dans le script R de Text Mining, il a surtout servi à transformer les tokens pour ne garder que la racine de chaque mot (processus de \textit{racination}), afin de ne compter qu'un seul exemplaire de chaque mot (si, pour un humain, "enhance" et "enhancement" sont deux mots ayant approximativement le même sens, informatiquement ce sont deux chaînes de caractères distinctes).
+      \item[Librairie grid:] Librarie R implémentant les fonctions graphiques primitives qui sous-tendent le package ggplot2. Elles permettent de modifier certains détails des graphes produits grâce à ggplot2, offrant ainsi un meilleur contrôle du rendu visuel du résulat obtenu. Dans le script, il est employé, par exemple, pour spécifier exactement l'aspect des flèches composant le réseau de bigrammes. 
+      \item[Librairie ggraph:] Librairie R formant une extension de ggplot2, conçue pour permettre de supporter les structures de données relationnelles comme les réseaux, les graphes et les arbres. Dans le script, elle est notamment employée pour produire les réseaux de bigrammes.
+      \item[Librairie igraph:] fonction \textit{graph\_from\_data\_frame():} Cette fonction appartient à la librairie igraph. Elle crée un objet graphe à partir d'un data frame, où le data frame représente les arêtes entre les nœuds.
+      \item[Librairie egg:] fonction \textit{ggarrange():} Librairie servant à organiser différents graphes sur une seule et même figure. Dans le script, c'est l'une des librairies employées pour comparer les quatre MA entre elles.
+      \item[Librairie tidyr:] Librairie R implémentant des méthodes utiles pour manipuler des objets de type "tidy". Elle comprend des fonction telles que \textit{pivot\_wider} et \textit{pivot\_longer} (pour convertir le dataFrame d'un format "wide" en format "long"), ou encore \textit{bind\_rows()}, pour combiner des DataFrames par lignes.
+  \end{description}
+  \noindent
+
+\section{Données}
+\noindent
+
+\subsection{Données 1}
+\noindent
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit,
+vestibulum ut, placerat ac,
+
+\subsection{Données 2}
+\noindent
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit,
+vestibulum ut, placerat ac,
+
+\subsection{Données 3}
+\noindent
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit,
+vestibulum ut, placerat ac,
+
+\chapter{\label{Troisième Chapitre}Résultats}
+\section{Choix et sélection des outils}
 
 \section{Installation et test des outils}
 
@@ -701,7 +685,7 @@ utilisé Python, la langage de scripts avec lequel je suis le plus à l'aise.
 %\paragraph{Paragraphe}
 \noindent
 Au cours de ce stage, j'ai commencé par développer un programme Python pour le
-web scrapping sur la base de données médicale PubMed, avant de découvrir que ce
+web scraping sur la base de données médicale PubMed, avant de découvrir que ce
 n'était pas selon dont nous avions besoin. J'ai donc réussi à m'adapter pour
 faire fonctionner mon code (en interrogeant une autre base de données), mais il
 reste encore à nettoyer les données extraites par le code (collectées
@@ -748,19 +732,13 @@ de départ de nouveaux travaux. Il n'y a pas a priori d'appel à des référence
 \end{center}
 
 \vspace{1cm}
-En résumé, ce stage m’a permis d'apprendre les bases du web scrapping
-automatisé avec Python (pour la veille bibliographique) et du Text Mining avec
-R pour chercher automatiquement des mots clés d'intérêt dans la littérature.
-Cela m'a également permis de prendre conscience que même au sein de la
-communauté scientifique, la perception d'un même sujet (ici, le vers de terre),
-peut-être totalement différente, voire opposée, d'un pays à l'autres.
-
+à faire à la fin
 \vspace{\baselineskip} % Sauter une ligne
 \par
-\textbf{Mots-clés de référencement type MESH :}
+\textbf{Mots-clés de référencement type MESH:} Lumbricus terrestris, Soil, Ecosystem, Introduced species, Meta-Analysis.
 \vspace{\baselineskip} % Sauter une ligne
 \par
-\textbf{Mots-clés des acquis techniques : }
+\textbf{Mots-clés des acquis techniques:} Web-scraping, Text-mining, dplyr, R Markdown, GitHub.
 
 \end{document}
 

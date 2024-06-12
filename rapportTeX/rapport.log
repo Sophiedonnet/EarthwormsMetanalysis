@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.5.28)  10 JUN 2024 17:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.5.28)  12 JUN 2024 17:56
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -622,17 +622,17 @@ LaTeX Info: Redefining \nameref on input line 51.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<univ.png, id=131, 1505.625pt x 1493.58pt>
+<univ.png, id=123, 1505.625pt x 1493.58pt>
 File: univ.png Graphic file (type png)
 <use univ.png>
 Package pdftex.def Info: univ.png  used on input line 68.
 (pdftex.def)             Requested size: 57.34299pt x 56.9055pt.
-<URN_NU_ST.jpg, id=133, 1204.5pt x 196.735pt>
+<URN_NU_ST.jpg, id=125, 1204.5pt x 196.735pt>
 File: URN_NU_ST.jpg Graphic file (type jpg)
 <use URN_NU_ST.jpg>
 Package pdftex.def Info: URN_NU_ST.jpg  used on input line 70.
 (pdftex.def)             Requested size: 261.2966pt x 42.67912pt.
-<logos.png, id=134, 619.989pt x 128.553pt>
+<logos.png, id=126, 619.989pt x 128.553pt>
 File: logos.png Graphic file (type png)
 <use logos.png>
 Package pdftex.def Info: logos.png  used on input line 129.
@@ -640,17 +640,17 @@ Package pdftex.def Info: logos.png  used on input line 129.
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./univ.png> <./URN_NU_ST.jpg> <./logos.png>] [2]
-<univBW.png, id=150, 1505.625pt x 1493.58pt>
+<univBW.png, id=142, 1505.625pt x 1493.58pt>
 File: univBW.png Graphic file (type png)
 <use univBW.png>
 Package pdftex.def Info: univBW.png  used on input line 144.
 (pdftex.def)             Requested size: 57.34299pt x 56.9055pt.
-<URN_NU_ST_BW.png, id=151, 1204.5pt x 196.735pt>
+<URN_NU_ST_BW.png, id=143, 1204.5pt x 196.735pt>
 File: URN_NU_ST_BW.png Graphic file (type png)
 <use URN_NU_ST_BW.png>
 Package pdftex.def Info: URN_NU_ST_BW.png  used on input line 146.
 (pdftex.def)             Requested size: 261.2966pt x 42.67912pt.
-<logosBW.png, id=152, 280.32pt x 58.035pt>
+<logosBW.png, id=144, 280.32pt x 58.035pt>
 File: logosBW.png Graphic file (type png)
 <use logosBW.png>
 Package pdftex.def Info: logosBW.png  used on input line 205.
@@ -702,22 +702,22 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.1638pt}.
 
 [8]
-Overfull \hbox (7.04185pt too wide) in paragraph at lines 319--322
+Overfull \hbox (7.04185pt too wide) in paragraph at lines 320--323
 []\T1/cmr/m/n/12 Un bot informatique est un agent logiciel automatique ou semi-automatique qui interagit
  []
 
 
-Underfull \hbox (badness 1509) in paragraph at lines 337--338
+Underfull \hbox (badness 1509) in paragraph at lines 340--341
 []\T1/cmr/m/n/12 Figure permettant de visualiser toutes les relations entre les
  []
 
 
-Underfull \hbox (badness 1072) in paragraph at lines 339--342
+Underfull \hbox (badness 1072) in paragraph at lines 342--345
 []\T1/cmr/m/n/12 Les sélecteurs définissent les éléments sur lesquelles s'applique un
  []
 
 
-Underfull \hbox (badness 1264) in paragraph at lines 357--361
+Underfull \hbox (badness 1264) in paragraph at lines 360--364
 \T1/cmr/m/n/12 d'informations d'un site Web, sans intervention humaine directe, via un script
  []
 
@@ -725,53 +725,75 @@ Underfull \hbox (badness 1264) in paragraph at lines 357--361
 
 ] [10]
 Chapitre 1.
-<organigrammeEquipe.png, id=245, 1625.07124pt x 1135.24126pt>
+<organigrammeEquipe.png, id=235, 1625.07124pt x 1135.24126pt>
 File: organigrammeEquipe.png Graphic file (type png)
 <use organigrammeEquipe.png>
-Package pdftex.def Info: organigrammeEquipe.png  used on input line 386.
+Package pdftex.def Info: organigrammeEquipe.png  used on input line 389.
 (pdftex.def)             Requested size: 455.24408pt x 318.02129pt.
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.391 \newpage
+l.394 \newpage
                [1
 
  <./organigrammeEquipe.png>]
-Underfull \hbox (badness 6063) in paragraph at lines 393--400
+Underfull \hbox (badness 6063) in paragraph at lines 396--403
 \T1/cmr/m/n/12 sélection de modèle...), et algorithmiques (généralisation, transfert de domaine,
  []
 
 
-Underfull \hbox (badness 3977) in paragraph at lines 393--400
+Underfull \hbox (badness 3977) in paragraph at lines 396--403
 \T1/cmr/m/n/12 représentation des connaissances). L'unité développe des méthodes statistiques et
+ []
+
+
+Underfull \hbox (badness 1072) in paragraph at lines 421--422
+[]\T1/cmr/m/n/12 Ils favorisent le recyclage des éléments nutritifs, du carbone, et du phosphore.
  []
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.446 
+l.449 
        [2]pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.453 \chapter
+l.456 \chapter
               [Ressources]{\label{Second Chapitre}Ressources: pratiques [3]pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.453 \chapter
+l.456 \chapter
               [Ressources]{\label{Second Chapitre}Ressources: pratiques [4
 
 ]
 Chapitre 2.
 [5]
-Underfull \hbox (badness 1168) in paragraph at lines 538--551
+Underfull \hbox (badness 1152) in paragraph at lines 482--483
+[]\T1/cmr/m/n/12 Pour le script de Text-mining en Rmd sous RStudio, la plupart des tests de
+ []
+
+
+Underfull \hbox (badness 1253) in paragraph at lines 482--483
+\T1/cmr/m/n/12 fonctionnement au cours du dévéloppement ont été réalisés dans la console R
+ []
+
+[6] [7]
+Underfull \hbox (badness 1168) in paragraph at lines 623--636
 []\T1/cmr/m/n/12 Afin de filtrer les mots d'intérêt seulement, deux stratégies ont été employées :
  []
 
-[6] [7] [8
+[8] [9] [10]
+Chapitre 3.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 12.1638pt, for example:
+(fancyhdr)                \setlength{\headheight}{12.1638pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-0.1638pt}.
+
+[11
 
 ]
-Chapitre 3.
-[9]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 12.1638pt, for example:
@@ -779,62 +801,43 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-0.1638pt}.
 
-[10]
-Underfull \vbox (badness 6842) has occurred while \output is active []
+[12
 
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 12.1638pt, for example:
-(fancyhdr)                \setlength{\headheight}{12.1638pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-0.1638pt}.
-
-[11]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 12.1638pt, for example:
-(fancyhdr)                \setlength{\headheight}{12.1638pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-0.1638pt}.
-
-[12]
+]
 Chapitre 4.
 
 Package lipsum Warning: Unknown language 'latin'. Hyphenation patterns for
 (lipsum)                'french' will be used instead.
 
-[13
-
-] [14
+[13] [14
 
 ]
 Chapitre 5.
 [15]
 No file rapport.bbl.
 
-LaTeX Warning: Citation `clef1' on page 16 undefined on input line 732.
+LaTeX Warning: Citation `clef1' on page 16 undefined on input line 716.
 
 [16] [17] [18] (./rapport.aux)
 
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `rapport.out' has not changed.
-(rerunfilecheck)             Checksum: 954D1381E0580A1EA2BA397DBA713E26;5063.
+(rerunfilecheck)             Checksum: 9A851D76FE0410B98C418BE531D98D62;4846.
  ) 
 Here is how much of TeX's memory you used:
- 20444 strings out of 480247
- 354364 string characters out of 5896106
- 787840 words of memory out of 5000000
- 38000 multiletter control sequences out of 15000+600000
+ 20442 strings out of 480247
+ 354308 string characters out of 5896106
+ 786841 words of memory out of 5000000
+ 37998 multiletter control sequences out of 15000+600000
  482069 words of font info for 53 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 91i,11n,91p,1317b,497s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 91i,11n,91p,1360b,629s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2488.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfcc1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on rapport.pdf (32 pages, 1134515 bytes).
+Output written on rapport.pdf (32 pages, 1135881 bytes).
 PDF statistics:
- 401 PDF objects out of 1000 (max. 8388607)
- 326 compressed objects within 4 object streams
+ 393 PDF objects out of 1000 (max. 8388607)
+ 318 compressed objects within 4 object streams
  67 named destinations out of 1000 (max. 500000)
- 292 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 276 words of extra memory for PDF output out of 10000 (max. 10000000)
 
