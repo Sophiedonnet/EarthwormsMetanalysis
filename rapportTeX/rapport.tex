@@ -14,6 +14,8 @@
 \usepackage{adjustbox}
 \usepackage{hyperref}
 \usepackage{enumitem}
+\usepackage{float}
+\usepackage{cleveref}
 
 \pagestyle{fancy}
 \fancyhf{} % Efface tous les en-têtes et pieds de page actuels
@@ -386,14 +388,12 @@ appliqués), à l'INRAE du Campus Agro Paris Saclay, sur le plateau de Saclay. L
 
 \begin{figure}[h] %le h entre crochet signifie je veux la figure à cet emplacement
     \begin{center} %centrer la figure
-        \includegraphics[width=16cm]{organigrammeEquipe.png}
-        \caption{Organigramme de l'UMR MIA Paris-Saclay}
+        \includegraphics[width=12cm]{organigrammeEquipe.png}
+        \caption{Organigramme de l'UMR MIA Paris-Saclay}\label{fig_organigrame}
         %legende
     \end{center}
 \end{figure}
-\newpage
-
-Les compétences mises en oeuvre portent sur les méthodes d’inférences statistiques (modèles complexes, modèles à variables latentes, inférence bayésienne, apprentissage, sélection de modèle…), et algorithmiques \sloppy (généralisation, transfert de domaine, représentation des connaissances). L’unité développe des méthodes statistiques et informatiques originales, génériques ou motivées par des problèmes précis en science du vivant. Ses activités s’appuient sur une bonne culture dans les disciplines destinatrices: écologie, environnement, agro-alimentaire, biologie moléculaire et biologie des systèmes.
+Les compétences mises en oeuvre portent sur les méthodes d’inférences statistiques et algorithmiques. L’unité développe des méthodes statistiques et informatiques originales, génériques ou motivées par des problèmes précis en science du vivant. Ses activités s’appuient sur une bonne culture dans les disciplines destinatrices: écologie, environnement, agro-alimentaire, biologie moléculaire et biologie des systèmes.
 L'unité MIA est dirigée par Julien CHIQUET et Sophie
 DONNET, et comprends deux équipes distinctes: l'équipe SOLsTIS (Statistical
 mOdeling and Learning for environnemenT and Life Science) dirigée par Sophie
@@ -401,7 +401,7 @@ DONNET et Pierre BARBILLON, et l'équipe EkiNocs (Expert Knowledge, INteractive
 modelINg for understandINg and decisiOn makINg in dINamic Complexe Systems),
 dirigée par Antoine CORNU\'{E}JOLS.
 
-En tant que stagiaire, j'ai ainsi pu intégrer SOLsTIS pour mettre au point des
+En tant que stagiaire, j'ai ainsi pu intégrer SOLsTIS (\cref{fig_organigrame}) pour mettre au point des
 méthodes informatiques et statistiques pour l'analyse textuelle d'abstracts
 d'articles scientifiques. L'unité comprends 63 membres tous statuts et équipes
 confondus, dont 40 appartiennent à l'équipe SOLsTIS, 19 à l'équipe EkiNocs et 4
@@ -412,16 +412,16 @@ membres d'appui.
 \section{Contexte Scientifique}
 
 \noindent
-Selon la perception des spécialistes du sujet en Europe, les services écosystémiques rendus par les vers de terre sont multiples:
+Selon la perception des spécialistes du sujet en Europe, les services écosystémiques rendus par les vers de terre sont multiples (\cref{fig_wormsservices})\cite{11_EW_benefits_summary}:
 
 {
 \renewcommand{\labelitemi}{\textbullet}
 \begin{itemize}
-    \item Ils permettent une meilleure aération des sols. (PREMIERE REF DU BIBTEX)
-    \item Ils favorisent le recyclage des éléments nutritifs, du carbone, et du phosphore. (DEUXIEME REF DU BIBTEX)
-    \item Ils jouent un rôle important dans le recyclage de la matière organique des sols (3e).
-    \item Leur activité de décomposeurs (minéralisation de la matière organique) favorise la croissance d'autres organismes de l'environment, augmentant de ce fait la productivité des plantes (4e).
-    \item Ils sont essentiels pour la structuration, l’entretien et la productivité des sols, forestiers, prairiaux et agricoles (5e).
+    \item Ils permettent une meilleure aération des sols (\cite{1_aeration_sols}).
+    \item Ils favorisent le recyclage des éléments nutritifs, du carbone, et du phosphore (\cite{2_recyclage_elements_nutri}).
+    \item Ils jouent un rôle important dans le recyclage de la matière organique des sols (\cite{3_recyclage_matiere_orga}).
+    \item Leur activité de décomposeurs (minéralisation de la matière organique) favorise la croissance d'autres organismes de l'environment, augmentant de ce fait la productivité des plantes (\cite{4_augmentation_productivite_revue}).
+    \item Ils sont essentiels pour la structuration, l’entretien et la productivité des sols, forestiers, prairiaux et agricoles (\cite{5_structuration_des_sols}).
 \end{itemize}
 } % the "%" aims to define an environment where bullets are set to textbullet.
 
@@ -431,25 +431,38 @@ Cependant, la perception des vers de terre en Amérique du Nord est très diffé
 {
 \renewcommand{\labelitemi}{\textbullet}
 \begin{itemize}
-    \item Les vers de terre exotiques (venus d'Europe et d'Asie) sont des espèces invasives suceptibles de perturber les écosystèmes natifs (6e).
-    \item Leur présence dans les sols modifie durablement les propriétés physico-chimiques des écosystèmes sousterrains (7e).
-    \item Les modifications physico-chimiques induites par les espèces exotiques causent une baisse globale de la biodiversité chez les espèces natives du milieu (8e).
-    \item L'impact de ces espèces exotiques sur les émissions de gaz à effet de serre est également sujet à controverse (9e).
+    \item Les vers de terre exotiques (venus d'Europe et d'Asie) sont des espèces invasives suceptibles de perturber les écosystèmes natifs (\cite{6_invasion_vers_de_terre}). Voir \cref{fig_wormmap}.\footnote{\textbf{Noir}: stations où Lumbricus rubelus a été retrouvée / \textbf{Gris}: stations où une autre espèce que Lumbricus rubelus a été retrouvée / \textbf{Blanc}: Station où aucune données n'est disponible (image: https://daphnia.ecology.uga.edu/drakelab/?p=318).}
+    \item Leur présence dans les sols modifie durablement les propriétés physico-chimiques des écosystèmes sousterrains (\cite{7_EW_change_soil_chemical_properties}).
+    \item Les modifications physico-chimiques induites par les espèces exotiques causent une baisse globale de la biodiversité chez les espèces natives du milieu (\cite{8_EW_erode_soil_biodiversity}).
+    \item L'impact de ces espèces exotiques sur les émissions de gaz à effet de serre est également sujet à controverse (\cite{9_EW_effet_serre,10_EW_pas_effet_de_serre}).
 \end{itemize}
-} 
+}
 
-Ce stage s'inscrit dans un projet de recherche visant à étudier la littérature
-scientifique, par des méthodes de web scraping (sous Python) et de Text Mining
-(sous R), afin d'analyser la perception du vers de terre dans les 116 abstracts présents dans la base de données et pouvoir proposer une solution argumentée à cette controverse.
+\begin{figure}[h] %le h entre crochet signifie je veux la figure à cet emplacement
+    \begin{center} %centrer la figure
+        \includegraphics[width=5cm]{EW_services.png}
+        \caption{Les services écosystémiques rendus par les vers de terre}\label{fig_wormsservices}
+        %legende
+    \end{center}
+\end{figure}
+
+\begin{figure}[H] %le h entre crochet signifie je veux la figure à cet emplacement
+    \begin{center} %centrer la figure
+        \includegraphics[width=7cm]{worm-map.png}
+        \caption{Distribution régionale de Lumbricus rubelus (espèce exotique) aux USA}\label{fig_wormmap}
+        %legende
+    \end{center}
+    
+\end{figure}
 
 \section{Objectifs de mon travail}
 
 \noindent
-Ma mission reposant principalement sur de l'analyse textuelle, mon premier objectif a été de réunir, si possible automatiquement, l'ensemble des métadonnées disponibles à propos des articles mis à ma disposition pour réaliser l'analyse. Ces métadonnées comprennent par exemple l'abstract (le plus important pour le Text-mining), les auteurs, la date de publication, le DOI (\textit{Digital Object Identifier}) ou encore le lien vers la page ResearchGate correspondante. Une fois cette base de données correctement établie et complétée (parfois manuellement), il a été possible de passer à l'étape d'analyse proprement dite, à travers l'élaboration d'un script de Text-mining.
+Ma mission reposant principalement sur de l'analyse textuelle, mon premier objectif a été de réunir, si possible automatiquement(par web-scraping), l'ensemble des métadonnées disponibles à propos des articles mis à ma disposition. Ces métadonnées comprennent par exemple l'abstract (le plus important pour le Text-mining), les auteurs, la date de publication, le DOI (\textit{Digital Object Identifier}) ou encore le lien vers la page ResearchGate correspondante.
 
-Le script de Text-mining a été conçu dans le but de transformer les données lisibles par un humain dans le corpus de texte (mots, phases, paragraphes) en données statistiques analysables automatiquement par ordinateur. Pour cela, le corpus a donc été transformé en tibble (table de données R) contenant différents types de \textit{tokens} (principalement des mots et des n-grams) aisément quantifiables, et donc, représentables sous formes de figures mathématiques. Ainsi, des informations comme la fréquence globale des mots, les mots les plus fréquents à l'intérieur de chaque métaanalyse, en encore la composition de chaque bigrammes (groupes de deux mots), entre autres, permettent une bonne compréhension générale du sujet, mais aussi de l'avis scientifique émis par chaque groupe d'auteurs au sujet des vers de terre. Par ailleurs, l'aspect quantitatif de l'analyse permet de s'affranchir en partie du ressenti subjectif qui vient inévitablement lors de la lecture et l'interprétation d'un texte. En automatisant totalement le calcul de ressenti, il devient alors possible de tirer des conclusions d'odre statistique, reposant uniquement sur des scores chiffrés calculés informatiquement.
+Le script de Text-mining a pour but de transformer les données lisibles par un humain dans le corpus de texte (mots, phases, paragraphes) en données statistiques analysables automatiquement par ordinateur. Pour cela, le corpus a donc été transformé en tibble (table de données R) contenant différents types de \textit{tokens} (principalement des mots et des n-grams) aisément quantifiables, et donc, représentables sous formes de figures mathématiques. Ainsi, des informations comme la fréquence globale des mots, les mots les plus fréquents à l'intérieur de chaque métaanalyse, en encore la composition de chaque bigrammes (groupes de deux mots), entre autres, permettent une bonne compréhension générale du sujet, mais aussi de l'avis scientifique émis par chaque groupe d'auteurs au sujet des vers de terre. Par ailleurs, l'aspect quantitatif de l'analyse permet de s'affranchir en partie du ressenti subjectif qui vient inévitablement lors de la lecture et l'interprétation d'un texte. En automatisant totalement le calcul de ressenti, il devient alors possible de tirer des conclusions d'odre statistique, reposant uniquement sur des scores chiffrés calculés informatiquement.
 
-Grâce à ces deux phases de construction d'une base de données et d'analyse textuelle, il devient donc possible de comprendre les idées générales présentes dans un corpus textuel important (ici, 116 abstracts) sans avoir besoin de les lires un par un pour en faire une synthèse collective.
+Grâce à ces méthodes d'analyse statistique, les idées générales présentes dans un corpus textuel important sont mises en valeur sans nécessiter une lecture complète des 116 abstracts qui le composent.
 
 \thispagestyle{fancy}
 
@@ -712,8 +725,7 @@ de départ de nouveaux travaux. Il n'y a pas a priori d'appel à des référence
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%          15         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Références %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 \bibliographystyle{plain}
-\bibliography{mabiblio}
-\cite{clef1}
+\bibliography{biblio.bib}
 \thispagestyle{fancy}
 %\apalike
 
@@ -757,3 +769,4 @@ de départ de nouveaux travaux. Il n'y a pas a priori d'appel à des référence
 %créer une nouvelle commande : \newcommand{\convertToBW}[1]{\adjustimage{filter=gray}{#1}}
 %le _ permet de mettre en indice. Il peut facilement tout bousiller si mal utilisé.
 % (\href{https://www.reddit.com/r/Python/comments/v2bxyl/script_scraping_researchgate_all_publications/}{\texttt{https://www.redd\linebreak it.com/r/Python/comments/v2bxyl/script\_scraping\_researchgate\_all\_publica\linebreak tions/}})
+
