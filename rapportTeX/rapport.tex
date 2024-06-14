@@ -97,7 +97,7 @@
     \vspace{1cm}
     \hrule
     \vspace{1cm}
-    \huge{Analyse textuelle des études scientifiques evaluant l’impact des vers
+    \huge{Analyse textuelle d'article scientifiques evaluant l’impact des vers
         de terre sur l’environnement }
     \vspace{1cm}
     \hrule
@@ -173,7 +173,7 @@
     \vspace{1cm}
     \hrule
     \vspace{1cm}
-    \huge{Analyse textuelle des études scientifiques evaluant l’impact des vers
+    \huge{Analyse textuelle d'articles scientifiques evaluant l’impact des vers
         de terre sur l’environnement}
     \vspace{1cm}
     \hrule
@@ -223,6 +223,7 @@
 \fancyhead[LE,RO]{REMERCIEMENTS}
 % Début de la numérotation en chiffres romains
 \pagenumbering{Roman}
+\fancyfoot[C]{Antoine MALET - M1 Mention Bioinformatique Parcours BIMS - 2023-2024 - URN}
 % Supprimer la ligne horizontale de l'en-tête pour cette page spécifique
 %\thispagestyle{fancy} % Réappliquer le style fancy pour les autres pages
 %\renewcommand{\headrulewidth}{0pt}   % Supprimer la ligne horizontale de l'en-tête
@@ -241,11 +242,12 @@
 \noindent
 \large{En premier lieu, j'aimerais remercier mes encadrants pour ce stage, Mme Sophie DONNET et
     M. David MAKOWSKI, pour avoir accepté ma candidature et acceuilli au sein de
-    leur équipe. Je tiens aussi à adresser un mot particulier à mes vaillants collègues de bureau Emré ANAKOK et Caroline COGNOT, pour leur compagnie perpétuelle et leurs très bons
+    leur équipe. Merci aussi pour leurs conseils et leurs effort d'accompagnement et de relecture de mes travaux! Je tiens aussi à adresser un mot particulier à mes vaillants collègues de bureau Emré ANAKOK et Caroline COGNOT, pour leur compagnie perpétuelle et leurs très bons
     conseils.}
 \par % Nouveau paragraphe
-{Je remercie aussi Louis LACOSTE, pour ses excellents conseils en R et en cinématographie, ainsi que François VICTOR, pour ses généreuses explications en statistiques théoriques auxquelles je n'ai pas compris grand-chose. }
+Je remercie aussi Louis LACOSTE, pour ses excellents conseils en R et en cinématographie, ainsi que François VICTOR, pour ses généreuses explications en statistiques théoriques auxquelles je n'ai pas compris grand-chose. Merci aussi à Armand FAVROT, pour son acceuil et ses invitations aux Eventos des repas organisés par la cafet (les fraises maison étaient légendaires !). Enfin, chaleureuses salutations à tous mes collègues de pause café, qui sont toujours restés sympathiques et acceuillants même si je n'ai jamais bu la moindre goutte de café. Courage, peut-être qu'un jour vous me convertirez à votre religion!
 
+Merci enfin à tous ceux que je n'ai pas nommés, particulièrement aux personnels qui prennent soin des locaux en silence, sans qui l'infrastructure de travail ne pourrait pas fonctionner correctement.
 
 % Ne pas mettre le texte "Chapitre 1" de l'en-tête
 \thispagestyle{fancy}
@@ -381,10 +383,10 @@
 \chapter{\label{Premier Chapitre}Introduction}
 %\label permet de référencer plus tard le chapitre ou la figure
 
-\section{Structure d'accueil}
+\section{Unité MIA, Campus Agro Paris Saclay}
 \noindent
-Mon stage s'est déroulé au sein de l'Unité MIA (mathématique et informatique
-appliqués), à l'INRAE du Campus Agro Paris Saclay, sur le plateau de Saclay. L’UMR MIA Paris-Saclay, associée aux tutelles AgroParisTech, INRAE et Université Paris Saclay, regroupe des statisticiens et des informaticiens spécialisés dans la modélisation et l’apprentissage statistique et informatique pour la biologie, l’écologie, l’environnement, l’agronomie et l’agro-alimentaire. 
+Mon stage s'est déroulé au sein de l'Unité MIA (Mathématique et Informatique
+Appliqués), à l'INRAE du Campus Agro Paris Saclay, sur le plateau de Saclay. L’UMR MIA Paris-Saclay, associée aux tutelles AgroParisTech, INRAE et Université Paris Saclay, regroupe des statisticiens et des informaticiens spécialisés dans la modélisation et l’apprentissage statistique et informatique pour la biologie, l’écologie, l’environnement, l’agronomie et l’agro-alimentaire. 
 
 \begin{figure}[h] %le h entre crochet signifie je veux la figure à cet emplacement
     \begin{center} %centrer la figure
@@ -393,7 +395,7 @@ appliqués), à l'INRAE du Campus Agro Paris Saclay, sur le plateau de Saclay. L
         %legende
     \end{center}
 \end{figure}
-Les compétences mises en oeuvre portent sur les méthodes d’inférences statistiques et algorithmiques. L’unité développe des méthodes statistiques et informatiques originales, génériques ou motivées par des problèmes précis en science du vivant. Ses activités s’appuient sur une bonne culture dans les disciplines destinatrices: écologie, environnement, agro-alimentaire, biologie moléculaire et biologie des systèmes.
+Les compétences mises en oeuvre portent sur les méthodes d’inférences statistiques et algorithmiques. L’unité développe des méthodes statistiques et informatiques originales, \sloppy génériques ou motivées par des problèmes précis en science du vivant. Ses activités s’appuient sur une bonne culture dans les disciplines destinatrices: écologie, environnement, agro-alimentaire, biologie moléculaire et biologie des systèmes.
 L'unité MIA est dirigée par Julien CHIQUET et Sophie
 DONNET, et comprends deux équipes distinctes: l'équipe SOLsTIS (Statistical
 mOdeling and Learning for environnemenT and Life Science) dirigée par Sophie
@@ -409,7 +411,7 @@ membres d'appui.
 
 \thispagestyle{fancy}
 
-\section{Contexte Scientifique}
+\section{Le vers de terre dans la littérature scientifique}
 
 \noindent
 Selon la perception des spécialistes du sujet en Europe, les services écosystémiques rendus par les vers de terre sont multiples (\cref{fig_wormsservices})\cite{11_EW_benefits_summary}:
@@ -431,7 +433,7 @@ Cependant, la perception des vers de terre en Amérique du Nord est très diffé
 {
 \renewcommand{\labelitemi}{\textbullet}
 \begin{itemize}
-    \item Les vers de terre exotiques (venus d'Europe et d'Asie) sont des espèces invasives suceptibles de perturber les écosystèmes natifs (\cite{6_invasion_vers_de_terre}). Voir \cref{fig_wormmap}.\footnote{\textbf{Noir}: stations où Lumbricus rubelus a été retrouvée / \textbf{Gris}: stations où une autre espèce que Lumbricus rubelus a été retrouvée / \textbf{Blanc}: Station où aucune données n'est disponible (image: https://daphnia.ecology.uga.edu/drakelab/?p=318).}
+    \item Les vers de terre exotiques (venus d'Europe et d'Asie) sont des espèces invasives suceptibles de perturber les écosystèmes natifs (\cite{6_invasion_vers_de_terre}). Voir \cref{fig_wormmap}.\footnote{\textbf{Noir}: stations où Lumbricus rubelus a été retrouvée / \textbf{Gris}: stations où une autre espèce que Lumbricus rubelus a été retrouvée / \textbf{Blanc}: Station où aucune données n'est disponible (image: \url{https://daphnia.ecology.uga.edu/drakelab/?p=318}).}
     \item Leur présence dans les sols modifie durablement les propriétés physico-chimiques des écosystèmes sousterrains (\cite{7_EW_change_soil_chemical_properties}).
     \item Les modifications physico-chimiques induites par les espèces exotiques causent une baisse globale de la biodiversité chez les espèces natives du milieu (\cite{8_EW_erode_soil_biodiversity}).
     \item L'impact de ces espèces exotiques sur les émissions de gaz à effet de serre est également sujet à controverse (\cite{9_EW_effet_serre,10_EW_pas_effet_de_serre}).
@@ -440,7 +442,7 @@ Cependant, la perception des vers de terre en Amérique du Nord est très diffé
 
 \begin{figure}[h] %le h entre crochet signifie je veux la figure à cet emplacement
     \begin{center} %centrer la figure
-        \includegraphics[width=5cm]{EW_services.png}
+        \includegraphics[width=0.3\textwidth]{EW_services.png}
         \caption{Les services écosystémiques rendus par les vers de terre}\label{fig_wormsservices}
         %legende
     \end{center}
@@ -448,7 +450,7 @@ Cependant, la perception des vers de terre en Amérique du Nord est très diffé
 
 \begin{figure}[H] %le h entre crochet signifie je veux la figure à cet emplacement
     \begin{center} %centrer la figure
-        \includegraphics[width=7cm]{worm-map.png}
+        \includegraphics[width=0.3\textwidth]{worm-map.png}
         \caption{Distribution régionale de Lumbricus rubelus (espèce exotique) aux USA}\label{fig_wormmap}
         %legende
     \end{center}
@@ -471,48 +473,27 @@ Grâce à ces méthodes d'analyse statistique, les idées générales présentes
   statistiques, données}
 \section{Environnement informatique}
 \noindent
-Le matériel qui m'a été fourni par le laboratoire est un ordinateur fixe HP Elite SFF 800 G9 Desktop PC, numéro de série CZC2479ZXS - 4G087AV, avec 31 Go de mémoire vive et un processeur 12th Gen Intel® Core™ i7-12700 × 20, ainsi qu'un processeur graphique Mesa Intel® UHD Graphics 770.
-
-Il est géré par un système d'exploitation Ubuntu 22.04 64-bits (distribution Linux), sous la version 42.9 de GNOME (GNU Network Object Model Environment) fournissant une interface utilisateur ergonomique pour interagir avec le système d'exploitation GNU  (\textit{GNU's Not Unix}). Il est ainsi composé d'un noyeau Linux et de GNU, qui ensemble forment le système d'exploitation communément connu sous le nom "Linux". Le système de fenêtrage est "Wayland", un système chargé de l'affichage et du placement des fenêtres durant l'usage du système d'exploitation par l'utiisateur.
+Le matériel qui m'a été fourni par le laboratoire est un ordinateur fixe HP Elite SFF 800 G9 Desktop PC, numéro de série CZC2479ZXS - 4G087AV, avec 31 Go de mémoire vive et un processeur 12th Gen Intel® Core™ i7-12700 × 20, ainsi qu'un processeur graphique Mesa Intel® UHD Graphics 770. Il est géré par un système d'exploitation Ubuntu 22.04 64-bits (distribution Linux), sous la version 42.9 de GNOME (GNU Network Object Model Environment) fournissant une interface utilisateur ergonomique pour interagir avec le système d'exploitation GNU  (\textit{GNU's Not Unix}). Il est ainsi composé d'un noyeau Linux et de GNU, qui ensemble forment le système d'exploitation communément connu sous le nom "Linux". Le système de fenêtrage est "Wayland", un système chargé de l'affichage et du placement des fenêtres durant l'usage du système d'exploitation par l'utiisateur.
 
 \section{Pratique Professionnelle}
 
 \subsection{Veille bibliographique et technologique}
 \noindent
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit,
-vestibulum ut, placerat ac,
-adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu libero,
-nonummy eget, consectetuer
-REVENIR DESSUS APRES LA RÉDACTION DE LA PARTIE "Discussion".
+Pour la veille bibliographique, je me suis aidé du script de Web-scraping développé dans le cadre de mon stage, qui, à partir d'un fichier comprenant les titres de nombreux articles cible, m'a permis de récupérer les métadonnées associées de maniere semi-automatique. Les journaux consultés (\textit{Applied Soil Ecology, Ecosystems, Soil Biology and Biochemistry}, etc.) étaient majoritairement orientés sur les études écologiques. Un travail par recherche MESH a aussi été réalisé, en retenant les mots-clés \textbf{Oligochaetas, Earthworm, Lumbricus terrestris, Ecosystems, Introduced species, Soil, Data mining} et \textbf{Meta-Analysis}. Pour gérer cette bibliographie, j'ai employé le package LaTeX \textit{cleveref} conçu dans ce but.
 
 \subsection[Bonnes pratiques]{Bonne pratique de programmation informatique et
     de developpement logiciel}
 \noindent
 Pour l'écriture du code Python, j'ai utilisé l'éditeur de code Visual Studio Code (VScode). Pour la conception du script Rmd, j'ai travaillé sous l'IDE RStudio. Conformément aux bonnes pratiques, l'intégralité des scripts (Python et R) ont été commentés en anglais, pour faciliter la relecture du code. Pour tester le fonctionnement de chaque script, deux approches différentes ont été mises en place: 
-\begin{enumerate}
-    \item Pour le script de Web-scraping en Python, les tests de fonctionnement effectués durant le développement ont été réalisées sur des jeux de données réduits (comprenant le plus souvent seulement les dix premiers articles) afin de pouvoir détecter rapidement si la sortie renvoyée est correcte par rapport à la tâche initiale. Pour la récupération de données via Crossref, des tests ont aussi été réalisées, notamment pour l'exploration des structures JSON renvoyées par la fonction works() de l'API. Une fois les données recherchées obtenues en sortie de tests ponctuels, il a été possible de généraliser la méthode, en l'appliquant dans l'ensemble du script principal. Enfin, afin d'éviter la régression du code (perte de fonctionnalité), j'ai souvent travaillé sur deux scripts identiques mais distincts, le premier servant de script principal, tandis que le deuxième était davantage un support pour le développement de nouvelles fonctionnalités. De cette façon, le script principal n'était mis à jour que lorsque le script secondaire était considéré comme fonctionnel. Un dépôt GitHub personnel aurait aussi pu jouer ce rôle, mais comme je travaillais seul sur cette partie, je n'en ai pas ressenti l'utlité.
 
-    \item Pour le script de Text-mining en Rmd sous RStudio, la plupart des tests de fonctionnement au cours du dévéloppement ont été réalisés dans la console R directement, afin d'éviter d'ajouter de nouveaux objets inutiles "test" à l'environnement R. Les processus n'ont été intégrés au script Rmd proprement dit qu'une fois leur fonctionnement testé et validé dans la console. Dans cette démarche, le fonctionnement de l'environnement R a été très utile, car cela a permis de réemployer certains objets stockés en mémoire sans avoir à les redéfinir seulement pour effectuer le test.
+Pour le script de Web-scraping en Python, les tests de fonctionnement effectués durant le développement ont été réalisées sur des jeux de données réduits (comprenant le plus souvent seulement les dix premiers articles) afin de pouvoir détecter rapidement si la sortie renvoyée est correcte par rapport à la tâche initiale. Pour la récupération de données via Crossref, des tests ont aussi été réalisées, notamment pour l'exploration des structures JSON renvoyées par la fonction works() de l'API. Une fois les données recherchées obtenues en sortie de tests ponctuels, il a été possible de généraliser la méthode, en l'appliquant dans l'ensemble du script principal. Enfin, afin d'éviter la régression du code (perte de fonctionnalité), j'ai souvent travaillé sur deux scripts identiques mais distincts, le premier servant de script principal, tandis que le deuxième était davantage un support pour le développement de nouvelles fonctionnalités. De cette façon, le script principal n'était mis à jour que lorsque le script secondaire était considéré comme fonctionnel. Un dépôt GitHub personnel aurait aussi pu jouer ce rôle, mais comme je travaillais seul sur cette partie, je n'en ai pas ressenti l'utlité.
     
-
-\end{enumerate} 
-
+    
+Pour le script de Text-mining en Rmd sous RStudio, la plupart des tests de fonctionnement au cours du dévéloppement ont été réalisés dans la console R directement, afin d'éviter d'ajouter de nouveaux objets inutiles "test" à l'environnement R. Les processus n'ont été intégrés au script Rmd proprement dit qu'une fois leur fonctionnement testé et validé dans la console. Dans cette démarche, le fonctionnement de l'environnement R a été très utile, car cela a permis de réemployer certains objets stockés en mémoire sans avoir à les redéfinir seulement pour effectuer le test.
 \subsection{Communication des travaux}
 \noindent
 En concertation avec mes encadrants, j'ai aussi utilisé un dépôt GitHub spécialement
-mis en place pour le projet entre eux et moi, où mon travail de chaque jour a
-pu être sauvegardé grâce à un mécanisme de Push/Pull. De cette façon, mes encadrants ont pu facilement suivre l'évolution de mon travail et évaluer la qualité des solutions proposées.
-
-Pour faciliter l'utilisation de cet outil, le logiciel GitHub Desktop m'a été présenté, une
-interface utilisateur graphique facilitant grandement la visualisation et
-l'usage du dépôt GitHub mis en place pour le projet.
-
-Grâce à la fonctionnalité Knitr de Rmd, j'ai pu rendre compte de ma progression
-quotidienne en produisant automatiquement un fichier rapport au format HTML,
-directement issu de mon code (figures produites sous R, titres et
-intérprétation rédigées en Markdown ou HTML).
-
-Les réunions avec mes encadrants, le plus souvent hebdomadaires, ont été fixées par échange de mails ou bien organisées de vive voix sur site. Elles m'ont permis de rester bien focalisé sur la mission en me fournissant des objectifs hebdomadaires clairs et précis, tout en permettant à mes encadrants d'être régulièrement informés de ma progression par rapport aux objectifs fixés.
+mis en place pour le projet entre eux et moi, où mon travail de chaque jour a pu être sauvegardé grâce à un mécanisme de Push/Pull. De cette façon, mes encadrants ont pu facilement suivre l'évolution de mon travail et évaluer la qualité des solutions proposées. Pour faciliter l'utilisation de cet outil, le logiciel GitHub Desktop m'a été présenté, une interface utilisateur graphique facilitant grandement la visualisation et l'usage du dépôt GitHub mis en place pour le projet. Grâce à la fonctionnalité Knitr de Rmd, j'ai pu rendre compte de ma progression quotidienne en produisant automatiquement un fichier rapport au format HTML, directement issu de mon code (figures produites sous R, titres et intérprétation rédigées en Markdown ou HTML). Les réunions avec mes encadrants, le plus souvent hebdomadaires, ont été fixées par échange de mails ou bien organisées de vive voix sur site. Elles m'ont permis de rester bien focalisé sur la mission en me fournissant des objectifs hebdomadaires clairs et précis, tout en permettant à mes encadrants d'être régulièrement informés de ma progression par rapport aux objectifs fixés.
 
 \thispagestyle{fancy}
 
@@ -531,8 +512,6 @@ parallèle un module pour récupérer les données d'intérêt dans le code sour
 ResearchGate (web scraping), comme le \textit{DOI (Digital Object Identifier)}
 de chaque publication, la date de chargement sur la base de RG ou encore le
 lien vers la page RG correspondante. Pour parvenir à cette solution, voici la liste des modules qui ont été utilisés:
-
-\noindent
 
 \begin{description}
     \item[Pandas:] Pandas est un module qui permet de manipuler facilement des
@@ -590,50 +569,57 @@ lien vers la page RG correspondante. Pour parvenir à cette solution, voici la l
                 facilitant l'extraction des données pour les formats HTML, JSON et XML. Dans le
                 code, il est utilisé pour trouver les données recherchées directement dans le
                 code source de la page (web scraping) en s'appuyant sur des sélecteurs CSS.
-                \vspace{\baselineskip}
         \item Module \textbf{playwright.sync\_api}, fonction
                 \textit{sync\_playwright}: Module permettant de lancer une session navigateur
                 depuis un script Python. Dans le code, il est utilisé pour se rendre sur le
                 site de ResearchGate via une session Chromium, un navigateur libre développé
                 par Google.
-                \vspace{\baselineskip}
         \item Module \textbf{re}: Module fournissant des opérations sur les
-                expressions rationnelles utilisable dans un code Python, ce qui peut s'avérer
-                nécessaire pour sélectionner très précisément les informations voulues dans une
-                structure de données complexes. Dans le code Python, il est utilisé pour
+                expressions rationnelles utilisable dans un code Python. Dans le code Python, il est utilisé pour
                 filtrer les résultats HTML bruts issus du Web scraping.
-                \vspace{\baselineskip}
         \item Module \textbf{time}, fonction \textit{sleep}: Module
                 fournissant différentes fonctions liées au temps. Dans le script, la fonction
                 "sleep(t)" est utilisée pour forcer le système à ne rien faire pendant t
                 secondes, évitant de cette façon de surcharcher le serveur cible de requêtes
                 trop rapides et trop nombreuses.
     \end{enumerate}
-
 \end{description}
 
 \subsection{Text Mining avec R}
 \noindent
 Pour réaliser le text-mining, j'ai utilisé un script R (développé sous Rstudio
-en Rmd) pour traiter le texte et l'analyser sous forme de figures. L'approche
-choisie est une approche "tidy" reposant sur la \textit{tokenisation} du corpus
-de texte en unitées textuelles (appelées \textit{"tokens"}) plus petite, comme
-des mots, des phrases ou des \textit{n-grams}. J'ai pour cela pu m'inspirer du
-livre rédigé par Julia Slige (data scientist) et David Robinson (Directeur de
-Data Scientist de la plateforme Heap), disponible en ligne à l'adresse:
-https://www.tidytextmining.com/. Mon travail a donc consisté à adapter les
+en Rmd) pour traiter les textes et l'analyser sous forme de figures. Mon travail a donc consisté à adapter les
 codes R montrés en exemple sur des livres à mes propres données (abstracts
 d'articles scientifiques), structurées différemment. Les analyses portaient par
 exemple sur la fréquence des mots, au global et pour chaque MA, ou encore sur
-l'analyse de sentiment (Pour répondre à la question : Quel est le sentiment
-global exprimé par le texte à la lecture ?), reposant sur l'attribution d'un
+l'analyse de sentiment reposant sur l'attribution d'un
 score positif (+1) ou négatif (-1) à chaque mot du corpus. Cette attribution de
 sentiment a pu être réalisée grâce à un dictionnaire R conçu pour relier un
 token donné à la valence (positive ou négative) qui lui correspond. Afin de
 mieux visualiser les résultats, différentes figures ont été réalisées, comme
-des diagrammes en barre ou des nuages de mots.
+des diagrammes en barre ou des nuages de mots. Le script R développé repose sur les librairies suivantes:
 
-Afin de filtrer les mots d'intérêt seulement, deux stratégies ont été
+  \begin{description}
+      \item[Librairie dplyr:] Librairie R conçue pour faciliter la manipulation de larges jeux de données (DataFrame et Tibble), avec des fonctions spacialisées comme \textit{mutate} (ajout de variables), \textit{select} (sélectionner les variables à partir de leurs noms), \textit{filter} (filtrer des cellules selon leur valeur), \textit{summarise} (résumer les informations d'un tibble dans un format très synthétique) et \textit{arrange} (pour réordonner les lignes selon l'ordre / la variable voulue.)
+      \item[Librairie ggplot2:] Librairie R pour créer déclarativement des graphiques divers et variés (barplots, histogrammes, scatter plots, etc.)
+      \item[Librairie tidytext:] Librairie R conçue pour faciliter l'analyse de texte (Silge, Julia, and David Robinson. 2016. "tidytext: Text Mining and Analysis Using Tidy Data Principles in R."\footnote{ref Silge/Robinson à mettre à la place}), se fondant sur le paradigme d'analyse de données "tidy", où chaque variable est une colonne, chaque observation une ligne et chaque ensemble d'observations est un tableau. La fonction la plus utilisée dans le cadre de cette analyse est \textit{unnest\_tokens}, qui permet de transformer un texte donné en une tables d'unités textuelles plus réduites (tokens), comme des phrases ou des mots.
+      \item[Librairie Knitr:] Librairie R conçue pour récupérer automatiquement l'output d'un code R (par exemple, pour produire une figure) afin de l'inclure dans un autre document (par exemple, format Word, HTML ou PDF) qui contiendra aussi la prose écrite par l'auteur du document, souvent pour interpréter ou commenter des résultats. Cette librairie permet notamment de moduler plus finement l'affichage des résultats, en permettant par exemple de ne pas afficher certaines figures dans un format de sortie donné (pour masquer une figure interactive au format HTML que l'on ne souhaite pas forcément voir apparaître dans un document PDF, par exemple).
+      \item[Librairie SnowballC:] Librairie R implémentant Snowball, un langage conçu pour gérer les chaînes de caractères, les nombres entiers et les booléens. Dans le script R de Text Mining, il a servi à transformer les tokens pour ne garder que la racine de chaque mot (processus de \textit{racination}), afin d'éviter les erreurs de comptage (si, pour un humain, "enhance" et "enhancement" sont deux mots ayant approximativement le même sens, informatiquement ce sont deux chaînes de caractères distinctes).
+      \item[Librairie grid:] Librarie R implémentant les fonctions graphiques primitives\sloppy qui sous-tendent le package ggplot2. Elles permettent de modifier certains détails des graphes produits grâce à ggplot2, offrant ainsi un meilleur contrôle du rendu visuel du résulat obtenu. Dans le script, il est employé, par exemple, pour spécifier exactement l'aspect des flèches composant le réseau de bigrammes. 
+      \item[Librairie ggraph:] Librairie R formant une extension de ggplot2, conçue pour permettre de supporter les structures de données relationnelles comme les réseaux, les graphes et les arbres. Dans le script, elle est notamment employée pour produire les réseaux de bigrammes.
+      \item[Librairie igraph:] fonction \textit{graph\_from\_data\_frame():} Cette fonction appartient à la librairie igraph. Elle crée un objet graphe à partir d'un data frame, où le data frame représente les arêtes entre les nœuds.
+      \item[Librairie egg:] fonction \textit{ggarrange():} Librairie servant à organiser différents graphes sur une seule et même figure. Dans le script, c'est l'une des librairies employées pour comparer les quatre MA entre elles.
+      \item[Librairie tidyr:] Librairie R implémentant des méthodes utiles pour manipuler des objets de type "tidy". Elle comprend des fonction telles que \textit{pivot\_wider} et \textit{pivot\_longer} (pour convertir le dataFrame d'un format à un autre), ou encore \textit{bind\_rows()}, pour combiner des DataFrames par lignes.
+  \end{description}
+
+\section{Données}
+\noindent
+L'approche "tidy" choisie repose sur la \textit{tokenisation} du corpus
+de texte en unitées textuelles (appelées \textit{"tokens"}) plus petite, comme
+des mots, des phrases ou des \textit{n-grams}. J'ai pour cela pu m'inspirer du
+livre rédigé par Julia Slige (data scientist) et David Robinson (Directeur de
+Data Scientist de la plateforme Heap). \footnote{disponible en ligne à l'adresse:
+https://www.tidytextmining.com/.} Afin de filtrer les mots d'intérêt seulement, deux stratégies ont été
 employées: Premièrement, un filtrage brut de tous les mots de liaisons sans
 rapport direct avec le sujet (nommés "stop words" en text-mining, des mots tels
 que "the", "and", "is", "of" etc. en anglais) pour ne conserver que les mots
@@ -645,39 +631,7 @@ nombre total de mots présents dans le corpus (n mot / N mots). De cette façon,
 les mots les plus fréquents perdent une partie de leur poids statistique, tandis que les mots plus rares en gagnent. On peut ainsi visualiser facilement les mots les plus importants d'un texte, sans même
 avoir besoin de modifier les données au préalable avec une liste de stop words.
 Cela permet de conserver le texte dans son ensemble, évitant ainsi un potentiel
-biais pouvant perturber l'analyse. Le script R développé repose sur les librairies suivantes:
-
-  \begin{description}
-      \item[Librairie dplyr:] Librairie R conçue pour faciliter la manipulation de larges jeux de données (DataFrame et Tibble), avec des fonctions spacialisées comme \textit{mutate} (ajout de variables), \textit{select} (sélectionner les variables à partir de leurs noms), \textit{filter} (filtrer des cellules selon leur valeur), \textit{summarise} (résumer les informations d'un tibble dans un format très synthétique) et \textit{arrange} (pour réordonner les lignes selon l'ordre / la variable voulue.)
-      \item[Librairie ggplot2:] Librairie R pour créer déclarativement des graphiques divers et variés (barplots, histogrammes, scatter plots, etc.)
-      \item[Librairie tidytext:] Librairie R conçue pour faciliter l'analyse de texte (Silge, Julia, and David Robinson. 2016. "tidytext: Text Mining and Analysis Using Tidy Data Principles in R."\footnote{ref Silge/Robinson à mettre à la place}), se fondant sur le paradigme d'analyse de données "tidy", où chaque variable est une colonne, chaque observation une ligne et chaque ensemble d'observations est un tableau. La fonction la plus utilisée dans le cadre de cette analyse est \textit{unnest\_tokens}, qui permet de transformer un texte donné en une tables d'unités textuelles plus réduites (tokens), comme des phrases ou des mots.
-      \item[Librairie Knitr:] Librairie R conçue pour récupérer automatiquement l'output d'un code R (par exemple, pour produire une figure) afin de l'inclure dans un autre document (par exemple, format Word, HTML ou PDF) qui contiendra aussi la prose écrite par l'auteur du document, souvent pour interpréter ou commenter des résultats. Cette librairie permet notamment de moduler plus finement l'affichage des résultats, en permettant par exemple de ne pas afficher certaines figures dans un format de sortie donné (pour masquer une figure interactive au format HTML que l'on ne souhaite pas forcément voir apparaître dans un document PDF, par exemple).
-      \item[Librairie SnowballC:] Librairie R implémentant Snowball, un langage conçu pour gérer les chaînes de caractères, les nombres entiers et les booléens. Dans le script R de Text Mining, il a surtout servi à transformer les tokens pour ne garder que la racine de chaque mot (processus de \textit{racination}), afin de ne compter qu'un seul exemplaire de chaque mot (si, pour un humain, "enhance" et "enhancement" sont deux mots ayant approximativement le même sens, informatiquement ce sont deux chaînes de caractères distinctes).
-      \item[Librairie grid:] Librarie R implémentant les fonctions graphiques primitives qui sous-tendent le package ggplot2. Elles permettent de modifier certains détails des graphes produits grâce à ggplot2, offrant ainsi un meilleur contrôle du rendu visuel du résulat obtenu. Dans le script, il est employé, par exemple, pour spécifier exactement l'aspect des flèches composant le réseau de bigrammes. 
-      \item[Librairie ggraph:] Librairie R formant une extension de ggplot2, conçue pour permettre de supporter les structures de données relationnelles comme les réseaux, les graphes et les arbres. Dans le script, elle est notamment employée pour produire les réseaux de bigrammes.
-      \item[Librairie igraph:] fonction \textit{graph\_from\_data\_frame():} Cette fonction appartient à la librairie igraph. Elle crée un objet graphe à partir d'un data frame, où le data frame représente les arêtes entre les nœuds.
-      \item[Librairie egg:] fonction \textit{ggarrange():} Librairie servant à organiser différents graphes sur une seule et même figure. Dans le script, c'est l'une des librairies employées pour comparer les quatre MA entre elles.
-      \item[Librairie tidyr:] Librairie R implémentant des méthodes utiles pour manipuler des objets de type "tidy". Elle comprend des fonction telles que \textit{pivot\_wider} et \textit{pivot\_longer} (pour convertir le dataFrame d'un format "wide" en format "long"), ou encore \textit{bind\_rows()}, pour combiner des DataFrames par lignes.
-  \end{description}
-  \noindent
-
-\section{Données}
-\noindent
-
-\subsection{Données 1}
-\noindent
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit,
-vestibulum ut, placerat ac,
-
-\subsection{Données 2}
-\noindent
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit,
-vestibulum ut, placerat ac,
-
-\subsection{Données 3}
-\noindent
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit,
-vestibulum ut, placerat ac,
+biais pouvant perturber l'analyse.
 
 \chapter{\label{Troisième Chapitre}Résultats}
 \section{Choix et sélection des outils}

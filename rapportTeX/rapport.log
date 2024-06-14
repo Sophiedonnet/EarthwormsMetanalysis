@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.5.28)  13 JUN 2024 18:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.5.28)  14 JUN 2024 16:58
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -642,17 +642,17 @@ LaTeX Info: Redefining \nameref on input line 53.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<univ.png, id=123, 1505.625pt x 1493.58pt>
+<univ.png, id=111, 1505.625pt x 1493.58pt>
 File: univ.png Graphic file (type png)
 <use univ.png>
 Package pdftex.def Info: univ.png  used on input line 70.
 (pdftex.def)             Requested size: 57.34299pt x 56.9055pt.
-<URN_NU_ST.jpg, id=125, 1204.5pt x 196.735pt>
+<URN_NU_ST.jpg, id=113, 1204.5pt x 196.735pt>
 File: URN_NU_ST.jpg Graphic file (type jpg)
 <use URN_NU_ST.jpg>
 Package pdftex.def Info: URN_NU_ST.jpg  used on input line 72.
 (pdftex.def)             Requested size: 261.2966pt x 42.67912pt.
-<logos.png, id=126, 619.989pt x 128.553pt>
+<logos.png, id=114, 619.989pt x 128.553pt>
 File: logos.png Graphic file (type png)
 <use logos.png>
 Package pdftex.def Info: logos.png  used on input line 131.
@@ -660,17 +660,17 @@ Package pdftex.def Info: logos.png  used on input line 131.
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./univ.png> <./URN_NU_ST.jpg> <./logos.png>] [2]
-<univBW.png, id=142, 1505.625pt x 1493.58pt>
+<univBW.png, id=130, 1505.625pt x 1493.58pt>
 File: univBW.png Graphic file (type png)
 <use univBW.png>
 Package pdftex.def Info: univBW.png  used on input line 146.
 (pdftex.def)             Requested size: 57.34299pt x 56.9055pt.
-<URN_NU_ST_BW.png, id=143, 1204.5pt x 196.735pt>
+<URN_NU_ST_BW.png, id=131, 1204.5pt x 196.735pt>
 File: URN_NU_ST_BW.png Graphic file (type png)
 <use URN_NU_ST_BW.png>
 Package pdftex.def Info: URN_NU_ST_BW.png  used on input line 148.
 (pdftex.def)             Requested size: 261.2966pt x 42.67912pt.
-<logosBW.png, id=144, 280.32pt x 58.035pt>
+<logosBW.png, id=132, 280.32pt x 58.035pt>
 File: logosBW.png Graphic file (type png)
 <use logosBW.png>
 Package pdftex.def Info: logosBW.png  used on input line 207.
@@ -722,22 +722,22 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.1638pt}.
 
 [8]
-Overfull \hbox (7.04185pt too wide) in paragraph at lines 322--325
+Overfull \hbox (7.04185pt too wide) in paragraph at lines 324--327
 []\T1/cmr/m/n/12 Un bot informatique est un agent logiciel automatique ou semi-automatique qui interagit
  []
 
 
-Underfull \hbox (badness 1509) in paragraph at lines 342--343
+Underfull \hbox (badness 1509) in paragraph at lines 344--345
 []\T1/cmr/m/n/12 Figure permettant de visualiser toutes les relations entre les
  []
 
 
-Underfull \hbox (badness 1072) in paragraph at lines 344--347
+Underfull \hbox (badness 1072) in paragraph at lines 346--349
 []\T1/cmr/m/n/12 Les sélecteurs définissent les éléments sur lesquelles s'applique un
  []
 
 
-Underfull \hbox (badness 1264) in paragraph at lines 362--366
+Underfull \hbox (badness 1264) in paragraph at lines 364--368
 \T1/cmr/m/n/12 d'informations d'un site Web, sans intervention humaine directe, via un script
  []
 
@@ -745,114 +745,67 @@ Underfull \hbox (badness 1264) in paragraph at lines 362--366
 
 ] [10]
 Chapitre 1.
-<organigrammeEquipe.png, id=239, 1625.07124pt x 1135.24126pt>
+<organigrammeEquipe.png, id=224, 1625.07124pt x 1135.24126pt>
 File: organigrammeEquipe.png Graphic file (type png)
 <use organigrammeEquipe.png>
-Package pdftex.def Info: organigrammeEquipe.png  used on input line 391.
+Package pdftex.def Info: organigrammeEquipe.png  used on input line 393.
 (pdftex.def)             Requested size: 341.43306pt x 238.51163pt.
-
-Overfull \hbox (25.04248pt too wide) in paragraph at lines 396--403
-\T1/cmr/m/n/12 algorithmiques. L'unité développe des méthodes statistiques et informatiques originales, génériques
- []
-
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.403 
+l.405 
        [1
 
 pdfTeX warning (ext4): destination with the same identifier (name{figure.1.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.403 
+l.405 
        <./organigrammeEquipe.png>]
-Overfull \hbox (8.68388pt too wide) in paragraph at lines 434--435
-[]\T1/cmr/m/n/12 Les vers de terre exotiques (venus d'Europe et d'Asie) sont des espèces invasives suceptibles
- []
-
-<EW_services.png, id=262, 241.8636pt x 267.8808pt>
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 436.
+ (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+<EW_services.png, id=248, 241.8636pt x 267.8808pt>
 File: EW_services.png Graphic file (type png)
 <use EW_services.png>
-Package pdftex.def Info: EW_services.png  used on input line 443.
-(pdftex.def)             Requested size: 142.26378pt x 157.56596pt.
+Package pdftex.def Info: EW_services.png  used on input line 445.
+(pdftex.def)             Requested size: 141.61081pt x 156.84247pt.
+
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<worm-map.png, id=263, 822.82407pt x 651.18282pt>
+<worm-map.png, id=249, 925.4575pt x 823.075pt>
 File: worm-map.png Graphic file (type png)
 <use worm-map.png>
-Package pdftex.def Info: worm-map.png  used on input line 451.
-(pdftex.def)             Requested size: 199.16928pt x 157.61852pt.
-
-Overfull \hbox (8.23318pt too wide) in paragraph at lines 460--462
-\T1/cmr/m/n/12 réunir, si possible automatiquement(par web-scraping), l'ensemble des métadonnées disponibles
- []
-
+Package pdftex.def Info: worm-map.png  used on input line 453.
+(pdftex.def)             Requested size: 141.61081pt x 125.94261pt.
 pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.462 
+l.464 
        [2pdfTeX warning (ext4): destination with the same identifier (name{figure.1.3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.462 
+l.464 
        <./worm-map.png>]pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.469 \chapter
+l.471 \chapter
               [Ressources]{\label{Second Chapitre}Ressources: pratiques [3pdfTeX warning (ext4): destination with the same identifier (name{figure.1.2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.469 \chapter
+l.471 \chapter
               [Ressources]{\label{Second Chapitre}Ressources: pratiques <./EW_services.png>]pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.469 \chapter
+l.471 \chapter
               [Ressources]{\label{Second Chapitre}Ressources: pratiques [4
 
 ]
 Chapitre 2.
+[5] [6] [7] [8] [9] [10
 
-Overfull \hbox (9.48578pt too wide) in paragraph at lines 481--487
-\T1/cmr/m/n/12 placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu libero, nonummy
- []
-
-
-Overfull \hbox (16.94022pt too wide) in paragraph at lines 481--487
-\T1/cmr/m/n/12 eget, consectetuer REVENIR DESSUS APRES LA RÉDACTION DE LA PARTIE "Discussion". 
- []
-
-[5]
-Overfull \hbox (7.08842pt too wide) in paragraph at lines 495--496
-[]\T1/cmr/m/n/12 Pour le script de Text-mining en Rmd sous RStudio, la plupart des tests de fonctionnement
- []
-
-
-Overfull \hbox (6.37088pt too wide) in paragraph at lines 510--514
-[]\T1/cmr/m/n/12 Grâce à la fonctionnalité Knitr de Rmd, j'ai pu rendre compte de ma progression quotidienne
- []
-
-[6]
-Overfull \hbox (3.46169pt too wide) in paragraph at lines 572--579
-\T1/cmr/m/it/12 unidecode \T1/cmr/m/n/12 est employée pour rendre l'affichage des noms d'auteur contenant des caractères
- []
-
-[7]
-Overfull \hbox (8.51329pt too wide) in paragraph at lines 636--649
-[]\T1/cmr/m/n/12 Afin de filtrer les mots d'intérêt seulement, deux stratégies ont été employées : Premièrement,
- []
-
-
-Overfull \hbox (4.4112pt too wide) in paragraph at lines 651--652
-\T1/cmr/m/n/12 (DataFrame et Tibble), avec des fonctions spacialisées comme \T1/cmr/m/it/12 mutate \T1/cmr/m/n/12 (ajout de variables),
- []
-
-[8]
-Overfull \hbox (6.2323pt too wide) in paragraph at lines 656--657
-[]\T1/cmr/m/n/12 Librarie R implémentant les fonctions graphiques primitives qui sous-tendent
- []
-
-[9] [10]
+]
 Chapitre 3.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -861,9 +814,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-0.1638pt}.
 
-[11
-
-]
+[11]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 12.1638pt, for example:
@@ -876,18 +827,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 ]
 Chapitre 4.
 
-Overfull \hbox (2.16272pt too wide) in paragraph at lines 699--709
-\T1/cmr/m/n/12 rentable en temps, même si je suis satisfait d'avoir commencé à apprendre comment développer
- []
-
-
 Package lipsum Warning: Unknown language 'latin'. Hyphenation patterns for
 (lipsum)                'french' will be used instead.
-
-
-Overfull \hbox (9.48578pt too wide) in paragraph at lines 711--711
-\T1/cmr/m/n/12 placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu libero, nonummy
- []
 
 [13] [14
 
@@ -902,21 +843,21 @@ Underfull \hbox (badness 1365) in paragraph at lines 53--58
 
 [17]) [18] [19] [20] (./rapport.aux)
 Package rerunfilecheck Info: File `rapport.out' has not changed.
-(rerunfilecheck)             Checksum: 9A851D76FE0410B98C418BE531D98D62;4846.
+(rerunfilecheck)             Checksum: F6C5662E037C562241E1FC3CC6E8C2A6;4763.
  ) 
 Here is how much of TeX's memory you used:
- 22156 strings out of 480247
- 394074 string characters out of 5896106
+ 22171 strings out of 480247
+ 394614 string characters out of 5896106
  847532 words of memory out of 5000000
- 39682 multiletter control sequences out of 15000+600000
- 482845 words of font info for 54 fonts, out of 8000000 for 9000
+ 39697 multiletter control sequences out of 15000+600000
+ 483385 words of font info for 56 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 91i,11n,91p,1360b,645s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texmf/fonts/type1/public/cm-super/sfbx0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2488.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfcc1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on rapport.pdf (34 pages, 1598333 bytes).
+ 91i,11n,91p,1350b,635s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texmf/fonts/type1/public/cm-super/sfbx0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2488.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfcc1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt0800.pfb>
+Output written on rapport.pdf (34 pages, 1620436 bytes).
 PDF statistics:
- 444 PDF objects out of 1000 (max. 8388607)
- 362 compressed objects within 4 object streams
- 84 named destinations out of 1000 (max. 500000)
- 286 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 435 PDF objects out of 1000 (max. 8388607)
+ 351 compressed objects within 4 object streams
+ 80 named destinations out of 1000 (max. 500000)
+ 262 words of extra memory for PDF output out of 10000 (max. 10000000)
 
