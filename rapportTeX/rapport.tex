@@ -16,6 +16,7 @@
 \usepackage{enumitem}
 \usepackage{float}
 \usepackage{cleveref}
+\usepackage{caption}
 
 \pagestyle{fancy}
 \fancyhf{} % Efface tous les en-têtes et pieds de page actuels
@@ -305,6 +306,7 @@ Merci enfin à tous ceux que je n'ai pas nommés, particulièrement aux personne
     \item[UMR] Unité Mixte de Recherche
 
 \end{description}
+% REMOVE
 \thispagestyle{fancy}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%          11          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Verso Liste des abréviations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -315,18 +317,14 @@ Merci enfin à tous ceux que je n'ai pas nommés, particulièrement aux personne
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%          12         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Glossaire %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
 \newpage
 \fancyhead[LE,RO]{GLOSSAIRE}
 \chapter*{Glossaire}
-\addcontentsline{toc}{chapter}{Glossaire}
+
 
 \begin{description}
-    \item[Bot:] Un bot informatique est un agent logiciel automatique ou
-        semi-automatique qui interagit avec des serveurs informatiques sans supervision
-        humaine.
 
-    \item[CSS:] Langage de code utilisé pour mettre en forme une page web.
-    
     \item[JSON:] JSON (JavaScript Object Notation) est un format de fichier textuel conçu pour la structuration et l’échange de données (https://www.hostinger.fr/tutoriels/quest-ce-que-json).
 
     \item[Markdown:] Markdown est un langage de balisage léger qui permet de
@@ -336,6 +334,8 @@ Merci enfin à tous ceux que je n'ai pas nommés, particulièrement aux personne
         pour être affichés sur un site web ou dans un logiciel de traitement de texte
         (source: https://bility.fr/definition-markdown/).
 
+    \item[Métaanalyse:] Article scientifique présentant la combinaison des résultats statistiques d'une série d'études indépendantes sur un problème donné. 
+
     \item[N-gram:] Suite de mots consécutifs de taille n (une des possibilités
         de tokenisation). Utile pour comprendre les relations logiques entre les mots. Les bigrammes sont un cas particulier de n-gram (n-gram de longueur 2).
 
@@ -344,7 +344,7 @@ Merci enfin à tous ceux que je n'ai pas nommés, particulièrement aux personne
     \item [Réseau de n-grams:] Figure permettant de visualiser toutes les relations entre les différents tokens simultanément, plutôt que deux par deux. Cela permet d'aller plus loin que l'analyse de bigrammes séparés les uns des autres.
 
     \item[Sélecteurs CSS:] Les sélecteurs définissent les éléments sur
-        lesquelles s'applique un ensemble de règles CSS. Ils peuvent être employés en
+        lesquelles s'applique un ensemble de règles CSS (langage de programmation employé pour mettre en forme une page Web). Ils peuvent être employés en
         Web scraping pour cibler et isoler certains éléments d'intérêt.
 
     \item[Token:] Unité textuelle souvent réduite, voire ne comprenant qu'un
@@ -414,7 +414,7 @@ membres d'appui.
 \section{Le vers de terre dans la littérature scientifique}
 
 \noindent
-Selon la perception des spécialistes du sujet en Europe, les services écosystémiques rendus par les vers de terre sont multiples (\cref{fig_wormsservices})\cite{11_EW_benefits_summary}:
+Pour caractériser le rôle écologique des vers de terre d'après la littérature scientifique disponible, les abstracts (courts résumés \textbf{standardisés}) de 116 articles scientifiques issus de 4 métaanalyses distinctes ont été fournis sous forme de fichier CSV pour être analysés informatiquement. Selon la perception actuelle des spécialistes du sujet en Europe, les services écosystémiques rendus par les vers de terre sont multiples (\cref{fig_wormsservices})\cite{11_EW_benefits_summary}:
 
 {
 \renewcommand{\labelitemi}{\textbullet}
@@ -428,22 +428,22 @@ Selon la perception des spécialistes du sujet en Europe, les services écosyst�
 } % the "%" aims to define an environment where bullets are set to textbullet.
 
 \noindent
-Cependant, la perception des vers de terre en Amérique du Nord est très différente, pour ne pas dire opposée. On peut résumer la perception nord-américaine comme suis: 
+Cependant, la position argumentative défendue par les spécialistes d'Amérique du Nord est très différente, pour ne pas dire radicalement opposée. On peut résumer la perception nord-américaine comme suis: 
 
 {
 \renewcommand{\labelitemi}{\textbullet}
 \begin{itemize}
-    \item Les vers de terre exotiques (venus d'Europe et d'Asie) sont des espèces invasives suceptibles de perturber les écosystèmes natifs (\cite{6_invasion_vers_de_terre}). Voir \cref{fig_wormmap}.\footnote{\textbf{Noir}: stations où Lumbricus rubelus a été retrouvée / \textbf{Gris}: stations où une autre espèce que Lumbricus rubelus a été retrouvée / \textbf{Blanc}: Station où aucune données n'est disponible (image: \url{https://daphnia.ecology.uga.edu/drakelab/?p=318}).}
+    \item Les vers de terre exotiques (venus d'Europe et d'Asie) sont des espèces invasives suceptibles de perturber les écosystèmes natifs (\cite{6_invasion_vers_de_terre}). Voir \cref{fig_wormmap}.
     \item Leur présence dans les sols modifie durablement les propriétés physico-chimiques des écosystèmes sousterrains (\cite{7_EW_change_soil_chemical_properties}).
     \item Les modifications physico-chimiques induites par les espèces exotiques causent une baisse globale de la biodiversité chez les espèces natives du milieu (\cite{8_EW_erode_soil_biodiversity}).
     \item L'impact de ces espèces exotiques sur les émissions de gaz à effet de serre est également sujet à controverse (\cite{9_EW_effet_serre,10_EW_pas_effet_de_serre}).
 \end{itemize}
 }
 
-\begin{figure}[h] %le h entre crochet signifie je veux la figure à cet emplacement
+\begin{figure}[H] %le h entre crochet signifie je veux la figure à cet emplacement
     \begin{center} %centrer la figure
-        \includegraphics[width=0.3\textwidth]{EW_services.png}
-        \caption{Les services écosystémiques rendus par les vers de terre}\label{fig_wormsservices}
+        \includegraphics[width=0.2\textwidth]{EW_services.png}
+        \caption{Les services écosystémiques rendus par les vers de terre.}\label{fig_wormsservices}
         %legende
     \end{center}
 \end{figure}
@@ -451,21 +451,28 @@ Cependant, la perception des vers de terre en Amérique du Nord est très diffé
 \begin{figure}[H] %le h entre crochet signifie je veux la figure à cet emplacement
     \begin{center} %centrer la figure
         \includegraphics[width=0.3\textwidth]{worm-map.png}
-        \caption{Distribution régionale de Lumbricus rubelus (espèce exotique) aux USA}\label{fig_wormmap}
-        %legende
-    \end{center}
-    
+        \caption[Distribution régionale de Lumbricus rubelus (espèce exotique) aux USA.]{Distribution régionale de Lumbricus rubelus (espèce exotique) aux USA. Les régions représentent les stations où: L. rubelus a été retrouvé (\textbf{noir}), une autre espèce que L. rubelus a été retrouvée (\textbf{gris}), aucune donnée n'est disponible (\textbf{blanc}).  \textit{Source:} \url{https://daphnia.ecology.uga.edu/drakelab/?p=318}.}\label{fig_wormmap}
+    \end{center} 
 \end{figure}
 
 \section{Objectifs de mon travail}
 
 \noindent
-Ma mission reposant principalement sur de l'analyse textuelle, mon premier objectif a été de réunir, si possible automatiquement(par web-scraping), l'ensemble des métadonnées disponibles à propos des articles mis à ma disposition. Ces métadonnées comprennent par exemple l'abstract (le plus important pour le Text-mining), les auteurs, la date de publication, le DOI (\textit{Digital Object Identifier}) ou encore le lien vers la page ResearchGate correspondante.
+L'analyse infomatique des abstracts des articles issus des 4 métaanalyses a été conduite pour répondre à la question de recherche suivante:
 
-Le script de Text-mining a pour but de transformer les données lisibles par un humain dans le corpus de texte (mots, phases, paragraphes) en données statistiques analysables automatiquement par ordinateur. Pour cela, le corpus a donc été transformé en tibble (table de données R) contenant différents types de \textit{tokens} (principalement des mots et des n-grams) aisément quantifiables, et donc, représentables sous formes de figures mathématiques. Ainsi, des informations comme la fréquence globale des mots, les mots les plus fréquents à l'intérieur de chaque métaanalyse, en encore la composition de chaque bigrammes (groupes de deux mots), entre autres, permettent une bonne compréhension générale du sujet, mais aussi de l'avis scientifique émis par chaque groupe d'auteurs au sujet des vers de terre. Par ailleurs, l'aspect quantitatif de l'analyse permet de s'affranchir en partie du ressenti subjectif qui vient inévitablement lors de la lecture et l'interprétation d'un texte. En automatisant totalement le calcul de ressenti, il devient alors possible de tirer des conclusions d'odre statistique, reposant uniquement sur des scores chiffrés calculés informatiquement.
 
-Grâce à ces méthodes d'analyse statistique, les idées générales présentes dans un corpus textuel important sont mises en valeur sans nécessiter une lecture complète des 116 abstracts qui le composent.
+\vspace{\baselineskip}
+\noindent
+\textbf{Les méthodes statistiques de Text-mining permettent-elles d'identifier des groupes distincts d'articles scientifiques défendant une conception opposée du rôle écologique du vers de terre au sein du corpus de texte fourni pour l'analyse?}
 
+\vspace{\baselineskip}
+Pour répondre à cette question, nous procéderons en deux étapes: 
+\begin{enumerate}
+    \item Création d'une base de métadonnées (comprenant notamment les \textbf{abstracts} de chaque étude indépendante formant les 4 métaanalyses) via un script Python de Web-scraping, sous forme d'un fichier CSV brut destiné à être analysé.
+    \item Analyse textuelle des abstracts d'articles scientifiques présents dans le fichier CSV issu de l'étape précédante via un script R.
+\end{enumerate}
+\vspace{\baselineskip}
+Une fois ces étapes achevées, nous discuterons les résultats obtenus et les méthodes employées en les comparant avec ceux d'autres articles de la littérature scientifique spécialisés dans ce domaine.
 \thispagestyle{fancy}
 
 \chapter[Ressources]{\label{Second Chapitre}Ressources: pratiques
@@ -489,7 +496,7 @@ Pour l'écriture du code Python, j'ai utilisé l'éditeur de code Visual Studio 
 Pour le script de Web-scraping en Python, les tests de fonctionnement effectués durant le développement ont été réalisées sur des jeux de données réduits (comprenant le plus souvent seulement les dix premiers articles) afin de pouvoir détecter rapidement si la sortie renvoyée est correcte par rapport à la tâche initiale. Pour la récupération de données via Crossref, des tests ont aussi été réalisées, notamment pour l'exploration des structures JSON renvoyées par la fonction works() de l'API. Une fois les données recherchées obtenues en sortie de tests ponctuels, il a été possible de généraliser la méthode, en l'appliquant dans l'ensemble du script principal. Enfin, afin d'éviter la régression du code (perte de fonctionnalité), j'ai souvent travaillé sur deux scripts identiques mais distincts, le premier servant de script principal, tandis que le deuxième était davantage un support pour le développement de nouvelles fonctionnalités. De cette façon, le script principal n'était mis à jour que lorsque le script secondaire était considéré comme fonctionnel. Un dépôt GitHub personnel aurait aussi pu jouer ce rôle, mais comme je travaillais seul sur cette partie, je n'en ai pas ressenti l'utlité.
     
     
-Pour le script de Text-mining en Rmd sous RStudio, la plupart des tests de fonctionnement au cours du dévéloppement ont été réalisés dans la console R directement, afin d'éviter d'ajouter de nouveaux objets inutiles "test" à l'environnement R. Les processus n'ont été intégrés au script Rmd proprement dit qu'une fois leur fonctionnement testé et validé dans la console. Dans cette démarche, le fonctionnement de l'environnement R a été très utile, car cela a permis de réemployer certains objets stockés en mémoire sans avoir à les redéfinir seulement pour effectuer le test.
+Pour le script de Text-mining en Rmd sous RStudio, la plupart des tests de fonctionnement au cours du dévéloppement ont été réalisés dans la console R directement, afin d'éviter d'ajouter de nouveaux objets inutiles "test" à l'environnement R. Les processus n'ont été intégrés au script Rmd proprement dit qu'une fois leur fonctionnement testé et validé dans la console. Dans cette démarche, le fonctionnement de l'environnement R a été très utile, car cela a permis de réemployer certains objets stockés en mémoire sans avoir à les redéfinir seulement en vue d' effectuer des tests.
 \subsection{Communication des travaux}
 \noindent
 En concertation avec mes encadrants, j'ai aussi utilisé un dépôt GitHub spécialement
@@ -615,7 +622,7 @@ des diagrammes en barre ou des nuages de mots. Le script R développé repose su
 \section{Données}
 \noindent
 L'approche "tidy" choisie repose sur la \textit{tokenisation} du corpus
-de texte en unitées textuelles (appelées \textit{"tokens"}) plus petite, comme
+de texte en unitées textuelles (appelées \textit{"tokens"}) plus petites, comme
 des mots, des phrases ou des \textit{n-grams}. J'ai pour cela pu m'inspirer du
 livre rédigé par Julia Slige (data scientist) et David Robinson (Directeur de
 Data Scientist de la plateforme Heap). \footnote{disponible en ligne à l'adresse:
@@ -634,17 +641,27 @@ Cela permet de conserver le texte dans son ensemble, évitant ainsi un potentiel
 biais pouvant perturber l'analyse.
 
 \chapter{\label{Troisième Chapitre}Résultats}
-\section{Choix et sélection des outils}
+\section{Web-scraping et obtention d'une base de métadonnées en format CSV}
+\noindent
+En sortie du code de Web-scraping dévéloppé en Python (et après recherche manuelle des données manquantes), un fichier de métadonnées au format CSV, contenant la métaanalyse d'origine, le titre, les auteurs, l'abstract, la date de publication sur ResearchGate, le DOI et l'URL vers la page RG correspondante a été obtenue (\cref{fig_CSV}).
 
-\section{Installation et test des outils}
+\begin{figure}[H] %le h entre crochet signifie je veux la figure à cet emplacement
+    \begin{center} %centrer la figure
+        \includegraphics[width=1.1\textwidth]{exemple_CSV_rogne2.png}
+        \caption{Impression écran montrant les 46 premières lignes du fichier CSV issu du Web-scraping et employé comme base de données pour la suite des analyses.}\label{fig_CSV}
+        %legende
+    \end{center}  
+\end{figure}
 
-\section{Conception de la méthode}
+\section{Présentation de la démarche et analyse des textes bruts}
 
-\section{Développement de la méthode}
+\section{Analyse de sentiment}
 
-\section{Validation de la méthode}
+\section{Approche tf-idf et loi de Zipf}
 
-\section{Résultats biologiques}
+\section{Analyses de bigrammes seuls}
+
+\section{Réseaux de bigrammes}
 
 \thispagestyle{fancy}
 
@@ -723,4 +740,5 @@ de départ de nouveaux travaux. Il n'y a pas a priori d'appel à des référence
 %créer une nouvelle commande : \newcommand{\convertToBW}[1]{\adjustimage{filter=gray}{#1}}
 %le _ permet de mettre en indice. Il peut facilement tout bousiller si mal utilisé.
 % (\href{https://www.reddit.com/r/Python/comments/v2bxyl/script_scraping_researchgate_all_publications/}{\texttt{https://www.redd\linebreak it.com/r/Python/comments/v2bxyl/script\_scraping\_researchgate\_all\_publica\linebreak tions/}})
+
 
