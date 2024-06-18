@@ -17,6 +17,7 @@
 \usepackage{float}
 \usepackage{cleveref}
 \usepackage{caption}
+\usepackage[utf8]{inputenc}
 
 \pagestyle{fancy}
 \fancyhf{} % Efface tous les en-têtes et pieds de page actuels
@@ -50,6 +51,8 @@
 \renewcommand{\cftchapfont}{\Large} % Reduire la taille de la police pour les chapitres
 \renewcommand{\cftsecfont}{\large} % Reduire la taille de la police pour les sections
 \renewcommand{\cftsubsecfont}{\normalsize} % Reduire la taille de la police pour les sous-sections
+
+\DeclareUnicodeCharacter{FFFD}{\diamondquestionmark}
 
 \begin{document}
 %\maketitle on va faire une page vierge ou on va nous même tout insérer
@@ -504,6 +507,7 @@ mis en place pour le projet entre eux et moi, où mon travail de chaque jour a p
 
 \thispagestyle{fancy}
 
+% RECUPERER DE L'ESPACE ICI SI BESOIN EN RACOURSSISSANT LES DESCRIPTIONS.
 \section[Outils informatiques et statistiques]{Outils informatiques et
   statistiques pour les différentes phases de vos travaux}
   
@@ -643,21 +647,66 @@ biais pouvant perturber l'analyse.
 \chapter{\label{Troisième Chapitre}Résultats}
 \section{Web-scraping et obtention d'une base de métadonnées en format CSV}
 \noindent
-En sortie du code de Web-scraping dévéloppé en Python (et après recherche manuelle des données manquantes), un fichier de métadonnées au format CSV, contenant la métaanalyse d'origine, le titre, les auteurs, l'abstract, la date de publication sur ResearchGate, le DOI et l'URL vers la page RG correspondante a été obtenue (\cref{fig_CSV}).
+En sortie du code de Web-scraping dévéloppé en Python (et après recherche manuelle des données manquantes), un fichier de métadonnées au format CSV, contenant la métaanalyse d'origine, le titre, les auteurs, l'abstract, la date de publication sur ResearchGate, le DOI et l'URL vers la page RG correspondante a été obtenue (\cref{fig_CSV}). 
 
 \begin{figure}[H] %le h entre crochet signifie je veux la figure à cet emplacement
     \begin{center} %centrer la figure
         \includegraphics[width=1.1\textwidth]{exemple_CSV_rogne2.png}
-        \caption{Impression écran montrant les 46 premières lignes du fichier CSV issu du Web-scraping et employé comme base de données pour la suite des analyses.}\label{fig_CSV}
+        \caption{Impression écran montrant les 46 premières lignes du fichier CSV issu du Web-scraping et employé comme base de données pour la suite des analyses. Les données manquantes restante après complétion manuelle sont représentées par "N/A". Malgré l'usage de la fonction Python "unidecode" (voir Chapitre 2.3.1), certains caractères spéciaux ne sont toujours pas reconnus et sont notés\includegraphics[width=0.03\textwidth]{diamond-question-mark.jpeg}.}\label{fig_CSV}
         %legende
     \end{center}  
 \end{figure}
 
-\section{Présentation de la démarche et analyse des textes bruts}
+\section{Analyse globale des textes bruts}
+\noindent
+Pour détecter informatiquement les racines les plus fréquentes du corpus, chaque token distinct (dans cette section, des mots uniques) présent dans les quatre jeux de données (abstracts d'articles) a été compté.  Le graphique ci-dessous présente les racines les plus fréquemment retrouvées dans l'ensemble du corpus. Les trois plus imporantes sont \textbf{earthworm}, \textbf{soil} et \textbf{plant} (\cref{freq_all}).
+
+\begin{figure}[H] %le h entre crochet signifie je veux la figure à cet emplacement
+    \begin{center} %centrer la figure
+        \includegraphics[width=1\textwidth]{freq_all_MA.png}
+        \caption{Sur l'axe des abscisses, les valeurs numériques représentent le nombre total d'occurences des mots (après \textit{racination}) écrits en ordonnées. On remarque que les trois mots les plus fréquents dans les articles des quatres métaanalyses confondues sont \textbf{earthworm}, \textbf{soil} et \textbf{plant}.\label{freq_all}}
+        %legende
+    \end{center}  
+\end{figure}
+
+Dans un second temps, on a conduit la même analyse, mais en considérant cette fois-ci chaque métaanalyse comme un sous jeu de données à part entière (\cref{freq_each}). Les résultats observés pour chaque métaanalyse sont différents des résulats globaux, avec \textbf{earthworm}, \textbf{soil} et \textbf{forest} en premier pour la MA1, \textbf{plant}, \textbf{earthworm} et \textbf{increase} pour la MA2, \textbf{earthworm}, \textbf{species} et \textbf{plant} pour la MA3 et \textbf{earthworm}, \textbf{plant} et \textbf{soil} pour la MA4. Si tous ces groupes ne sont certes pas identiques, on remarque la prévalence de "earthworm" et de "plant", ainsi que la mention de certains écosystèmes ("soil", "forest"). La racine "invas" est aussi présente dans les graphes de fréquence des MA1 et 3.
+
+% Pour des raisons de taille de cette section et de complexité d'interprétation, le scale graph n'a pas été inclus ici. Sélection à discuter.
+
+\begin{figure}[H] %le h entre crochet signifie je veux la figure à cet emplacement
+    \begin{center} %centrer la figure
+        \includegraphics[width=1\textwidth]{freq_each_MA.png}
+        \caption{Sur l'axe des abscisses, les valeurs numériques représentent le nombre total d'occurences des mots (après \textit{racination}) écrits en ordonnées. On remarque que les résultats individuels sont très différents de ceux obtenus lors de l'analyse collective.\label{freq_each}}
+        %legende
+    \end{center}  
+\end{figure}
 
 \section{Analyse de sentiment}
+\noindent
+L'objectif de cette série d'analyses est de détecter informatiquement l'avis émis par les abstracts composant le corpus de texte à propos de leur sujet d'étude (ici, les vers de terre). Pour cela, on s'appuie sur des dictionnaires R prédéfinis faisant correspondre à chaque mot un score chiffré, +1 si le mot est positif, -1 sinon. La visualisation sous forme de nuage de mots (\cref{senti_cloud_all}) permet de constater que les racines "invasiv", "invad" et "effect", "affect" ont été les plus importantes contributrices au score de sentiment global.
+
+\begin{figure}[H] %le h entre crochet signifie je veux la figure à cet emplacement
+    \begin{center} %centrer la figure
+        \includegraphics[width=0.5\textwidth]{senti_cloud_all.png}
+        \caption{Nuage de mots de l'ensemble des racines de mots trouvées dans la base de données. Les mots exprimant un sentiment négatif sont en \textbf{rouge}, les mots exprimant un sentiment positif en \textbf{bleu}.\label{senti_cloud_all}}
+        %legende
+    \end{center}  
+\end{figure}
+
+Afin de visualiser plus précisément quels mots ont été les principaux contributeurs au score de sentiment pour les quatre métaanalyses, une analyse plus détaillée a pu être mise en place pour chacune (\cref{senti_contri_each}). On peut voir que les métaanalyses 1 et 3 semblent globalement négatives (encadrés 1 et 3), tandis que les métaanalyses 2 et 4 semblent globalement positives (encadrés 2 et 4). Le nombre de contributeurs défferents est visible en ordonnée. 
+
+\begin{figure}[H] %le h entre crochet signifie je veux la figure à cet emplacement
+    \begin{center} %centrer la figure
+        \includegraphics[width=0.9\textwidth]{senti_contri_each.png}
+        \caption{Mots contribuant au score de sentiment pour chacune des quatre métaanalyses. Les mots exprimant un sentiment négatif sont en \textbf{rouge}, les mots exprimant un sentiment positif en \textbf{bleu}. Le nombre de contributeurs différents est visible sur l'axe Oy de chaque graphique.\label{senti_contri_each}}
+        %legende
+    \end{center}  
+\end{figure}
+
 
 \section{Approche tf-idf et loi de Zipf}
+\noindent
+L'objectif de l'approche tf-idf est d'évaluer l'importance d'un terme contenu dans un document, relativement à l'ensemble du corpus. La fréquence brute du terme est nommée tf, et la fréquence inverse de document (une mesure de l'importance du terme dans l'ensemble du corpus) est nommée idf. Le poids ajusté de chaque terme s'obtient en multipliant ces deux mesures, et il augmente proportionnellement au nombre d'occurrences du mot dans le document.
 
 \section{Analyses de bigrammes seuls}
 

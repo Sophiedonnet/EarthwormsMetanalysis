@@ -1272,6 +1272,8 @@ freq_and_rank <-  all_freq %>% group_by(MA) %>%
     mutate(rank = seq_len(length(word)), word_frequency = n/Total) %>% # 
     ungroup()
 
+# freq_and_rank %>% filter(MA=='MA2')
+
 freq_and_rank %>% 
     ggplot(aes(rank, word_frequency, color = MA)) + 
     geom_line(linewidth = 1.1, alpha = 0.8, show.legend = TRUE) + 

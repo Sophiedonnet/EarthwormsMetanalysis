@@ -18,10 +18,10 @@
 \contentsline {section}{\numberline {2.4}Données}{9}{section.2.4}%
 \contentsline {chapter}{\numberline {3}Résultats}{11}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Web-scraping et obtention d'une base de métadonnées en format CSV}{11}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Présentation de la démarche et analyse des textes bruts}{12}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Analyse de sentiment}{12}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Approche tf-idf et loi de Zipf}{12}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Analyses de bigrammes seuls}{12}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Réseaux de bigrammes}{12}{section.3.6}%
-\contentsline {chapter}{\numberline {4}Discussion}{13}{chapter.4}%
-\contentsline {chapter}{\numberline {5}Conclusion}{15}{chapter.5}%
+\contentsline {section}{\numberline {3.2}Analyse globale des textes bruts}{12}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Analyse de sentiment}{13}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Approche tf-idf et loi de Zipf}{15}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Analyses de bigrammes seuls}{15}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Réseaux de bigrammes}{15}{section.3.6}%
+\contentsline {chapter}{\numberline {4}Discussion}{17}{chapter.4}%
+\contentsline {chapter}{\numberline {5}Conclusion}{19}{chapter.5}%

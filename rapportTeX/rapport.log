@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.5.28)  17 JUN 2024 17:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.5.28)  18 JUN 2024 16:29
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -565,27 +565,33 @@ Package caption Info: longtable package is loaded.
 Package: ltcaption 2020/05/30 v1.4b longtable captions (AR)
 )
 Package caption Info: supertabular package is loaded.
-) (./rapport.aux)
+) (/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2021/02/14 v1.3d Input encoding file
+\inpenc@prehook=\toks39
+\inpenc@posthook=\toks40
+)
+   defining Unicode char U+FFFD (decimal 65533)
+ (./rapport.aux)
 \openout1 = `rapport.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 54.
-LaTeX Font Info:    ... okay on input line 54.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 54.
-LaTeX Font Info:    ... okay on input line 54.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 54.
-LaTeX Font Info:    ... okay on input line 54.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 54.
-LaTeX Font Info:    ... okay on input line 54.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 54.
-LaTeX Font Info:    ... okay on input line 54.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 54.
-LaTeX Font Info:    ... okay on input line 54.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 54.
-LaTeX Font Info:    ... okay on input line 54.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 54.
-LaTeX Font Info:    ... okay on input line 54.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 54.
-LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
  (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count335
@@ -593,27 +599,33 @@ LaTeX Font Info:    ... okay on input line 54.
 \scratchbox=\box65
 \nofMPsegments=\count336
 \nofMParguments=\count337
-\everyMPshowfont=\toks39
+\everyMPshowfont=\toks41
 \MPscratchCnt=\count338
 \MPscratchDim=\dimen266
 \MPnumerator=\count339
 \makeMPintoPDFobject=\count340
-\everyMPtoPDFconversion=\toks40
+\everyMPtoPDFconversion=\toks42
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+ (/usr/share/texlive/texmf-dist/tex/latex/grfext/grfext.sty
+Package: grfext 2019/12/03 v1.3 Manage graphics extensions (HO)
+)
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 504.
  (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-LaTeX Info: Redefining \degres on input line 54.
+LaTeX Info: Redefining \degres on input line 57.
 Package french.ldf Info: Setting StandardItemizeEnv=true for
 (french.ldf)             compatibility with enumitem package,
-(french.ldf)             reported on input line 54.
+(french.ldf)             reported on input line 57.
 Package french.ldf Info: Setting StandardEnumerateEnv=true for
 (french.ldf)             compatibility with enumitem package,
-(french.ldf)             reported on input line 54.
-LaTeX Info: Redefining \up on input line 54.
-Package hyperref Info: Link coloring OFF on input line 54.
+(french.ldf)             reported on input line 57.
+LaTeX Info: Redefining \up on input line 57.
+Package hyperref Info: Link coloring OFF on input line 57.
  (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
@@ -623,9 +635,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count341
 )
-LaTeX Info: Redefining \ref on input line 54.
-LaTeX Info: Redefining \pageref on input line 54.
-LaTeX Info: Redefining \nameref on input line 54.
+LaTeX Info: Redefining \ref on input line 57.
+LaTeX Info: Redefining \pageref on input line 57.
+LaTeX Info: Redefining \nameref on input line 57.
  (./rapport.out) (./rapport.out)
 \@outlinefile=\write3
 \openout3 = `rapport.out'.
@@ -670,17 +682,17 @@ Package caption Info: End \AtBeginDocument code.
 <univ.png, id=107, 1505.625pt x 1493.58pt>
 File: univ.png Graphic file (type png)
 <use univ.png>
-Package pdftex.def Info: univ.png  used on input line 71.
+Package pdftex.def Info: univ.png  used on input line 74.
 (pdftex.def)             Requested size: 57.34299pt x 56.9055pt.
 <URN_NU_ST.jpg, id=109, 1204.5pt x 196.735pt>
 File: URN_NU_ST.jpg Graphic file (type jpg)
 <use URN_NU_ST.jpg>
-Package pdftex.def Info: URN_NU_ST.jpg  used on input line 73.
+Package pdftex.def Info: URN_NU_ST.jpg  used on input line 76.
 (pdftex.def)             Requested size: 261.2966pt x 42.67912pt.
 <logos.png, id=110, 619.989pt x 128.553pt>
 File: logos.png Graphic file (type png)
 <use logos.png>
-Package pdftex.def Info: logos.png  used on input line 132.
+Package pdftex.def Info: logos.png  used on input line 135.
 (pdftex.def)             Requested size: 426.79953pt x 65.44345pt.
 [1
 
@@ -688,17 +700,17 @@ Package pdftex.def Info: logos.png  used on input line 132.
 <univBW.png, id=126, 1505.625pt x 1493.58pt>
 File: univBW.png Graphic file (type png)
 <use univBW.png>
-Package pdftex.def Info: univBW.png  used on input line 147.
+Package pdftex.def Info: univBW.png  used on input line 150.
 (pdftex.def)             Requested size: 57.34299pt x 56.9055pt.
 <URN_NU_ST_BW.png, id=127, 1204.5pt x 196.735pt>
 File: URN_NU_ST_BW.png Graphic file (type png)
 <use URN_NU_ST_BW.png>
-Package pdftex.def Info: URN_NU_ST_BW.png  used on input line 149.
+Package pdftex.def Info: URN_NU_ST_BW.png  used on input line 152.
 (pdftex.def)             Requested size: 261.2966pt x 42.67912pt.
 <logosBW.png, id=128, 280.32pt x 58.035pt>
 File: logosBW.png Graphic file (type png)
 <use logosBW.png>
-Package pdftex.def Info: logosBW.png  used on input line 208.
+Package pdftex.def Info: logosBW.png  used on input line 211.
 (pdftex.def)             Requested size: 426.80084pt x 65.44505pt.
  [3 <./univBW.png> <./URN_NU_ST_BW.png> <./logosBW.png>] [4] [1
 
@@ -724,11 +736,17 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-0.1638pt}.
 
-[4] (./rapport.lof)
+[4] (./rapport.lof
+<diamond-question-mark.jpeg, id=191, 30.1125pt x 22.0825pt>
+File: diamond-question-mark.jpeg Graphic file (type jpg)
+<use diamond-question-mark.jpeg>
+Package pdftex.def Info: diamond-question-mark.jpeg  used on input line 8.
+(pdftex.def)             Requested size: 14.16035pt x 10.38416pt.
+)
 \tf@lof=\write5
 \openout5 = `rapport.lof'.
 
- [5] [6]
+ [5 <./diamond-question-mark.jpeg>] [6]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 12.1638pt, for example:
@@ -747,17 +765,17 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.1638pt}.
 
 [8]
-Underfull \hbox (badness 1509) in paragraph at lines 344--345
+Underfull \hbox (badness 1509) in paragraph at lines 347--348
 []\T1/cmr/m/n/12 Figure permettant de visualiser toutes les relations entre les
  []
 
 
-Underfull \hbox (badness 1072) in paragraph at lines 346--349
+Underfull \hbox (badness 1072) in paragraph at lines 349--352
 []\T1/cmr/m/n/12 Les sélecteurs définissent les éléments sur lesquelles s'applique un
  []
 
 
-Underfull \hbox (badness 1264) in paragraph at lines 364--368
+Underfull \hbox (badness 1264) in paragraph at lines 367--371
 \T1/cmr/m/n/12 d'informations d'un site Web, sans intervention humaine directe, via un script
  []
 
@@ -765,48 +783,48 @@ Underfull \hbox (badness 1264) in paragraph at lines 364--368
 
 ] [10]
 Chapitre 1.
-<organigrammeEquipe.png, id=223, 1625.07124pt x 1135.24126pt>
+<organigrammeEquipe.png, id=246, 1625.07124pt x 1135.24126pt>
 File: organigrammeEquipe.png Graphic file (type png)
 <use organigrammeEquipe.png>
-Package pdftex.def Info: organigrammeEquipe.png  used on input line 393.
+Package pdftex.def Info: organigrammeEquipe.png  used on input line 396.
 (pdftex.def)             Requested size: 341.43306pt x 238.51163pt.
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.405 
+l.408 
        [1
 
  <./organigrammeEquipe.png>]
-<EW_services.png, id=245, 241.8636pt x 267.8808pt>
+<EW_services.png, id=268, 241.8636pt x 267.8808pt>
 File: EW_services.png Graphic file (type png)
 <use EW_services.png>
-Package pdftex.def Info: EW_services.png  used on input line 445.
+Package pdftex.def Info: EW_services.png  used on input line 448.
 (pdftex.def)             Requested size: 94.4048pt x 104.55893pt.
-<worm-map.png, id=246, 925.4575pt x 823.075pt>
+<worm-map.png, id=269, 925.4575pt x 823.075pt>
 File: worm-map.png Graphic file (type png)
 <use worm-map.png>
-Package pdftex.def Info: worm-map.png  used on input line 453.
+Package pdftex.def Info: worm-map.png  used on input line 456.
 (pdftex.def)             Requested size: 141.61081pt x 125.94261pt.
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 454.
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 457.
  (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.457 
+l.460 
        [2 <./EW_services.png>]
-Underfull \hbox (badness 1019) in paragraph at lines 465--467
+Underfull \hbox (badness 1019) in paragraph at lines 468--470
 \T1/cmr/bx/n/12 Les méthodes statistiques de Text-mining permettent-elles d'identifier des
  []
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.478 \chapter
+l.481 \chapter
               [Ressources]{\label{Second Chapitre}Ressources: pratiques [3 <./worm-map.png>]pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.478 \chapter
+l.481 \chapter
               [Ressources]{\label{Second Chapitre}Ressources: pratiques [4
 
 ]
@@ -815,16 +833,43 @@ Chapitre 2.
 
 ]
 Chapitre 3.
-<exemple_CSV_rogne2.png, id=315, 1379.1525pt x 757.83125pt>
+<exemple_CSV_rogne2.png, id=338, 1379.1525pt x 757.83125pt>
 File: exemple_CSV_rogne2.png Graphic file (type png)
 <use exemple_CSV_rogne2.png>
-Package pdftex.def Info: exemple_CSV_rogne2.png  used on input line 650.
+Package pdftex.def Info: exemple_CSV_rogne2.png  used on input line 654.
 (pdftex.def)             Requested size: 519.23723pt x 285.31924pt.
 
-Overfull \hbox (47.206pt too wide) in paragraph at lines 650--651
+Overfull \hbox (47.206pt too wide) in paragraph at lines 654--655
  [] 
  []
 
+File: diamond-question-mark.jpeg Graphic file (type jpg)
+<use diamond-question-mark.jpeg>
+Package pdftex.def Info: diamond-question-mark.jpeg  used on input line 655.
+(pdftex.def)             Requested size: 14.16035pt x 10.38416pt.
+File: diamond-question-mark.jpeg Graphic file (type jpg)
+<use diamond-question-mark.jpeg>
+Package pdftex.def Info: diamond-question-mark.jpeg  used on input line 655.
+(pdftex.def)             Requested size: 14.16035pt x 10.38416pt.
+
+Underfull \hbox (badness 1127) in paragraph at lines 661--663
+\T1/cmr/m/n/12 (abstracts d'articles) a été compté. Le graphique ci-dessous présente les racines les
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [11 <./exemple_CSV_rogne2.png>]
+<freq_all_MA.png, id=346, 505.89pt x 361.35pt>
+File: freq_all_MA.png Graphic file (type png)
+<use freq_all_MA.png>
+Package pdftex.def Info: freq_all_MA.png  used on input line 666.
+(pdftex.def)             Requested size: 472.03123pt x 337.17133pt.
+<freq_each_MA.png, id=348, 722.7pt x 722.7pt>
+File: freq_each_MA.png Graphic file (type png)
+<use freq_each_MA.png>
+Package pdftex.def Info: freq_each_MA.png  used on input line 678.
+(pdftex.def)             Requested size: 472.03123pt x 472.03212pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
@@ -836,7 +881,16 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-0.1638pt}.
 
-[11 <./exemple_CSV_rogne2.png>]
+[12 <./freq_all_MA.png>]
+<senti_cloud_all.png, id=355, 303.1325pt x 282.05376pt>
+File: senti_cloud_all.png Graphic file (type png)
+<use senti_cloud_all.png>
+Package pdftex.def Info: senti_cloud_all.png  used on input line 690.
+(pdftex.def)             Requested size: 236.01561pt x 219.60509pt.
+
+Underfull \vbox (badness 4859) has occurred while \output is active []
+
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 12.1638pt, for example:
@@ -844,42 +898,72 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-0.1638pt}.
 
-[12]
+[13 <./freq_each_MA.png>]
+<senti_contri_each.png, id=362, 722.7pt x 433.62pt>
+File: senti_contri_each.png Graphic file (type png)
+<use senti_contri_each.png>
+Package pdftex.def Info: senti_contri_each.png  used on input line 700.
+(pdftex.def)             Requested size: 424.82523pt x 254.89404pt.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 12.1638pt, for example:
+(fancyhdr)                \setlength{\headheight}{12.1638pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-0.1638pt}.
+
+[14 <./senti_cloud_all.png> <./senti_contri_each.png (PNG copy)>]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 12.1638pt, for example:
+(fancyhdr)                \setlength{\headheight}{12.1638pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-0.1638pt}.
+
+[15]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 12.1638pt, for example:
+(fancyhdr)                \setlength{\headheight}{12.1638pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-0.1638pt}.
+
+[16
+
+]
 Chapitre 4.
 
 Package lipsum Warning: Unknown language 'latin'. Hyphenation patterns for
 (lipsum)                'french' will be used instead.
 
-[13
-
-] [14
+[17] [18
 
 ]
 Chapitre 5.
-[15] (./rapport.bbl [16
+[19] (./rapport.bbl [20
 
 ]
 Underfull \hbox (badness 1365) in paragraph at lines 53--58
 []\T1/cmr/m/n/12 Aboulkacem Lemtiri, Gilles Colinet, Taofic Alabi, Daniel Cluzeau, Lara Zirbes,
  []
 
-[17]) [18] [19] [20] (./rapport.aux)
+[21]) [22] [23] [24] (./rapport.aux)
 Package rerunfilecheck Info: File `rapport.out' has not changed.
-(rerunfilecheck)             Checksum: A4C94DEF104DEEB5532A95544FF21A66;5008.
+(rerunfilecheck)             Checksum: D8A4BAC61A5467A12CE0407D0909DE25;4875.
  ) 
 Here is how much of TeX's memory you used:
- 23506 strings out of 480247
- 421142 string characters out of 5896106
- 847532 words of memory out of 5000000
- 41017 multiletter control sequences out of 15000+600000
+ 23633 strings out of 480247
+ 424083 string characters out of 5896106
+ 849866 words of memory out of 5000000
+ 41123 multiletter control sequences out of 15000+600000
  484298 words of font info for 58 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  91i,11n,117p,1350b,653s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texmf/fonts/type1/public/cm-super/sfbx1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2488.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfcc1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1000.pfb>
-Output written on rapport.pdf (34 pages, 1935060 bytes).
+Output written on rapport.pdf (38 pages, 2256225 bytes).
 PDF statistics:
- 444 PDF objects out of 1000 (max. 8388607)
- 355 compressed objects within 4 object streams
- 82 named destinations out of 1000 (max. 500000)
- 259 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 497 PDF objects out of 1000 (max. 8388607)
+ 397 compressed objects within 4 object streams
+ 90 named destinations out of 1000 (max. 500000)
+ 284 words of extra memory for PDF output out of 10000 (max. 10000000)
 
