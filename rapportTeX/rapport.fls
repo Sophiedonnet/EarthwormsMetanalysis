@@ -1314,11 +1314,11 @@ INPUT ./freq_all_MA.png
 INPUT freq_all_MA.png
 INPUT ./freq_all_MA.png
 INPUT ./freq_all_MA.png
-INPUT ./freq_each_MA.png
-INPUT ./freq_each_MA.png
-INPUT freq_each_MA.png
-INPUT ./freq_each_MA.png
-INPUT ./freq_each_MA.png
+INPUT ./scales_graph.png
+INPUT ./scales_graph.png
+INPUT scales_graph.png
+INPUT ./scales_graph.png
+INPUT ./scales_graph.png
 INPUT ./word_rank_table.png
 INPUT ./word_rank_table.png
 INPUT word_rank_table.png

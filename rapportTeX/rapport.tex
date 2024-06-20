@@ -678,10 +678,10 @@ En sortie du code de Web-scraping dévéloppé en Python (et après recherche ma
     \caption[Table 1]{Tableau présentant un exemple de la structure type du fichier CSV issu du Web-scrapping et employé pour l'analyse. Le fichier originel comprend 168 lignes. Les données manquantes (non représentées ici), sont notées "NA".\label{Table 1}}
     \end{table}
 
-
+\newpage
 \section{Analyse globale des textes bruts}
 \noindent
-Pour détecter informatiquement les racines les plus fréquentes du corpus, chaque token distinct (dans cette section, des mots uniques) présent dans les quatre jeux de données (abstracts d'articles) a été compté.  Le graphique ci-dessous présente les racines les plus fréquemment retrouvées dans l'ensemble du corpus. Les trois plus imporantes sont \textbf{earthworm}, \textbf{soil} et \textbf{plant} (\cref{freq_all}).
+Pour détecter informatiquement les racines les plus fréquentes du corpus, chaque token distinct (dans cette section, des mots uniques) présent dans les quatre jeux de données (abstracts d'articles) a été compté.  Le graphique ci-dessous présente les racines les plus fréquemment retrouvées dans l'ensemble du corpus. Les trois plus fréquentes sont \textbf{earthworm}, \textbf{soil} et \textbf{plant} (\cref{freq_all}).
 
 \begin{figure}[htb] %le h entre crochet signifie je veux la figure à cet emplacement
     \begin{center} %centrer la figure
@@ -696,17 +696,17 @@ Dans un second temps, on a conduit la même analyse, mais en considérant cette 
 
 % Pour des raisons de taille de cette section et de complexité d'interprétation, le scale graph n'a pas été inclus ici. Sélection à discuter.
 
-\begin{figure} %le h entre crochet signifie je veux la figure à cet emplacement
+\begin{figure}[htb] %le h entre crochet signifie je veux la figure à cet emplacement
     \begin{center} %centrer la figure
-        \includegraphics[width=1\textwidth]{freq_each_MA.png}
-        \caption{Sur l'axe des abscisses, les valeurs numériques représentent le nombre total d'occurences des mots (après \textit{racination}) écrits en ordonnées. On remarque que les résultats individuels sont très différents de ceux obtenus lors de l'analyse collective.\label{freq_each}}
+        \includegraphics[width=1\textwidth]{scales_graph.png}
+        \caption{La ligne grise représente les mots dont la fréquence est similaire dans les deux textes comparés. Les mots au-dessus de la ligne sont plus fréquents dans la MA1, tandis que les mots en-dessous de la ligne sont plus fréquents dans la deuxième MA. Les termes situés dans le quart supérieur droits sont très fréquents dans les deux corpus.\label{scales}}
         %legende
     \end{center}  
 \end{figure}
 
 \clearpage
 
-\section{Approche tf-idf et loi de Zipf}
+\section{Rang, approche tf-idf et loi de Zipf}
 \noindent
  En analyse comparative de texte, il est possible de calculer le \textbf{rang} de chaque mot. Dans les tableaux ci-dessous (\cref{rank_table}), on remarque que trois premiers rangs sont toujours occupés par des mots-outils, c'est à dire non sémantiquement pleins. Le mot "earthworm" fait partie des dix premiers de toutes les MA. Le mot "soil" est dans les dix premiers pour les MA1, 3 et 4, là où "plant" est dans les dix premiers pour les MA2, 3 et 4. Pour la MA1, le champ lexical des végétaux est réprésenté par le mot "forest".
 
@@ -719,7 +719,7 @@ Dans un second temps, on a conduit la même analyse, mais en considérant cette 
 \end{figure}
 \FloatBarrier{} % {} permet de d'ignorer les "command terminated with space".
 
-L'objectif de l'approche tf-idf est d'évaluer l'importance d'un terme contenu dans un document, relativement à l'ensemble du document. La fréquence brute du terme est nommée tf, et la fréquence inverse de document (une mesure de l'importance du terme dans l'ensemble du corpus) est nommée idf. Le poids ajusté de chaque terme s'obtient en multipliant ces deux mesures, et il augmente proportionnellement au nombre d'occurrences du mot dans le document. Grâce à l'approche tf-idf (\cref{graph_tf_idf}), on peut voir que chaque mot présent sur l'axe Oy est un mot utilisé plus souvent que les autres au sein d'une métaanalyse. Les racines \textbf{earthworm, soil, forest} sont plus fréquentes dans la MA1, \textbf{aphid, nematod, herbivor} plus fréquentes dans la MA2, \textbf{eastern, canopy, arthropod} plus fréquentes dans la MA3 et \textbf{plfa, pb, cu} plus féquentes dans la MA4.
+L'objectif de l'approche tf-idf est d'évaluer l'importance d'un terme contenu dans un document, relativement à l'ensemble du document. La fréquence brute du terme est nommée tf, et la fréquence inverse de document (une mesure de l'importance du terme dans l'ensemble du corpus) est nommée idf. Le poids ajusté de chaque terme s'obtient en multipliant ces deux mesures, et il augmente proportionnellement au nombre d'occurrences du mot dans le document. Grâce à l'approche tf-idf (\cref{graph_tf_idf}), on peut voir que chaque mot présent sur l'axe Oy est un mot utilisé plus souvent que les autres au sein d'une métaanalyse. Les racines \textbf{earthworm, soil, forest} sont plus importantes dans la MA1, \textbf{aphid, nematod, herbivor} plus importantes dans la MA2, \textbf{eastern, canopy, arthropod} plus importantes dans la MA3 et \textbf{plfa, pb, cu} plus importantes dans la MA4.
 
 \begin{figure}[htb] %le h entre crochet signifie je veux la figure à cet emplacement
     \begin{center} %centrer la figure
