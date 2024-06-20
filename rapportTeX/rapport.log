@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.5.28)  20 JUN 2024 16:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.5.28)  20 JUN 2024 18:03
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -757,7 +757,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 [4] (./rapport.lof
 Package cleveref Info: loaded `french' language definitions on input line 1.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 1939) has occurred while \output is active []
 
  [5])
 \tf@lof=\write5
@@ -811,7 +811,7 @@ Underfull \hbox (badness 1264) in paragraph at lines 371--375
 
 ] [12]
 Chapitre 1.
-<organigrammeEquipe.png, id=282, 1625.07124pt x 1135.24126pt>
+<organigrammeEquipe.png, id=283, 1625.07124pt x 1135.24126pt>
 File: organigrammeEquipe.png Graphic file (type png)
 <use organigrammeEquipe.png>
 Package pdftex.def Info: organigrammeEquipe.png  used on input line 400.
@@ -823,12 +823,12 @@ l.412
        [1
 
  <./organigrammeEquipe.png>]
-<EW_services.png, id=305, 241.8636pt x 267.8808pt>
+<EW_services.png, id=306, 241.8636pt x 267.8808pt>
 File: EW_services.png Graphic file (type png)
 <use EW_services.png>
 Package pdftex.def Info: EW_services.png  used on input line 450.
 (pdftex.def)             Requested size: 94.4048pt x 104.55893pt.
-<worm-map.png, id=306, 925.4575pt x 823.075pt>
+<worm-map.png, id=307, 925.4575pt x 823.075pt>
 File: worm-map.png Graphic file (type png)
 <use worm-map.png>
 Package pdftex.def Info: worm-map.png  used on input line 458.
@@ -1026,24 +1026,17 @@ Overfull \hbox (6.34402pt too wide) in paragraph at lines 667--667
 \T1/cmr/m/n/10 1393(98)00075-
  []
 
-
+[11]
 Underfull \hbox (badness 1127) in paragraph at lines 677--679
 \T1/cmr/m/n/12 (abstracts d'articles) a été compté. Le graphique ci-dessous présente les racines les
  []
 
-<freq_all_MA.png, id=377, 505.89pt x 361.35pt>
+<freq_all_MA.png, id=384, 505.89pt x 361.35pt>
 File: freq_all_MA.png Graphic file (type png)
 <use freq_all_MA.png>
 Package pdftex.def Info: freq_all_MA.png  used on input line 682.
 (pdftex.def)             Requested size: 472.03123pt x 337.17133pt.
-[11]
-<freq_each_MA.png, id=385, 722.7pt x 722.7pt>
-File: freq_each_MA.png Graphic file (type png)
-<use freq_each_MA.png>
-Package pdftex.def Info: freq_each_MA.png  used on input line 695.
-(pdftex.def)             Requested size: 472.03123pt x 472.03212pt.
-Package cleveref Info: loaded `french' language definitions on input line 701.
-
+Package cleveref Info: loaded `french' language definitions on input line 688.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 12.1638pt, for example:
@@ -1052,8 +1045,15 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.1638pt}.
 
 [12 <./freq_all_MA.png>]
-Package cleveref Info: loaded `french' language definitions on input line 701.
 
+LaTeX Warning: Reference `freq_each' on page 1 undefined on input line 689.
+
+<scales_graph.png, id=390, 1084.05pt x 722.7pt>
+File: scales_graph.png Graphic file (type png)
+<use scales_graph.png>
+Package pdftex.def Info: scales_graph.png  used on input line 695.
+(pdftex.def)             Requested size: 472.03123pt x 314.69176pt.
+Package cleveref Info: loaded `french' language definitions on input line 701.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 12.1638pt, for example:
@@ -1061,13 +1061,13 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-0.1638pt}.
 
-[13 <./freq_each_MA.png>]
-<word_rank_table.png, id=397, 715.67375pt x 504.88625pt>
+[13 <./scales_graph.png (PNG copy)>]
+<word_rank_table.png, id=396, 715.67375pt x 504.88625pt>
 File: word_rank_table.png Graphic file (type png)
 <use word_rank_table.png>
 Package pdftex.def Info: word_rank_table.png  used on input line 709.
 (pdftex.def)             Requested size: 472.03123pt x 333.01022pt.
-<graphe_tf_idf.png, id=399, 505.89pt x 578.16pt>
+<graphe_tf_idf.png, id=398, 505.89pt x 578.16pt>
 File: graphe_tf_idf.png Graphic file (type png)
 <use graphe_tf_idf.png>
 Package pdftex.def Info: graphe_tf_idf.png  used on input line 720.
@@ -1084,7 +1084,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 [14
 
  <./word_rank_table.png>]
-<curve_zipf.png, id=406, 505.89pt x 361.35pt>
+<curve_zipf.png, id=405, 505.89pt x 361.35pt>
 File: curve_zipf.png Graphic file (type png)
 <use curve_zipf.png>
 Package pdftex.def Info: curve_zipf.png  used on input line 732.
@@ -1099,7 +1099,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.1638pt}.
 
 [15 <./graphe_tf_idf.png>]
-<bigrammes_tf_idf.png, id=418, 505.89pt x 361.35pt>
+<bigrammes_tf_idf.png, id=417, 505.89pt x 361.35pt>
 File: bigrammes_tf_idf.png Graphic file (type png)
 <use bigrammes_tf_idf.png>
 Package pdftex.def Info: bigrammes_tf_idf.png  used on input line 745.
@@ -1114,7 +1114,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.1638pt}.
 
 [16 <./curve_zipf.png (PNG copy)> <./bigrammes_tf_idf.png>]
-<network_all_(oriented).png, id=425, 867.24pt x 578.16pt>
+<network_all_(oriented).png, id=424, 867.24pt x 578.16pt>
 File: network_all_(oriented).png Graphic file (type png)
 <use network_all_(oriented).png>
 Package pdftex.def Info: network_all_(oriented).png  used on input line 757.
@@ -1129,12 +1129,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.1638pt}.
 
 [17 <./network_all_(oriented).png (PNG copy)>]
-<network1.png, id=431, 1445.4pt x 361.35pt>
+<network1.png, id=430, 1445.4pt x 361.35pt>
 File: network1.png Graphic file (type png)
 <use network1.png>
 Package pdftex.def Info: network1.png  used on input line 770.
 (pdftex.def)             Requested size: 472.03123pt x 118.00526pt.
-<network2.png, id=433, 1445.4pt x 361.35pt>
+<network2.png, id=432, 1445.4pt x 361.35pt>
 File: network2.png Graphic file (type png)
 <use network2.png>
 Package pdftex.def Info: network2.png  used on input line 780.
@@ -1149,12 +1149,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.1638pt}.
 
 [18 <./network1.png (PNG copy)> <./network2.png (PNG copy)>]
-<network3.png, id=439, 1843.88875pt x 1008.76875pt>
+<network3.png, id=438, 1843.88875pt x 1008.76875pt>
 File: network3.png Graphic file (type png)
 <use network3.png>
 Package pdftex.def Info: network3.png  used on input line 791.
 (pdftex.def)             Requested size: 330.42041pt x 180.75473pt.
-<network4.png, id=441, 1843.88875pt x 1008.76875pt>
+<network4.png, id=440, 1843.88875pt x 1008.76875pt>
 File: network4.png Graphic file (type png)
 <use network4.png>
 Package pdftex.def Info: network4.png  used on input line 801.
@@ -1169,12 +1169,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.1638pt}.
 
 [19 <./network3.png> <./network4.png>]
-<senti_cloud_all.png, id=450, 303.1325pt x 282.05376pt>
+<senti_cloud_all.png, id=449, 303.1325pt x 282.05376pt>
 File: senti_cloud_all.png Graphic file (type png)
 <use senti_cloud_all.png>
 Package pdftex.def Info: senti_cloud_all.png  used on input line 815.
 (pdftex.def)             Requested size: 122.72552pt x 114.1924pt.
-<senti_contri_each.png, id=452, 722.7pt x 433.62pt>
+<senti_contri_each.png, id=451, 722.7pt x 433.62pt>
 File: senti_contri_each.png Graphic file (type png)
 <use senti_contri_each.png>
 Package pdftex.def Info: senti_contri_each.png  used on input line 825.
@@ -1214,21 +1214,24 @@ Package cleveref Info: loaded `french' language definitions on input line 861.
  [26] [27] [28] (./rapport.aux
 Package cleveref Info: loaded `french' language definitions on input line 28.
 )
+
+LaTeX Warning: There were undefined references.
+
 Package rerunfilecheck Info: File `rapport.out' has not changed.
-(rerunfilecheck)             Checksum: 845CF9F7BCB5AA058CFB7B022BD42169;4846.
+(rerunfilecheck)             Checksum: E70E99246DCB3201C0E7AF65ACA09392;4879.
  ) 
 Here is how much of TeX's memory you used:
- 23857 strings out of 480247
- 427672 string characters out of 5896106
+ 23858 strings out of 480247
+ 427682 string characters out of 5896106
  875189 words of memory out of 5000000
- 41311 multiletter control sequences out of 15000+600000
+ 41312 multiletter control sequences out of 15000+600000
  487772 words of font info for 66 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  91i,12n,117p,1350b,925s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx0900.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2488.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0900.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti0900.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt0900.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfxc1200.pfb>
-Output written on rapport.pdf (44 pages, 2685008 bytes).
+Output written on rapport.pdf (44 pages, 3342703 bytes).
 PDF statistics:
- 607 PDF objects out of 1000 (max. 8388607)
+ 606 PDF objects out of 1000 (max. 8388607)
  477 compressed objects within 5 object streams
  104 named destinations out of 1000 (max. 500000)
  311 words of extra memory for PDF output out of 10000 (max. 10000000)
