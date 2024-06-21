@@ -21,6 +21,7 @@
 \usepackage{placeins}
 % Pour les tables
 \usepackage[normalem]{ulem}
+\usepackage{natbib}
 \useunder{\uline}{\ul}{}
 
 \pagestyle{fancy}
@@ -333,6 +334,8 @@ Merci enfin à tous ceux que je n'ai pas nommés, particulièrement aux personne
 \begin{description}
 
     \item[JSON:] JSON (JavaScript Object Notation) est un format de fichier textuel conçu pour la structuration et l’échange de données (https://www.hostinger.fr/tutoriels/quest-ce-que-json).
+    
+    \item[log-log scatter plot:] Type de graphique sous forme de nuage de points montrant les relations entre deux variables. Le passage à l'échelle logarithmique permet une meilleure visualisation des résulats.
 
     \item[Markdown:] Markdown est un langage de balisage léger qui permet de
         formater du texte de manière simple et rapide. Il utilise des caractères
@@ -348,11 +351,7 @@ Merci enfin à tous ceux que je n'ai pas nommés, particulièrement aux personne
 
     \item [Racinisation (linguistique):] Obtention du radical, par exemple par dépréfixation ou \sloppy désuffixation (\textit{Exemple:}"enhance", "enhances" et "enhancement" deviennent tous "enhanc").
     
-    \item [Réseau de n-grams:] Figure permettant de visualiser toutes les relations entre les différents tokens simultanément, plutôt que deux par deux. Cela permet d'aller plus loin que l'analyse de bigrammes séparés les uns des autres.
-
-    \item[Sélecteurs CSS:] Les sélecteurs définissent les éléments sur
-        lesquelles s'applique un ensemble de règles CSS (langage de programmation employé pour mettre en forme une page Web). Ils peuvent être employés en
-        Web scraping pour cibler et isoler certains éléments d'intérêt.
+    \item [Réseau de n-grams:] Figure permettant de visualiser toutes les relations entre les différents \textit{tokens} simultanément, plutôt que deux par deux. Cela permet d'aller plus loin que l'analyse de bigrammes séparés les uns des autres.
 
     \item[Token:] Unité textuelle souvent réduite, voire ne comprenant qu'un
         seul mot, issue du processus de tokenisation.
@@ -366,12 +365,12 @@ Merci enfin à tous ceux que je n'ai pas nommés, particulièrement aux personne
         l’analyse. Cette pratique repose sur la technologie de « Natural Language
         Processing » (traitement du langage naturel), permettant aux machines de
         comprendre et de traiter le langage humain automatiquement (source :
-        https://datascientest.com/text-mining-definition).
+        https://datascientest.com/Text-mining-definition).
 
     \item[Web scraping:] Technique permettant d’extraire automatiquement de
         grandes quantités d’informations d’un site Web, sans intervention humaine
         directe, via un script informatique (source:
-        https://moncoachdata.com/blog/web-scraping-pratique/).
+        https://moncoachdata.com/blog/\textit{Web-scraping}-pratique/).
 \end{description}
 
 \thispagestyle{fancy}
@@ -474,12 +473,12 @@ L'analyse infomatique des abstracts des articles issus des 4 métaanalyses a ét
 
 \vspace{\baselineskip}
 \noindent
-\textbf{Les méthodes statistiques de Text-mining permettent-elles d'identifier des groupes distincts d'articles scientifiques défendant une conception opposée du rôle écologique du vers de terre au sein du corpus de texte fourni pour l'analyse?}
+\textbf{Les méthodes statistiques de \textit{Text-mining} permettent-elles d'identifier des groupes distincts d'articles scientifiques défendant une conception opposée du rôle écologique du vers de terre au sein du corpus de texte fourni pour l'analyse?}
 
 \vspace{\baselineskip}
 Pour répondre à cette question, nous procéderons en deux étapes: 
 \begin{enumerate}
-    \item Création d'une base de métadonnées (comprenant notamment les \textbf{abstracts} de chaque étude indépendante formant les 4 métaanalyses) via un script Python de Web-scraping, sous forme d'un fichier CSV brut destiné à être analysé.
+    \item Création d'une base de métadonnées (comprenant notamment les \textbf{abstracts} de chaque étude indépendante formant les 4 métaanalyses) via un script Python de \textit{Web-scraping}, sous forme d'un fichier CSV brut destiné à être analysé.
     \item Analyse textuelle des abstracts d'articles scientifiques présents dans le fichier CSV issu de l'étape précédante via un script R.
 \end{enumerate}
 \vspace{\baselineskip}
@@ -497,17 +496,17 @@ Le matériel qui m'a été fourni par le laboratoire est un ordinateur fixe HP E
 
 \subsection{Veille bibliographique et technologique}
 \noindent
-Pour la veille bibliographique, je me suis aidé du script de Web-scraping développé dans le cadre de mon stage, qui, à partir d'un fichier comprenant les titres de nombreux articles cible, m'a permis de récupérer les métadonnées associées de maniere semi-automatique. Les journaux consultés (\textit{Applied Soil Ecology, Ecosystems, Soil Biology and Biochemistry}, etc.) étaient majoritairement orientés sur les études écologiques. Un travail par recherche MESH a aussi été réalisé, en retenant les mots-clés \textbf{Oligochaetas, Earthworm, Lumbricus terrestris, Ecosystems, Introduced species, Soil, Data mining} et \textbf{Meta-Analysis}. Pour gérer cette bibliographie, j'ai employé le package LaTeX \textit{cleveref} conçu dans ce but.
+Pour la veille bibliographique, je me suis aidé du script de \textit{Web-scraping} développé dans le cadre de mon stage, qui, à partir d'un fichier comprenant les titres de nombreux articles cible, m'a permis de récupérer les métadonnées associées de maniere semi-automatique. Les journaux consultés (\textit{Applied Soil Ecology, Ecosystems, Soil Biology and Biochemistry}, etc.) étaient majoritairement orientés sur les études écologiques. Un travail par recherche MESH a aussi été réalisé, en retenant les mots-clés \textbf{Oligochaetas, Earthworm, Lumbricus terrestris, Ecosystems, Introduced species, Soil, Data mining} et \textbf{Meta-Analysis}. Pour gérer cette bibliographie, j'ai employé le package LaTeX \textit{cleveref} conçu dans ce but.
 
 \subsection[Bonnes pratiques]{Bonne pratique de programmation informatique et
     de developpement logiciel}
 \noindent
 Pour l'écriture du code Python, j'ai utilisé l'éditeur de code Visual Studio Code (VScode). Pour la conception du script Rmd, j'ai travaillé sous l'IDE RStudio. Conformément aux bonnes pratiques, l'intégralité des scripts (Python et R) ont été commentés en anglais, pour faciliter la relecture du code. Pour tester le fonctionnement de chaque script, deux approches différentes ont été mises en place: 
 
-Pour le script de Web-scraping en Python, les tests de fonctionnement effectués durant le développement ont été réalisées sur des jeux de données réduits (comprenant le plus souvent seulement les dix premiers articles) afin de pouvoir détecter rapidement si la sortie renvoyée est correcte par rapport à la tâche initiale. Pour la récupération de données via Crossref, des tests ont aussi été réalisées, notamment pour l'exploration des structures JSON renvoyées par la fonction works() de l'API. Une fois les données recherchées obtenues en sortie de tests ponctuels, il a été possible de généraliser la méthode, en l'appliquant dans l'ensemble du script principal. Enfin, afin d'éviter la régression du code (perte de fonctionnalité), j'ai souvent travaillé sur deux scripts identiques mais distincts, le premier servant de script principal, tandis que le deuxième était davantage un support pour le développement de nouvelles fonctionnalités. De cette façon, le script principal n'était mis à jour que lorsque le script secondaire était considéré comme fonctionnel. Un dépôt GitHub personnel aurait aussi pu jouer ce rôle, mais comme je travaillais seul sur cette partie, je n'en ai pas ressenti l'utlité.
+Pour le script de \textit{Web-scraping} en Python, les tests de fonctionnement effectués durant le développement ont été réalisées sur des jeux de données réduits (comprenant le plus souvent seulement les dix premiers articles) afin de pouvoir détecter rapidement si la sortie renvoyée est correcte par rapport à la tâche initiale. Pour la récupération de données via Crossref, des tests ont aussi été réalisées, notamment pour l'exploration des structures JSON renvoyées par la fonction works() de l'API. Une fois les données recherchées obtenues en sortie de tests ponctuels, il a été possible de généraliser la méthode, en l'appliquant dans l'ensemble du script principal. Enfin, afin d'éviter la régression du code (perte de fonctionnalité), j'ai souvent travaillé sur deux scripts identiques mais distincts, le premier servant de script principal, tandis que le deuxième était davantage un support pour le développement de nouvelles fonctionnalités. De cette façon, le script principal n'était mis à jour que lorsque le script secondaire était considéré comme fonctionnel. Un dépôt GitHub personnel aurait aussi pu jouer ce rôle, mais comme je travaillais seul sur cette partie, je n'en ai pas ressenti l'utlité.
     
     
-Pour le script de Text-mining en Rmd sous RStudio, la plupart des tests de fonctionnement au cours du dévéloppement ont été réalisés dans la console R directement, afin d'éviter d'ajouter de nouveaux objets inutiles "test" à l'environnement R. Les processus n'ont été intégrés au script Rmd proprement dit qu'une fois leur fonctionnement testé et validé dans la console. Dans cette démarche, le fonctionnement de l'environnement R a été très utile, car cela a permis de réemployer certains objets stockés en mémoire sans avoir à les redéfinir seulement en vue d' effectuer des tests.
+Pour le script de \textit{Text-mining} en Rmd sous RStudio, la plupart des tests de fonctionnement au cours du dévéloppement ont été réalisés dans la console R directement, afin d'éviter d'ajouter de nouveaux objets inutiles "test" à l'environnement R. Les processus n'ont été intégrés au script Rmd proprement dit qu'une fois leur fonctionnement testé et validé dans la console. Dans cette démarche, le fonctionnement de l'environnement R a été très utile, car cela a permis de réemployer certains objets stockés en mémoire sans avoir à les redéfinir seulement en vue d' effectuer des tests.
 \subsection{Communication des travaux}
 \noindent
 En concertation avec mes encadrants, j'ai aussi utilisé un dépôt GitHub spécialement
@@ -528,7 +527,7 @@ propos d'un ensemble de titres d'articles scientifiques défini au préalable su
 le sujet des vers de terre. Pour compléter les données récupérées (la base de
 Crossref comprenant de nombreuses données manquantes), j'ai aussi développé en
 parallèle un module pour récupérer les données d'intérêt dans le code source de
-ResearchGate (web scraping), comme le \textit{DOI (Digital Object Identifier)}
+ResearchGate (\textit{web scraping}), comme le \textit{DOI (Digital Object Identifier)}
 de chaque publication, la date de chargement sur la base de RG ou encore le
 lien vers la page RG correspondante. Pour parvenir à cette solution, voici la liste des modules qui ont été utilisés:
 
@@ -587,7 +586,7 @@ lien vers la page RG correspondante. Pour parvenir à cette solution, voici la l
         \item Module \textbf{Parsel}, fonction \textit{Selector}: Module
                 facilitant l'extraction des données pour les formats HTML, JSON et XML. Dans le
                 code, il est utilisé pour trouver les données recherchées directement dans le
-                code source de la page (web scraping) en s'appuyant sur des sélecteurs CSS.
+                code source de la page (\textit{web scraping}) en s'appuyant sur des sélecteurs CSS.
         \item Module \textbf{playwright.sync\_api}, fonction
                 \textit{sync\_playwright}: Module permettant de lancer une session navigateur
                 depuis un script Python. Dans le code, il est utilisé pour se rendre sur le
@@ -595,7 +594,7 @@ lien vers la page RG correspondante. Pour parvenir à cette solution, voici la l
                 par Google.
         \item Module \textbf{re}: Module fournissant des opérations sur les
                 expressions rationnelles utilisable dans un code Python. Dans le code Python, il est utilisé pour
-                filtrer les résultats HTML bruts issus du Web scraping.
+                filtrer les résultats HTML bruts issus du \textit{Web scraping}.
         \item Module \textbf{time}, fonction \textit{sleep}: Module
                 fournissant différentes fonctions liées au temps. Dans le script, la fonction
                 "sleep(t)" est utilisée pour forcer le système à ne rien faire pendant t
@@ -606,7 +605,7 @@ lien vers la page RG correspondante. Pour parvenir à cette solution, voici la l
 
 \subsection{Text Mining avec R}
 \noindent
-Pour réaliser le text-mining, j'ai utilisé un script R (développé sous Rstudio
+Pour réaliser le \textit{Text-mining}, j'ai utilisé un script R (développé sous Rstudio
 en Rmd) pour traiter les textes et l'analyser sous forme de figures. Mon travail a donc consisté à adapter les
 codes R montrés en exemple sur des livres à mes propres données (abstracts
 d'articles scientifiques), structurées différemment. Les analyses portaient par
@@ -614,16 +613,16 @@ exemple sur la fréquence des mots, au global et pour chaque MA, ou encore sur
 l'analyse de sentiment reposant sur l'attribution d'un
 score positif (+1) ou négatif (-1) à chaque mot du corpus. Cette attribution de
 sentiment a pu être réalisée grâce à un dictionnaire R conçu pour relier un
-token donné à la valence (positive ou négative) qui lui correspond. Afin de
+\textit{token} donné à la valence (positive ou négative) qui lui correspond. Afin de
 mieux visualiser les résultats, différentes figures ont été réalisées, comme
 des diagrammes en barre ou des nuages de mots. Le script R développé repose sur les librairies suivantes:
 
   \begin{description}
       \item[Librairie dplyr:] Librairie R conçue pour faciliter la manipulation de larges jeux de données (DataFrame et Tibble), avec des fonctions spacialisées comme \textit{mutate} (ajout de variables), \textit{select} (sélectionner les variables à partir de leurs noms), \textit{filter} (filtrer des cellules selon leur valeur), \textit{summarise} (résumer les informations d'un tibble dans un format très synthétique) et \textit{arrange} (pour réordonner les lignes selon l'ordre / la variable voulue.)
       \item[Librairie ggplot2:] Librairie R pour créer déclarativement des graphiques divers et variés (barplots, histogrammes, scatter plots, etc.)
-      \item[Librairie tidytext:] Librairie R conçue pour faciliter l'analyse de texte (Silge, Julia, and David Robinson. 2016. "tidytext: Text Mining and Analysis Using Tidy Data Principles in R."\footnote{ref Silge/Robinson à mettre à la place}), se fondant sur le paradigme d'analyse de données "tidy", où chaque variable est une colonne, chaque observation une ligne et chaque ensemble d'observations est un tableau. La fonction la plus utilisée dans le cadre de cette analyse est \textit{unnest\_tokens}, qui permet de transformer un texte donné en une tables d'unités textuelles plus réduites (tokens), comme des phrases ou des mots.
+      \item[Librairie tidytext:] Librairie R conçue pour faciliter l'analyse de texte (Silge, Julia, and David Robinson. 2016. "tidytext: Text Mining and Analysis Using Tidy Data Principles in R."\footnote{ref Silge/Robinson à mettre à la place}), se fondant sur le paradigme d'analyse de données "tidy", où chaque variable est une colonne, chaque observation une ligne et chaque ensemble d'observations est un tableau. La fonction la plus utilisée dans le cadre de cette analyse est \textit{unnest\_tokens}, qui permet de transformer un texte donné en une tables d'unités textuelles plus réduites (\textit{tokens}), comme des phrases ou des mots.
       \item[Librairie Knitr:] Librairie R conçue pour récupérer automatiquement l'output d'un code R (par exemple, pour produire une figure) afin de l'inclure dans un autre document (par exemple, format Word, HTML ou PDF) qui contiendra aussi la prose écrite par l'auteur du document, souvent pour interpréter ou commenter des résultats. Cette librairie permet notamment de moduler plus finement l'affichage des résultats, en permettant par exemple de ne pas afficher certaines figures dans un format de sortie donné (pour masquer une figure interactive au format HTML que l'on ne souhaite pas forcément voir apparaître dans un document PDF, par exemple).
-      \item[Librairie SnowballC:] Librairie R implémentant Snowball, un langage conçu pour gérer les chaînes de caractères, les nombres entiers et les booléens. Dans le script R de Text Mining, il a servi à transformer les tokens pour ne garder que la racine de chaque mot (processus de \textit{racination}), afin d'éviter les erreurs de comptage (si, pour un humain, "enhance" et "enhancement" sont deux mots ayant approximativement le même sens, informatiquement ce sont deux chaînes de caractères distinctes).
+      \item[Librairie SnowballC:] Librairie R implémentant Snowball, un langage conçu pour gérer les chaînes de caractères, les nombres entiers et les booléens. Dans le script R de Text Mining, il a servi à transformer les \textit{tokens} pour ne garder que la racine de chaque mot (processus de \textit{racination}), afin d'éviter les erreurs de comptage (si, pour un humain, "enhance" et "enhancement" sont deux mots ayant approximativement le même sens, informatiquement ce sont deux chaînes de caractères distinctes).
       \item[Librairie grid:] Librarie R implémentant les fonctions graphiques primitives\sloppy qui sous-tendent le package ggplot2. Elles permettent de modifier certains détails des graphes produits grâce à ggplot2, offrant ainsi un meilleur contrôle du rendu visuel du résulat obtenu. Dans le script, il est employé, par exemple, pour spécifier exactement l'aspect des flèches composant le réseau de bigrammes. 
       \item[Librairie ggraph:] Librairie R formant une extension de ggplot2, conçue pour permettre de supporter les structures de données relationnelles comme les réseaux, les graphes et les arbres. Dans le script, elle est notamment employée pour produire les réseaux de bigrammes.
       \item[Librairie igraph:] fonction \textit{graph\_from\_data\_frame():} Cette fonction appartient à la librairie igraph. Elle crée un objet graphe à partir d'un data frame, où le data frame représente les arêtes entre les nœuds.
@@ -640,7 +639,7 @@ livre rédigé par Julia Slige (data scientist) et David Robinson (Directeur de
 Data Scientist de la plateforme Heap). \footnote{disponible en ligne à l'adresse:
 https://www.tidytextmining.com/.} Afin de filtrer les mots d'intérêt seulement, deux stratégies ont été
 employées: Premièrement, un filtrage brut de tous les mots de liaisons sans
-rapport direct avec le sujet (nommés "stop words" en text-mining, des mots tels
+rapport direct avec le sujet (nommés "stop words" en \textit{Text-mining}, des mots tels
 que "the", "and", "is", "of" etc. en anglais) pour ne conserver que les mots
 sur lesquels les analyses pourront donner des résultats scientifiques
 significatifs (savoir que le mot "le" est le plus fréquent dans un corpus de
@@ -653,9 +652,9 @@ Cela permet de conserver le texte dans son ensemble, évitant ainsi un potentiel
 biais pouvant perturber l'analyse.
 
 \chapter{\label{Troisieme Chapitre}Résultats}
-\section{Web-scraping et obtention d'une base de métadonnées en format CSV}
+\section{\textit{Web-scraping} et obtention d'une base de métadonnées en format CSV}
 \noindent
-En sortie du code de Web-scraping dévéloppé en Python (et après recherche manuelle des données manquantes), un fichier de métadonnées au format CSV, contenant la métaanalyse d'origine, le titre, les auteurs, l'abstract, la date de publication sur ResearchGate, le DOI et l'URL vers la page RG correspondante a été obtenue (\cref{Table 1}). 
+En sortie du code de \textit{Web-scraping} dévéloppé en Python (et après recherche manuelle des données manquantes), un fichier de métadonnées au format CSV, contenant la métaanalyse d'origine, le titre, les auteurs, l'abstract, la date de publication sur ResearchGate, le DOI et l'URL vers la page RG correspondante a été obtenue (\cref{Table 1}). 
 \begin{table}[H]
     % table: Environnement du tableau.
     \begin{tabular}{|p{0.7cm}|p{2cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{1.4cm}|p{2.1cm}|p{1cm}|}
@@ -681,7 +680,7 @@ En sortie du code de Web-scraping dévéloppé en Python (et après recherche ma
 \newpage
 \section{Analyse globale des textes bruts}
 \noindent
-Pour détecter informatiquement les racines les plus fréquentes du corpus, chaque token distinct (dans cette section, des mots uniques) présent dans les quatre jeux de données (abstracts d'articles) a été compté.  Le graphique ci-dessous présente les racines les plus fréquemment retrouvées dans l'ensemble du corpus. Les trois plus fréquentes sont \textbf{earthworm}, \textbf{soil} et \textbf{plant} (\cref{freq_all}).
+Pour détecter informatiquement les racines les plus fréquentes du corpus, chaque \textit{token} distinct (dans cette section, des mots uniques) présent dans les quatre jeux de données (abstracts d'articles) a été compté.  Le graphique ci-dessous présente les racines les plus fréquemment retrouvées dans l'ensemble du corpus. Les trois plus fréquentes sont \textbf{earthworm}, \textbf{soil} et \textbf{plant} (\cref{freq_all}).
 
 \begin{figure}[htb] %le h entre crochet signifie je veux la figure à cet emplacement
     \begin{center} %centrer la figure
@@ -692,14 +691,14 @@ Pour détecter informatiquement les racines les plus fréquentes du corpus, chaq
 \end{figure}
 
 \newpage
-Dans un second temps, on a conduit la même analyse, mais en considérant cette fois-ci chaque métaanalyse comme un sous jeu de données à part entière (\cref{freq_each}). Les résultats observés pour chaque métaanalyse sont différents des résulats globaux, avec \textbf{earthworm}, \textbf{soil} et \textbf{forest} en premier pour la MA1, \textbf{plant}, \textbf{earthworm} et \textbf{increase} pour la MA2, \textbf{earthworm}, \textbf{species} et \textbf{plant} pour la MA3 et \textbf{earthworm}, \textbf{plant} et \textbf{soil} pour la MA4. Si tous ces groupes ne sont certes pas identiques, on remarque la prévalence de "earthworm" et de "plant", ainsi que la mention de certains écosystèmes ("soil", "forest"). La racine "invas" est aussi présente dans les graphes de fréquence des MA1 et 3.
+Dans un second temps, un log-log scatter plot a été réalisé pour analyser les corrélations du choix des mots entre différents textes (\cref{scales}). Il en ressort que le terme "earthworm" est très fréquent dans l'ensemble des métaanalyses, car présent dans le quart supérieur droit de tous les graphes. Le terme "species" est lui aussi assez souvent rencontré. Pour la MA1, 2 et 3, on peut remarquer l'importance du terme "soil", présent dans le quart supérieur droit. D'après ce graphique, les termes "carbon", "invasive" et "mineral" sont plus fréquents dans la MA1 que dans la MA2, là où les termes "plant", "community” et "growth” sont plus fréquents dans la MA2. De la même façon, les termes "carbon" et "mineral" sont plus fréquents dans la MA1 que dans la MA3, là ou les termes "disturb", "density" ou "plant" sont plus fréquents dans la MA3. Enfin, les termes "forest", "invasive" et "exotic" sont plus fréquents dans la MA1 que dans la MA4, alors que les termes "plant", "growth" et "fertil" sont plus fréquents dans la MA4.
 
 % Pour des raisons de taille de cette section et de complexité d'interprétation, le scale graph n'a pas été inclus ici. Sélection à discuter.
 
 \begin{figure}[htb] %le h entre crochet signifie je veux la figure à cet emplacement
     \begin{center} %centrer la figure
         \includegraphics[width=1\textwidth]{scales_graph.png}
-        \caption{La ligne grise représente les mots dont la fréquence est similaire dans les deux textes comparés. Les mots au-dessus de la ligne sont plus fréquents dans la MA1, tandis que les mots en-dessous de la ligne sont plus fréquents dans la deuxième MA. Les termes situés dans le quart supérieur droits sont très fréquents dans les deux corpus.\label{scales}}
+        \caption{Log-log scatter plot montrant les corrélations du choix des mots entre chaque métaanalyse, à l'échelle logarithmique. La ligne grise représente les mots dont la fréquence est similaire dans les deux textes comparés. Les mots au-dessus de la ligne sont plus fréquents dans la MA1, tandis que les mots en-dessous de la ligne sont plus fréquents dans la deuxième MA. Les termes situés dans le quart supérieur droits sont très fréquents dans les deux corpus.\label{scales}}
         %legende
     \end{center}  
 \end{figure}
@@ -719,7 +718,7 @@ Dans un second temps, on a conduit la même analyse, mais en considérant cette 
 \end{figure}
 \FloatBarrier{} % {} permet de d'ignorer les "command terminated with space".
 
-L'objectif de l'approche tf-idf est d'évaluer l'importance d'un terme contenu dans un document, relativement à l'ensemble du document. La fréquence brute du terme est nommée tf, et la fréquence inverse de document (une mesure de l'importance du terme dans l'ensemble du corpus) est nommée idf. Le poids ajusté de chaque terme s'obtient en multipliant ces deux mesures, et il augmente proportionnellement au nombre d'occurrences du mot dans le document. Grâce à l'approche tf-idf (\cref{graph_tf_idf}), on peut voir que chaque mot présent sur l'axe Oy est un mot utilisé plus souvent que les autres au sein d'une métaanalyse. Les racines \textbf{earthworm, soil, forest} sont plus importantes dans la MA1, \textbf{aphid, nematod, herbivor} plus importantes dans la MA2, \textbf{eastern, canopy, arthropod} plus importantes dans la MA3 et \textbf{plfa, pb, cu} plus importantes dans la MA4.
+L'objectif de l'approche tf-idf est d'évaluer l'importance d'un terme contenu dans un document, relativement à l'ensemble du document. La fréquence brute du terme est nommée tf, et la fréquence inverse de document (une mesure de l'importance du terme dans l'ensemble du corpus) est nommée idf. Le poids ajusté de chaque terme s'obtient en multipliant ces deux mesures, et il augmente proportionnellement au nombre d'occurrences du mot dans le document. Grâce à l'approche tf-idf (\cref{graph_tf_idf}), on peut voir que chaque mot présent sur l'axe Oy est un mot utilisé plus souvent que les autres au sein d'une métaanalyse. Les racines \textbf{earthworm, soil, forest} sont plus importantes dans la MA1, \textbf{aphid, nematod, herbivor} plus importantes dans la MA2, \textbf{eastern, canopy, arthropod} plus importantes dans la MA3 et \textbf{grain, pb, cu} plus importantes dans la MA4.
 
 \begin{figure}[htb] %le h entre crochet signifie je veux la figure à cet emplacement
     \begin{center} %centrer la figure
@@ -756,7 +755,7 @@ Grâce à l'approche tf-idf (\cref{bi_tf_idf}), on peut voir que chaque \textit{
 \FloatBarrier{}
 
 \newpage
-Grâce à l'approche en réseau de bigrammes, il est possible de relever des associations de mots au-delà de deux mots seulement. Le réseau ci-dessous (\cref{network}) montre que les trois mots les plus importants du corpus sont \textbf{"plant", "soil"} et \textbf{"earthworm"}. Pour le premier, les bigrammes rencontrés sont \textit{“plant community”, “plant growth”, “plant communities”, “native plant”}, pour le second \textit{“mineral soil”, “soil microbial” / “microbial biomass” (forte association), “soil organisms”} et pour le troisième \textit{“invasion”, “species”, “activity”}. D’autres bigrammes notables sont: “forest floor”, “exotic earthworm”, “organic matter”, “leaf litter”, “northern hardwood” et “lumbricus terretris”.
+Grâce à l'approche en réseau de bigrammes, il est possible de relever des associations de mots au-delà de deux mots seulement. Le réseau ci-dessous (\cref{network}) montre que les trois mots les plus importants du corpus sont \textbf{"plant", "soil"} et \textbf{"earthworm"}. Pour le premier, les bigrammes rencontrés sont \textit{“plant community”, “plant growth”, “plant communities”, “native plant”}, pour le second \textit{“mineral soil”, “soil microbial” / “microbial biomass” (forte association), “soil organisms”} et pour le troisième \textit{“earthworm invasion”, “earthworm species”, “earthworm activity”}. D’autres bigrammes notables sont: “forest floor”, “exotic earthworm”, “organic matter”, “leaf litter”, “northern hardwood” et “lumbricus terretris”.
 
 \begin{figure}[htb] %le h entre crochet signifie je veux la figure à cet emplacement
     \begin{center} %centrer la figure
@@ -838,27 +837,35 @@ Une analyse plus détaillée de chaque contributeur (en ordonnée) a pu être mi
 \chapter{\label{Quatrieme Chapitre}Discussion}
 %\paragraph{Paragraphe}
 \noindent
-Pour la constitution de la base de données de travail (le fichier CSV contenant les abstracts des articles à analyser), une approche semi-automatique a pu être implémentée, mais il serait encore nécessaire d'améliorer l'outil pour pouvoir complètement automatiser le processus. Cependant, de nombreux sites internet combattant activement le Web-scraping, il pourrait s'avérer difficile d'obtenir un script parfaitement fonctionnel et stable dans le temps. Les abstracts d'articles se sont avérés étonnament difficiles à récupérer automatiquement, c'est pourquoi une intervention manuelle a souvent été nécessaire.
+Pour la constitution de la base de données de travail (le fichier CSV contenant les abstracts des articles à analyser), une approche semi-automatique a pu être implémentée, mais il serait encore nécessaire d'améliorer l'outil pour pouvoir complètement automatiser le processus. Cependant, de nombreux sites internet combattant activement le \textit{Web-scraping}, il pourrait s'avérer difficile d'obtenir un script à la fois précis, fonctionnel et stable dans le temps. Les abstracts d'articles se sont avérés étonnament difficiles à récupérer automatiquement, c'est pourquoi une intervention manuelle a souvent été nécessaire.
 
-Une fois les abstracts récupérés, une première analyse de la fréquence brute des termes à montré que les mots les plus retrouvés dans le corpus entier étaient "earthworm", "soil" et "plant", ce qui semble confirmer que tous ces textes traitaient bel et bien de l'influence des vers de terre sur le sol et les plantes. (\cref{Troisieme Chapitre}, section 3.2). Individuellement, il ressort que la MA1 étudie davantage l'impact des vers de terre invasifs sur les sols forestiers, là où la MA3 se focalise sur la canopée des forêts et l'influence des espèces venues de l'est. La MA2 s'intéresse à l'influence des organismes du sol sur la physiologie des plantes, là où la MA4 semble davantage étudier leur influence la productivité des plantes.   
+Une fois les abstracts récupérés, une première analyse de la fréquence brute des termes à montré que les mots les plus retrouvés dans le corpus entier étaient "earthworm", "soil" et "plant", ce qui semble confirmer que tous ces textes traitaient bel et bien de l'influence des vers de terre sur le sol et les plantes.
+
+Individuellement, ils ressort que la MA1 étudie davantage l'écologie des sols que les MA2 et 3, là où les MA2 et 3 semblent davantage étudier les plantes en tant que telles. De la même façon, la MA1 parle davantage d'invasion et d'espèces exotiques que la MA4, qui elle se focalise plus sur la croissance des plantes et la fertilité des sols.  
+
+L'étude du thème de chaque corpus par l'approche tf-idf sur des mots uniques confirme que toutes les métaanalyses mentionnent très souvent les vers de terre, les sols et les plantes. La MA2 semblent mentionner les sols moins souvent, cependant, se focalisant plus, comme noté précédemment, sur les réactions physiologiques des plantes en tant que telles face aux pucerons et aux herbivores. Thématiquement, elle semble cependant se rapprocher de la MA4, qui étudie l'effet des vers de terre sur la production végétale et la pollution des sols. Les MA1 et 3 semblent davantage orientées vers la caractérisation de l'influence des vers de terre sur les écosystèmes natifs, notamment les écosystèmes forestiers.
+
+L'application de la loi de Zipf aux différents textes du corpus montre que la métaanalyse comportant le plus de mots "rares" est la MA3, et cela pourrait s'expliquer par la taille plus petite de son corpus d'abstracts par rapport aux autres (avec 13 articles seulement contre 40 pour la MA1, 21 pour la MA2 et 42 pour la MA4, c'est le sous-groupe le plus réduit de la base de données), ce qui fait artificiellement monter la fréquence observée. Cependant, aucun effet notable n'est relevé pour la MA2, qui pourtant s'appuie aussi sur un corpus plutôt réduit.
+
+Pour aller plus loin dans l'étude thématique, la méthode tf-idf a ensuite été appliquée a un ensemble de bigrammes, et non plus uniquement des mots simples. Il en ressort que la MA1 étudie l'influence des vers de terre invasifs sur les sols forestiers, la MA2 l'influence des organismes du sol sur les plantes, la MA3 l'influence des espèces invasives sur la richesse spécifiques des écosystèmes, et la MA4 l'influence des vers de terre sur la pollution des sols et la productivité végétale. L'analyse des réseaux de bigrammes tends aussi à rapprocher thématiquement la MA1 de la MA3, et la MA2 de la MA4. 
+
+Enfin, l'analyse de sentiment conduite sur les mots simples a semblé montrer les MA1 et 3 comme étant globalement négatives, et les MA2 et 4 comme étant globalement positives, contribuant à renforcer les deux groupes dégagés au terme des étapes précédantes.
+
+Il semblerait donc que les vers de terre invasifs ont un impact plutôt négatif sur les écosystèmes natifs (MA1 et 3), mais un impact plutôt positif sur les sols et les plantes (MA2 et 4). Ces résultats semblent en accord avec les recherches conduites précédemment par \cite{12_EW_disrupt_ecosys} et \cite{13_EW_enhance_plant_growth}. Cependant, cette analyse portant sur de nombreux textes théoriquement très différents les uns des autres, il convient de noter que les groupes ainsi formés ne sont pas absolus, les résulats obtenus montrant simplement l'existence de tendances globales au sein des différents textes analysés. 
 
 \thispagestyle{fancy}
 
 \chapter{\label{Cinquième Chapitre}Conclusion}
-Elle vise, à reformuler les objectifs visés, énoncer les résultats essentiels
-obtenus, à replacer le
-travail dans son contexte scientifique et à faire ressortir leur importance
-théorique, pratique, tech-
-nique ou économique. Elle peut ouvrir de nouvelles perspectives ou hypothèses
-qui seront le point
-de départ de nouveaux travaux. Il n'y a pas a priori d'appel à des références.
+\noindent
+Au cours de ce stage, l'objectif principal fixé par mes encadrants était de savoir s'il était possible d’identifier des groupes distincts d’articles scientifiques défendant une conception opposée du rôle écologique du vers de terre au sein du corpus d'articles scientifiques divers rien qu'à partir des méthodes de \textit{Text-mining} sous R, c'est à dire sans avoir à lire et analyser chacun des nombreux abstracts individuellement. Les résulats obtenus à l'issue de ce stage semblent montrer qu'il est effectivement possible de détecter des tendances générales et des avis au sein de ces données textuelles en quantité, mais les deux groupes ainsi formés (favorables au vers de terres ou bien défavorables aux vers de terre), ne paraissent pas indiscutablement séparés l'un de l'autre. Cependant, la détection, même imprécise, de tels groupes par des méthodes statistiques prouve que la polémique entourant le rôle écologique du vers de terre au sein de la littérature scientifique existe bel et bien, et que des analyses informatiques relativement simples à mettre en place permettent de la mettre en évidence. Pour améliorer la qualité des résulats obtenus, il pourrait être nécessaire de poursuivre les analyses à l'aide de méthodes statistiques plus raffinées, ou bien tenter de confronter ces conclusions avec d'autres résultats comparables, idéalement obtenus grâce à des protocoles différents. 
 
 \thispagestyle{fancy}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%          15         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Références %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
-\bibliographystyle{plain}
-\bibliography{biblio.bib}
+%\bibliographystyle{bmc-mathphys}
+\bibliographystyle{dinat}
+\bibliography{biblio}
 \thispagestyle{fancy}
 %\apalike
 
