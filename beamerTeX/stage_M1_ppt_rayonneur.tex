@@ -1,0 +1,395 @@
+\documentclass[xcolor=dvipsnames]{beamer}
+
+\usetheme{Madrid}
+\useoutertheme{miniframes} % Alternatively: miniframes, infolines, split
+\useinnertheme{circles}
+
+\setbeamerfont{frametitle}{size=\footnotesize}
+
+\setbeamercolor{section in toc}{fg=black,bg=black}
+\setbeamercolor{alerted text}{fg=black}
+\setbeamercolor*{palette primary}{fg=white,bg=gray} % cadre autour du titre + rectangle bas droite.
+\setbeamercolor*{palette secondary}{fg=yellow,bg=yellow}
+\setbeamercolor*{palette tertiary}{bg=black,fg=gray!10!white} % carré du milieu + bande en header. 
+\setbeamercolor*{palette quaternary}{fg=yellow,bg=yellow}
+\setbeamercolor*{sidebar}{fg=black,bg=gray!15!white}
+%\setbeamercolor*{titlelike}{parent=palette primary}
+\setbeamercolor{titlelike}{parent=palette primary,fg=black}
+\setbeamercolor{frametitle}{bg=white}
+\setbeamercolor{frametitle right}{bg=gray!60!white}
+\setbeamercolor*{separation line}{}
+\setbeamercolor*{fine separation line}{}
+% Override palette coloring with secondary
+\setbeamercolor{subsection in head/foot}{bg=gray,fg=white}
+\setbeamercolor{local structure}{fg=black} % changer la couleur des enumerate et itemize.
+
+\title[Analyse d'articles scientifiques avec R]{Analyse textuelle d’articles scientifiques évaluant l’impact des vers de terre sur l’environnement}
+\subtitle{Une approche \textit{tidy} pour l'analyse textuelle d'articles scientifiques avec \includegraphics[scale=0.04]{R_logo.svg.png}}
+\author[Stage M1 BIMS]{Antoine MALET - Stage M1, Parcours BIMS}
+\institute[UMR MIA Paris-Saclay]{Campus Agro Paris-Saclay - Unité Mathématiques et Informatique Appliqués}
+\date{03/07/2024}
+
+\begin{document}
+
+\setbeamertemplate{headline}{}
+
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+\setbeamertemplate{headline}[miniframes theme]
+
+	\section*{Introduction}
+	\subsection*{Contexte scientifique / Objectifs} % PBTQ, à remettre dans chaque ss.
+
+	\begin{frame}
+		\frametitle{\underline{Contexte scientifique:}}
+		Bla bla 
+		\begin{columns}
+			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
+				\begin{enumerate}
+					\item List item 1
+					\item List item 2
+				\end{enumerate}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{itemize}
+					\item List item 1
+					\item List item 2
+				\end{itemize}
+			\end{column}
+		\end{columns}
+		\vspace{\baselineskip}
+		Here is some rambling text
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{\underline{Objectifs:}}
+		Bla bla 
+		\begin{columns}
+			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
+				\begin{enumerate}
+					\item List item 1
+					\item List item 2
+				\end{enumerate}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{itemize}
+					\item List item 1
+					\item List item 2
+				\end{itemize}
+			\end{column}
+		\end{columns}
+		\vspace{\baselineskip}
+		Here is some rambling text
+	\end{frame}
+
+	\section*{Données et scripts}
+	\subsection*{Base de données / Scripts} % PBTQ, à remettre dans chaque ss.
+	\begin{frame}
+		\frametitle{\underline{Base de données:}}
+		Bla bla 
+		\begin{columns}
+			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
+				\begin{enumerate}
+					\item List item 1
+					\item List item 2
+				\end{enumerate}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{itemize}
+					\item List item 1
+					\item List item 2
+				\end{itemize}
+			\end{column}
+		\end{columns}
+		\vspace{\baselineskip}
+		Here is some rambling text
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{\underline{Scripts Python et R:}}
+		Bla bla 
+		\begin{columns}
+			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
+				\begin{enumerate}
+					\item List item 1
+					\item List item 2
+				\end{enumerate}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{itemize}
+					\item List item 1
+					\item List item 2
+				\end{itemize}
+			\end{column}
+		\end{columns}
+		\vspace{\baselineskip}
+		Here is some rambling text
+	\end{frame}
+
+	\section*{Calculs de fréquence}
+	\subsection*{Courbe de Zipf / Fréquences brutes / Comparaison de fréquences / Approche TF-IDF}
+
+	\begin{frame}
+		\frametitle{\underline{Courbe de Zipf:}}
+		Bla bla 
+		\begin{columns}
+			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
+				\begin{enumerate}
+					\item List item 1
+					\item List item 2
+				\end{enumerate}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{itemize}
+					\item List item 1
+					\item List item 2
+				\end{itemize}
+			\end{column}
+		\end{columns}
+		\vspace{\baselineskip}
+		Here is some rambling text
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{\underline{Fréquences brutes:}}
+		Bla bla 
+		\begin{columns}
+			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
+				\begin{enumerate}
+					\item List item 1
+					\item List item 2
+				\end{enumerate}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{itemize}
+					\item List item 1
+					\item List item 2
+				\end{itemize}
+			\end{column}
+		\end{columns}
+		\vspace{\baselineskip}
+		Here is some rambling text
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{\underline{Comparaison de fréquences:}}
+		Bla bla 
+		\begin{columns}
+			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
+				\begin{enumerate}
+					\item List item 1
+					\item List item 2
+				\end{enumerate}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{itemize}
+					\item List item 1
+					\item List item 2
+				\end{itemize}
+			\end{column}
+		\end{columns}
+		\vspace{\baselineskip}
+		Here is some rambling text
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{\underline{Approche TF-IDF:}}
+		Bla bla 
+		\begin{columns}
+			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
+				\begin{enumerate}
+					\item List item 1
+					\item List item 2
+				\end{enumerate}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{itemize}
+					\item List item 1
+					\item List item 2
+				\end{itemize}
+			\end{column}
+		\end{columns}
+		\vspace{\baselineskip}
+		Here is some rambling text
+	\end{frame}
+
+	\section*{Analyse de bigrammes}
+	\subsection*{TF-IDF sur les bigrammes / Réseaux de bigrammes}
+
+	\begin{frame}
+		\frametitle{\underline{TF-IDF sur les bigrammes:}}
+		Bla bla 
+		\begin{columns}
+			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
+				\begin{enumerate}
+					\item List item 1
+					\item List item 2
+				\end{enumerate}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{itemize}
+					\item List item 1
+					\item List item 2
+				\end{itemize}
+			\end{column}
+		\end{columns}
+		\vspace{\baselineskip}
+		Here is some rambling text
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{\underline{Réseaux de bigrammes:}}
+		Bla bla 
+		\begin{columns}
+			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
+				\begin{enumerate}
+					\item List item 1
+					\item List item 2
+				\end{enumerate}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{itemize}
+					\item List item 1
+					\item List item 2
+				\end{itemize}
+			\end{column}
+		\end{columns}
+		\vspace{\baselineskip}
+		Here is some rambling text
+	\end{frame}
+
+	\section*{Analyse de sentiment}
+	\subsection*{Wordclouds / Mots simples / Bigrammes}
+
+	\begin{frame}
+		\frametitle{\underline{Wordclouds:}}
+		Bla bla 
+		\begin{columns}
+			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
+				\begin{enumerate}
+					\item List item 1
+					\item List item 2
+				\end{enumerate}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{itemize}
+					\item List item 1
+					\item List item 2
+				\end{itemize}
+			\end{column}
+		\end{columns}
+		\vspace{\baselineskip}
+		Here is some rambling text
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{\underline{Mots simples:}}
+		Bla bla 
+		\begin{columns}
+			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
+				\begin{enumerate}
+					\item List item 1
+					\item List item 2
+				\end{enumerate}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{itemize}
+					\item List item 1
+					\item List item 2
+				\end{itemize}
+			\end{column}
+		\end{columns}
+		\vspace{\baselineskip}
+		Here is some rambling text
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{\underline{Bigrammes:}}
+		Bla bla 
+		\begin{columns}
+			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
+				\begin{enumerate}
+					\item List item 1
+					\item List item 2
+				\end{enumerate}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{itemize}
+					\item List item 1
+					\item List item 2
+				\end{itemize}
+			\end{column}
+		\end{columns}
+		\vspace{\baselineskip}
+		Here is some rambling text
+	\end{frame}
+
+	\section*{Conclusion}
+	\subsection*{Rappel des résultats et perspectives}
+
+	\begin{frame}
+		Bla bla 
+		\begin{columns}
+			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
+				\begin{enumerate}
+					\item List item 1
+					\item List item 2
+				\end{enumerate}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{itemize}
+					\item List item 1
+					\item List item 2
+				\end{itemize}
+			\end{column}
+		\end{columns}
+		\vspace{\baselineskip}
+		Here is some rambling text
+	\end{frame}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% 15 DIAPOS EN M1 BIMS.
+
+% MANUEL:
+
+% FAIRE UNE FRAME COUPÉE EN 2 AU MILIEU:
+%  	\begin{frame}
+% 	Bla bla 
+% 	\begin{columns}
+% 		\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
+% 			\begin{enumerate}
+% 				\item List item 1
+% 				\item List item 2
+% 			\end{enumerate}
+% 		\end{column}
+% 		\begin{column}{0.5\textwidth}
+% 			\begin{itemize}
+% 				\item List item 1
+% 				\item List item 2
+% 			\end{itemize}
+% 		\end{column}
+% 	\end{columns}
+% 	\vspace{\baselineskip}
+	
+% 	Here is some rambling text
+
+% \end{frame}
