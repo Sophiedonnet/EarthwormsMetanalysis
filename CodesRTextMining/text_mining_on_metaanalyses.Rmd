@@ -2090,3 +2090,69 @@ network4
 En conclusion, on remarque que les centres retrouvés pour l'ensemble des quatres MA ("earthworm", "plant", "soil"), sont souvent retrouvés dans les MA individuellement (1- "earthworm", 2- "plant"). Le cas de "soil" est remarquable, car il est un centre global, sans pour autant être un centre local dans aucune des quatre MA.<br>
 
 installed.packages()[names(sessionInfo()$otherPkgs), "Version"] = permet de visualiser les packages R non-natifs installés dans une session R.
+
+# Comptage / corrélation avec widyr:
+
+- Visualiser des co-occurrences de mots par section au sein du corpus de texte (dans mon cas, 1 section = 1 MA) = explorer des co-occurences de mots même non-adjacents --> dans chaque MA, quels mots sont retrouvés proches de quels mots?
+
+```{r Setup co-occurrences}
+library(dplyr)
+library(tidytext)
+library(stringr)
+
+MA_section_words <- earthworms %>%
+  select(Abstract, MA) %>%
+  mutate(section = row_number() %/% 5) %>% # find word correlation within 5 lines / For example, rows 0-9 will have section 0, rows 10-19 will have section 1, and so on.
+  filter(section > 0) %>%  # Filter rows where section is greater than 0
+  unnest_tokens(word, Abstract) %>%
+  mutate(MA = str_replace(MA, "MA", "")) %>% # replace MA1, MA2, MA3, MA4 with 1, 2, 3 and 4.
+  filter(!word %in% stop_words$word)
+# MA_section_words$section %>% unique()
+```
+
+```{r Comptage des paires de mots avec widyr}
+library(widyr)
+
+# count words co-occuring within sections
+word_pairs <- MA_section_words %>%
+  pairwise_count(word, section, sort = TRUE) # Count the number of times each pair of items appear together within a group defined by "feature." (here, 10-lines sections).
+word_pairs %>%
+  filter(item1 == "earthworm")
+```
+Le tableau ci-dessus présente les co-occurence de mots pour chacune des sections de 10 lignes définies au préalable, filtré pour que le premier mot soit "earthworm". Dans une section de dix lignes, les trois groupes de mots qui reviennent le plus souvent et commençant par "earthworm" sont donc **earthworm + earthworms** (sans doute la fin d'une phrase et le début d'une autre), **earthworm + effects** et **"earthworm + experiment"**.<br>
+
+On veut maintenant observer les corrélations entre les mots: nb de fois où ils apparaissent ensemble / nb de fois où ils apparaissent séparément (coefficient Phi, équiv. corrélation de Pearson).<br>
+
+Le coefficient Phi permet de mesurer le degré (l’intensité) de liaison entre deux variables binaires (codées 0 ou 1). Les variables peuvent donc être soit des variables dichotomiques par nature (ex. genre = H / F) soit des variables que l’on dichotomise soi-même (découper / faire 2 classes à partir d’une variable continue). Plus le coefficent est proche de 0, moins il y a d’associations entre les 2 variables. Si celui-ci est proche de 1 ou -1, cela indique qu’il existe une forte dépendance (positive ou négative). Source: https://www.soft-concept.com/surveymag/definition-fr/definition-coefficient-de-phi.html.
+
+```{r}
+# we need to filter for at least relatively common words first
+word_cors <- MA_section_words %>%
+  group_by(word) %>%
+  pairwise_cor(word, section, sort = TRUE, use = "pairwise") %>% # the use = pairwise is necessary to get a good result.
+  na.omit()
+# word_cors$correlation %>% unique()
+# word_cors$correlation %>% table() --> plus précis que "unique".
+```
+
+```{r}
+word_cors %>%
+  filter(item1 == "earthworm")
+```
+```{r}
+word_cors_ecology = word_cors %>%
+  filter(item1 %in% c("earthworm","soil", "plant","ecosystem","invasive","interrelationship")) %>%
+  group_by(item1) %>%
+  slice_max(correlation, n = 5) %>%  # the plot don't know how to manage the ex-aequo during classifying.
+  ungroup() %>%
+  mutate(item2 = reorder(item2, correlation)) %>%
+  ggplot(aes(item2, correlation)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~ item1, scales = "free") +
+  coord_flip()
+word_cors_ecology
+```
+
+
+
+
