@@ -1,4 +1,8 @@
 \documentclass[xcolor=dvipsnames]{beamer}
+\usepackage{caption}
+
+\renewcommand{\thefootnote}{\arabic{footnote}}
+
 \usetheme{Madrid}
 \useoutertheme{miniframes} % Alternatively: miniframes, infolines, split
 \useinnertheme{circles}
@@ -43,7 +47,7 @@
 
 	\begin{frame}
 		\frametitle{\underline{Contexte scientifique:}}
-		\textbf{Rôle écologique du vers de terre: deux mouvements de pensée opposés dans la littérature scientifique.}
+		\textbf{Rôle écologique du vers de terre: deux contextes géographiques qui s'opposent dans la littérature scientifique.}
 		\begin{columns}
 			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
 				\begin{enumerate}
@@ -68,16 +72,17 @@
 
 	\begin{frame}
 		\frametitle{\underline{Objectifs:}}
-		\textbf{Les méthodes statistiques de Text-mining permettent-elles d’identifier des
-		groupes distincts d’articles scientifiques défendant une conception opposée du
-		rôle écologique du vers de terre au sein du corpus de texte fourni pour l’analyse ?}
-		
+		\textbf{Les méthodes informatiques et statistiques de} \textit{Web-scraping} \textbf{et de} \textit{Text-mining} \textbf{permettent-elles de mettre en évidence cette opposition grâce à une approche automatisable ?}
 		
 		\vspace{\baselineskip}
-		Pour répondre à cette question de recherche, j'ai procédé en 2 étapes: 
 		\begin{enumerate}
-				\item Constituer une base de données d'abstracts (courts résumés) d'articles scientifiques \textbf{issus de 4 métaanalyses} différentes du domaine par requêtage d'API et Web-scraping (récupération des données d'un site web grâce à un script) avec Python.
-				\item Analyser ces abstracts sous R, par une approche de Text-mining (analyse de données textuelles massives grâce à un script), pour tenter de résoudre cette controverse.
+				\item \textbf{Données:} Données textuelles (vers de terre), 4 métaanalyses et leur corpus\footnote{
+					1.“Soil chemistry turned upside down: a meta-analysis of invasive earthworm effects on soil chemical properties”
+					2.“Earthworms affect plant growth and resistance against herbivores: A meta-analysis”
+					3.“The unseen invaders: introduced earthworms as drivers of change in plant communities in North American forests (a meta-analysis)”
+					4.“Earthworms increase plant production: a meta-analysis”} (\textit{deux positives et deux négatives}).
+				\item \textbf{Objectif:} Tenter de retrouver cette opposition grâce à des méthodes statistiques automatisables.
+				\item \textbf{Méthodes:} \textit{Web scraping} avec Python / \textit{Text-mining} avec R.
 			\end{enumerate}
 	\end{frame}
 
@@ -119,39 +124,37 @@
 				\begin{figure}[htb] %le h entre crochet signifie je veux la figure à cet emplacement
 					\begin{center} %centrer la figure
 						\includegraphics[width=0.5\textwidth]{image_python_R.png}
-						\caption{Le code de Web-scraping a été implémenté en Python, le code de Text-mining en R (R Markdown). \textit{Source de l'image:} https://rstudio.github.io/reticulate/ (image employée à titre illustratif seulement).}\label{fig_python_R}
+						\caption{Le code de Web-scraping a été implémenté en Python, le code de Text-mining en R (R Markdown).\footnotemark}\label{fig_python_R}
 						%legende
 					\end{center}
 				\end{figure}
 			\end{column}
 		\end{columns}
+		\footnotetext{\textit{Source de l'image:} https://rstudio.github.io/reticulate/ (image employée à titre illustratif seulement).}
 	\end{frame}
 
 	\section*{Calculs de fréquence}
-	\subsection*{Courbe de Zipf / Fréquences brutes / Comparaison de fréquences / Approche TF-IDF}
+	\subsection*{\textit{Stop words} / Fréquences brutes / Comparaison de fréquences / Approche TF-IDF}
 
 	\begin{frame}
-		\frametitle{\underline{Courbe de Zipf:}}
+		\frametitle{\textit{\underline{Stop words:}}}
 		\begin{columns}
-			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
+			\begin{column}{0.4\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
 				\begin{enumerate}
-					\item La loi de Zipf stipule que dans une collection de données ordonnées par fréquence décroissante, la fréquence d'un élément est inversement proportionnelle à son rang (\textit{mots fréquents : en haut à gauche / mots rares: en bas à droite}).  
-					\item La MA3 (\textit{courbe grise}) contient davantage de mots très fréquents que les autres, dont la distribution de mots semble plus proche du modèle linéaire.
+					\item Mots-outil: \textbf{The, of, and, in, on, a, to, by.} Très haute fréquence (toutes MA confondues). Sémantiquement pauvres. 
+					\item Approche en \textit{"Stop words"}: Retirer les mots sémantiquement pauvres.
 				\end{enumerate}
 			\end{column}
-			\begin{column}{0.5\textwidth}
+			\begin{column}{0.6\textwidth}
 				\begin{figure}[htb] %le h entre crochet signifie je veux la figure à cet emplacement
 					\begin{center} %centrer la figure
-						\includegraphics[width=1\textwidth]{curve_zipf.png}
-						\caption{Allure de la courbe de Zipf pour les MA1, 2, 3 et 4.La droite en pointillés représente la valeur attendue selon un modèle linéaire sur l’intervalle
-						[11,99].}\label{Zipf}
+						\includegraphics[width=1\textwidth]{word_rank_table.png}
+						\caption{Capture d'écran issue de R montrant, pour chaque MA, les mots les plus fréquents rencontrés dans le corpus (rangs décroissants).}\label{Zipf}
 						%legende
 					\end{center}
 				\end{figure}
 			\end{column}
 		\end{columns}
-		\vspace{\baselineskip}
-		Here is some rambling text
 	\end{frame}
 
 	\begin{frame}
@@ -159,8 +162,8 @@
 		\begin{columns}
 			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
 				\begin{enumerate}
-					\item Les trois racines les plus fréquentes dans les articles des quatres métaanalyses confondues sont \textit{earthworm, soil} et \textit{plant}.
-					\item Cela semble cohérent avec ce que nous savons des métaanalyses, qui traitent donc bel et bien, toutes trois, du rôle écologique du vers de terre.
+					\item Racines les plus fréquentes: \textit{earthworm, soil} et \textit{plant}.
+					\item Thème général commun à toutes les MA: \textbf{Rôle écologique du vers de terre.}
 				\end{enumerate}
 			\end{column}
 			\begin{column}{0.5\textwidth}
@@ -178,17 +181,21 @@
 	\begin{frame}
 		\frametitle{\underline{Comparaison de fréquences:}}
 		\begin{columns}
-			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
+			\begin{column}{0.4\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
 				\begin{enumerate}
-					\item List item 1
-					\item List item 2
+					\item "earthworm"= très fréquent dans les 4 MA.
+					\item "soil" = très fréquent pour MA1, 2 et 3.
+					\item "plant", "community" et "growth" = $\text{MA2} > \text{MA1}$.
+					\item "disturb", "density", "plant" = $\text{MA3} > \text{MA1}$.
+					\item "forest", "invasive", "exotic" = $\text{MA1} > \text{MA4}$.
+					\item "plant", "growth", "fertil" = $\text{MA4} > \text{MA1}$.
 				\end{enumerate}
 			\end{column}
-			\begin{column}{0.5\textwidth}
+			\begin{column}{0.6\textwidth}
 				\begin{figure}[htb] %le h entre crochet signifie je veux la figure à cet emplacement
 					\begin{center} %centrer la figure
 						\includegraphics[width=1\textwidth]{scales_graph.png}
-						\caption{Log-log scatter plot montrant les corrélations du choix des mots entre les métaanalyses. Les mots sur la ligne grise en pointillés ont une fréquence similaire dans les deux MA comparées.}\label{log_log_sp}
+						\caption{Log-log scatter plot montrant les corrélations du choix des mots entre la MA1 et les 3 autres MA.}\label{log_log_sp}
 						%legende
 					\end{center}
 				\end{figure}
@@ -199,155 +206,171 @@
 	\end{frame}
 
 	\begin{frame}
-		\frametitle{\underline{Approche TF-IDF:}}
-		Bla bla 
+		\frametitle{\underline{Approche TF-IDF (Term frequency x Inverse document frequency):}} 
 		\begin{columns}
 			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
 				\begin{enumerate}
-					\item List item 1
-					\item List item 2
+					\item Thèmes majeurs MA1: "earthworm", "soil" et "forest".
+					\item Thèmes majeurs MA2: "aphid", "nematod" et "herbivor".
+					\item Thèmes majeurs MA3: "eastern", "canopy", "arthropod".
+					\item Thèmes majeurs MA4: "grain", "pb", "cu".
 				\end{enumerate}
 			\end{column}
 			\begin{column}{0.5\textwidth}
-				\begin{itemize}
-					\item List item 1
-					\item List item 2
-				\end{itemize}
+				\begin{figure}[htb] %le h entre crochet signifie je veux la figure à cet emplacement
+					\begin{center} %centrer la figure
+						\includegraphics[width=0.7\textwidth]{graphe_tf_idf.png}
+						\caption{Ce graphe de tf-idf montre les mots thématiques plus fréquents dans une MA précise que dans l'ensemble du corpus.}\label{tf_idf}
+						%legende
+					\end{center}
+				\end{figure}
 			\end{column}
 		\end{columns}
-		\vspace{\baselineskip}
-		Here is some rambling text
 	\end{frame}
 
 	\section*{Analyse de bigrammes}
 	\subsection*{TF-IDF sur les bigrammes / Réseaux de bigrammes}
 
 	\begin{frame}
-		\frametitle{\underline{TF-IDF sur les bigrammes:}}
-		Bla bla 
+		\frametitle{\underline{TF-IDF sur les bigrammes:}} 
 		\begin{columns}
 			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
 				\begin{enumerate}
-					\item List item 1
-					\item List item 2
+					\item Thèmes majeurs MA1: "mineral soil",
+					"earthworm invasion", "exotic earthworms".
+					\item Thèmes majeurs MA2: "soil organisms", "plant responses", "plant mediated".
+					\item Thèmes majeurs MA3: "species richness", "earthworm invasion", "native earthworm".
+					\item Thèmes majeurs MA4: "soil organisms", "dry weight", "soil fertility".
 				\end{enumerate}
 			\end{column}
 			\begin{column}{0.5\textwidth}
-				\begin{itemize}
-					\item List item 1
-					\item List item 2
-				\end{itemize}
+				\begin{figure}[htb] %le h entre crochet signifie je veux la figure à cet emplacement
+					\begin{center} %centrer la figure
+						\includegraphics[width=1\textwidth]{bigrammes_tf_idf.png}
+						\caption{Ce graphe de tf-idf montre les bigrammes thématiques plus fréquents dans une MA précise que dans l'ensemble du corpus.}\label{bi_tf_idf}
+						%legende
+					\end{center}
+				\end{figure}
 			\end{column}
 		\end{columns}
-		\vspace{\baselineskip}
-		Here is some rambling text
 	\end{frame}
 
 	\begin{frame}
 		\frametitle{\underline{Réseaux de bigrammes:}}
-		Bla bla 
 		\begin{columns}
 			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
 				\begin{enumerate}
-					\item List item 1
-					\item List item 2
+					\item Trois centres majeurs: \textbf{"plant", "soil"} et \textbf{"earthworm"}.
+					\item Plant: \textit{“plant community”, “plant growth”, “plant communities”}.
+					\item Soil: \textit{“mineral soil”, “soil microbial” / “microbial biomass” (forte
+					association), “soil organisms”}.
+					\item Earthworm: \textit{“earthworm invasion”, “earthworm species”, “earthworm activity”}.
 				\end{enumerate}
 			\end{column}
 			\begin{column}{0.5\textwidth}
-				\begin{itemize}
-					\item List item 1
-					\item List item 2
-				\end{itemize}
+				\begin{figure}[htb] %le h entre crochet signifie je veux la figure à cet emplacement
+					\begin{center} %centrer la figure
+						\includegraphics[width=1\textwidth]{network_all_(oriented).png}
+						\caption{Réseau de bigrammes orienté montrant les différentes connections (flèches) existant entre les mots (noeuds) de l'ensemble du corpus.}\label{nw_all_oriented}
+						%legende
+					\end{center}
+				\end{figure}
 			\end{column}
 		\end{columns}
-		\vspace{\baselineskip}
-		Here is some rambling text
 	\end{frame}
 
 	\section*{Analyse de sentiment}
-	\subsection*{Wordclouds / Mots simples / Bigrammes}
+	\subsection*{\textit{Wordcloud} / Contribution / Influence du mot "not" en n-1}
 
 	\begin{frame}
-		\frametitle{\underline{Wordclouds:}}
-		Bla bla 
+		\frametitle{\textit{\underline{Wordcloud:}}}
 		\begin{columns}
 			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
 				\begin{enumerate}
-					\item List item 1
-					\item List item 2
+					\item Principaux contributeurs négatifs (-1 au score de sentiment): \textit{"invasiv", "invad", "loss", "negat"}.
+					\item Principaux contributeurs positifs (+1 au score de sentiment): \textit{"effect", "affect", "enhance", "product"}.
 				\end{enumerate}
 			\end{column}
 			\begin{column}{0.5\textwidth}
-				\begin{itemize}
-					\item List item 1
-					\item List item 2
-				\end{itemize}
+				\begin{figure}[htb] %le h entre crochet signifie je veux la figure à cet emplacement
+					\begin{center} %centrer la figure
+						\includegraphics[width=0.7\textwidth]{senti_cloud_all.png}
+						\caption{Nuage de mots réalisé sur les données des 4 MA confondues. \textbf{Sentiment négatif: Rouge. Sentiment positif: Bleu.}}\label{senti_wc}
+						%legende
+					\end{center}
+				\end{figure}
 			\end{column}
 		\end{columns}
-		\vspace{\baselineskip}
-		Here is some rambling text
 	\end{frame}
 
 	\begin{frame}
-		\frametitle{\underline{Mots simples:}}
-		Bla bla 
+		\frametitle{\underline{Contribution:}}
 		\begin{columns}
 			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
 				\begin{enumerate}
-					\item List item 1
-					\item List item 2
+					\item MA1 et 3: Globalement négatives (\textit{Figure 11, 1. et 3.}) \\
+					\textbf{Principaux contributeurs:} "invas", "invad", "loss" (MA1) / "invas, "disturb", "burn" (MA3). 
+					\item MA2 et 4: Globalement positives (\textit{Figure 11, 2. et 4.}) \\
+					\textbf{Principaux contributeurs:} "enhanc", "strong", "competitiv" (MA1) / "fertil", "enhanc", "competitiv" (MA3).
 				\end{enumerate}
 			\end{column}
 			\begin{column}{0.5\textwidth}
-				\begin{itemize}
-					\item List item 1
-					\item List item 2
-				\end{itemize}
+				\begin{figure}[htb] %le h entre crochet signifie je veux la figure à cet emplacement
+					\begin{center} %centrer la figure
+						\includegraphics[width=1\textwidth]{senti_contri_each.png}
+						\caption{Diagramme à barres présentant, pour chacune des MA, les principaux contributeurs au score de sentiment global. \textbf{Sentiment négatif: Rouge. Sentiment positif: Bleu.}}\label{contri_graph}
+						%legende
+					\end{center}
+				\end{figure}
 			\end{column}
 		\end{columns}
-		\vspace{\baselineskip}
-		Here is some rambling text
 	\end{frame}
 
 	\begin{frame}
-		\frametitle{\underline{Bigrammes:}}
-		Bla bla 
+		\frametitle{\underline{Influence du mot "not" en n-1:}}
 		\begin{columns}
-			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
+			\begin{column}{0.6\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
 				\begin{enumerate}
-					\item List item 1
-					\item List item 2
+					\item MA1: "benefit", "increase" = positif / "\textbf{not} benefit", "\textbf{not} increase" = négatif.
+					\item MA2 / 3: "affected" = négatif / "\textbf{not} affected" = positif.
+					\item MA4: "affected" = négatif / "\textbf{not} affected" = positif.
+					\item MA4: "responsible" / "\textbf{not} responsible" = Contexte dépendant.
 				\end{enumerate}
 			\end{column}
-			\begin{column}{0.5\textwidth}
-				\begin{itemize}
-					\item List item 1
-					\item List item 2
-				\end{itemize}
+			\begin{column}{0.4\textwidth}
+					\begin{figure}[htb] %le h entre crochet signifie je veux la figure à cet emplacement
+						\begin{center} %centrer la figure
+							\includegraphics[width=0.8\textwidth]{influence_not_score_senti.png}
+							\caption{Diagramme à barres présentant, pour chacune des MA, les erreurs d'attribution de score de sentiment dûes à la présence du mot "not" en n-1.}\label{not}
+							%legende
+						\end{center}
+					\end{figure}
 			\end{column}
 		\end{columns}
-		\vspace{\baselineskip}
-		Here is some rambling text
 	\end{frame}
 
 	\section*{Conclusion}
-	\subsection*{Rappel des résultats et perspectives}
+	\subsection*{Démarche et résultats, limites}
 
 	\begin{frame}
-		Bla bla 
 		\begin{columns}
 			\begin{column}{0.5\textwidth} % permet diviser la frame en deux colonnes, chacune occupant 50% de l'espace total disponible.
-				\begin{enumerate}
-					\item List item 1
-					\item List item 2
-				\end{enumerate}
+				\begin{itemize}
+					\item Collecte de données textuelles: \textit{Web-scraping} avec Python.
+					\item Analyse statistique: \textit{Text-mining} avec R.
+					\item MA1 et 3 globalement négatives.
+					\item MA2 et 4 globalement positives.
+				\end{itemize}
 			\end{column}
+
 			\begin{column}{0.5\textwidth}
-				blabla
+				\begin{itemize}
+					\item Pays d'origine des auteurs non trouvé (non inclus dans la base de données.)
+					\item Difficulté à récupérer les abstracts par \textit{Web-scraping}. Complétion manuelle des données.
+					\item Approche de \textit{topic modeling} prévue initialement, mais non abordée.
+				\end{itemize}
 			\end{column}
 		\end{columns}
-		\vspace{\baselineskip}
-		Here is some rambling text
 	\end{frame}
 \end{document}
 
