@@ -2139,9 +2139,13 @@ word_cors <- MA_section_words %>%
 word_cors %>%
   filter(item1 == "earthworm")
 ```
-```{r}
-word_cors_ecology = word_cors %>%
-  filter(item1 %in% c("earthworm","soil", "plant","ecosystem","invasive","interrelationship")) %>%
+
+# Corrélations:
+## Ecologie:
+
+```{r écolo1}
+word_cors_ecology1= word_cors %>%
+  filter(item1 %in% c("earthworm","soil", "plants")) %>%
   group_by(item1) %>%
   slice_max(correlation, n = 5) %>%  # the plot don't know how to manage the ex-aequo during classifying.
   ungroup() %>%
@@ -2150,9 +2154,147 @@ word_cors_ecology = word_cors %>%
   geom_bar(stat = "identity") +
   facet_wrap(~ item1, scales = "free") +
   coord_flip()
-word_cors_ecology
+word_cors_ecology1
+```
+
+<br>Le calcul des corrélations à l'intérieur de groupes de cinq lignes montre les termes fréquement employés au voisinage des mots choisis pour cette première partie d'analyse (*earthworm/plant/soil*).<br>
+**earthworm:** *"invasion", "forest", "hardwood", "northern"*. On peut en déduire que dans les textes du corpus, les vers de terre sont souvent liés à des invasions dans les forêts de feuillus d'Amérique du nord. On retrouve ici un thème important de la MA3.<br>
+**plants:** *plant", "detritivores", "aphid", "herbivores"*. On peut en déduire que dans les textes du corpus, les plantes sont souvent mentionnées en lien avec les pucerons, les détritivores et les herbivores. On retrouve ici un thème important de la MA2.<br>
+**soil:** *"anecic", "respiration", "american"*. Les vers de terres anéciques sont une classe de vers de terre définie par M. B. Bouché (*Stratégie lombricienne*, 1977), dont l'une des caractéristiques principales était de creuser de profondes galeries dans le sol (1 à 6 mètres de profondeur). On peut donc penser qu'ils participent très fortement à la *respiration* des sols, probablement plus que les deux autres classes (épigés et endogés), qui, par définition, creusent moins profondément. La présence du mot *"american"* sous-entends que les vers de terre anéciques sont particulièrement surveillées en Amérique. On retrouve ici un terme important de la MA1 (la racine "pool" n'apparaît que dans la MA1 dans la mesure de la fréquence des mots).<br>
+
+```{r écolo2}
+word_cors_ecology2= word_cors %>%
+  filter(item1 %in% c("ecosystem","invasion","interrelationship")) %>%
+  group_by(item1) %>%
+  slice_max(correlation, n = 5) %>%  # the plot don't know how to manage the ex-aequo during classifying.
+  ungroup() %>%
+  mutate(item2 = reorder(item2, correlation)) %>%
+  ggplot(aes(item2, correlation)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~ item1, scales = "free") +
+  coord_flip()
+word_cors_ecology2
+```
+<br>Le calcul des corrélations à l'intérieur de groupes de cinq lignes montre les termes fréquement employés au voisinage des mots choisis pour cette seconde partie d'analyse (*ecosystem/interrelationship/invasion*).<br>
+**ecosystem:** *"engineers","lumbricus", "understanding", "indigenous"*. La présence du "engineer" à proximité de "ecosytem" et de "lumbricus" laisse entendre que les textes composant le corpus désignent souvent le vers de terre comme un agent majeur des écosystèmes. Le terme "understanding" laisse entendre que la question est complexes et que les recherches sur le sujet sont encore en cours. "indigenous" évoque l'idée d'une espèce introduite, qui est donc "indigène" pour son écosystème d'acceuil. <br>
+**interrelationship:** *"polluted", "pb", "metals", "harvest", "cycles"*. La présence de ces termes dans le voisinage du mots "interrelations" montre que le corpus parle sans doute de la pollution des sols aux métaux lourd (comme le plomb), et plus largement du monde l'agriculture, de l'agronomie et des récoltes. On retrouve ici un thème abordé dans la MA4.<br>
+**invasion:** *"forest", "usa", "earthworm", "northern"*. On peut en déduire que dans les textes du corpus, les vers de terre sont souvent liés à des invasions dans les forêts du **nord des USA**. On retrouve ici un thème important de la MA3.<br>
+
+## Origine géographique:
+
+```{r geo}
+word_cors_geo= word_cors %>%
+  filter(item1 %in% c("european","american","usa")) %>%
+  group_by(item1) %>%
+  slice_max(correlation, n = 5) %>%  # the plot don't know how to manage the ex-aequo during classifying.
+  ungroup() %>%
+  mutate(item2 = reorder(item2, correlation)) %>%
+  ggplot(aes(item2, correlation)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~ item1, scales = "free") +
+  coord_flip()
+word_cors_geo
+```
+
+<br>Le calcul des corrélations à l'intérieur de groupes de cinq lignes montre les termes fréquement employés au voisinage des mots choisis pour cette troisième partie d'analyse. Les mots ont été choisis spécifiquement pour tenter de grouper les données selon la région géographique.<br>
+En regardant les encadrés "american" et "usa" (les USA étant un pays d'Amérique), on peut remarquer la présence des termes *"previously", "uninvaded", "invasion"* et *"forests"*. Ce corpus semble donc décrire un processus d'invasion dynamique ("previously uninvaded"), même s'il est plutôt étonnant que ces deux mots ne se trouvent pas dans le même subplot. L'encadré "european" nous apprend que ce mot est souvent utilié à proximité de *"north""* et *"america"*, ce qui laisse entendre que les vers de terre invasifs actifs en Amérique sont majoritairement européens.  
+
+Dans les analyses précédentes, on a vu que:  
+- **MA1/MA3:** Métaanalyses globalement défavorables aux vers de terre. Si certains bénéfices, pour la santé des sols notamment, semblent être reconnus, le vers de terre est perçu comme une espèce invasive perturbant les écosystèmes natifs.  Les mots “soil”, “forest” et “effect” (MA1) et “canopy” (MA3), donnent une idée des environnements où se sont déroulées les études (sols forestiers, forêt). Les mots “exotic” (MA1) et “eastern” (MA3) semblent montrer que les espèces invasives viennent probablement d’Europe ou d’Asie.  Les bigrammes “forest soils” (MA1) et “tree species” (MA3) confirment que les études s’intéressent aux environnements forestiers. Les bigrammes “earthworm invasion” (MA1) et “earthworm invasions” (MA3) confirment que les vers de terre asiatiques et européens sont perçus comme des espèces invasives. La MA1 étant plus négative que prévu, sachant que la MA3 (plus positive que prévu) ne semble pas compenser totalement cet effet (cf. “words preceded by not”), on en déduit que ces deux métaanalyses sont un peu plus négatives que présenté précedemment, en raison de l’effet du mot “not” sur le mot suivant. Grâce au calcul des corrélations pour la MA3, il est maintenant possible d'affirmer que les territoires envahis sont principalement le nord des USA.  
+- **MA2/MA4:** Métaanalyses globalement favorables au vers de terre, mettant en avant les bienfaits physiologiques des vers de terre pour la plante et les avantages de ces interactions pour favoriser la productivité. Cependant, le vers de terre peut malgré tout rester nuisible, car c’est une espèce invasive qui risque de déséquilibrer l’écosystème natif.  La MA2 semble plus se focaliser sur les effets observées sur les plantes en tant que telles (pucerons, harbivores) alors que la 4 semble davantage axée sur la pollution des sols, notament par les métaux lourds (Cu, Pb).  Le bigramme “soil organisms” est le plus représenté dans les deux métaanalyses, reforçant encore le lien thématique (écologie des sols) commun aux MA2 et 4. Par ailleurs, de nombreuses références aux plantes (“plant responses”, “plant mediated” et “root herbivore” pour la MA2 et “plant functionnal”, “dry weight” et “diplocardia spp” pour la MA4) montrent que les deux MA s’intéressent spécifiquement au rôle des plantes dans l’écologie des sols.  La MA2 et la MA4 sont plus positive que prévu (cf. “words preceded by not”), en raison de l’effet du mot “not” sur le mot suivant.  
+
+Grâce au calcul des corrélations sur les groupes de 5 lignes, on peut maintenant rajouter que:
+
+
+**MA1/MA3:** Métaanalyses globalement défavorables aux vers de terre. Si certains bénéfices, pour la santé des sols notamment, semblent être reconnus, le vers de terre est perçu comme une espèce invasive perturbant les écosystèmes natifs.
+
+
+- Les mots “soil”, “forest” et “effect” (MA1) et “canopy” (MA3), donnent une idée des environnements où se sont déroulées les études (sols forestiers, forêt). Les mots “exotic” (MA1) et “eastern” (MA3) semblent montrer que les espèces invasives viennent majoritairement d'Europe (voir "Corrélations: origine géographique").
+
+
+- Les bigrammes “forest soils” (MA1) et “tree species” (MA3) confirment que les études s’intéressent aux environnements forestiers. Les bigrammes “earthworm invasion” (MA1) et “earthworm invasions” (MA3) confirment que les vers de terre asiatiques et européens sont perçus comme des espèces invasives.
+
+- La MA1 et la MA3 sont moins positives que prévu (cf. “words preceded by not”), en raison de l’effet du mot “not” sur le mot suivant.  
+
+**MA2/MA4:** Métaanalyses globalement favorables au vers de terre, mettant en avant les bienfaits physiologiques des vers de terre pour la plante et les avantages de ces interactions pour favoriser la productivité. Cependant, le vers de terre peut malgré tout rester nuisible, car c’est une espèce invasive qui risque de déséquilibrer l’écosystème natif.
+
+
+- La MA2 semble plus se focaliser sur les effets observées sur les plantes en tant que telles (pucerons, harbivores) alors que la 4 semble davantage axée sur la pollution des sols, notamment par les métaux lourds (Cu, Pb). Les analyses de la partie "Corrélations: écologie" confirment que certains articles du corpus étudient bel et bien les relations entre les récoltes, les cycles naturels, et la pollution aux métaux lourds (principalement Pb). 
+
+
+- Le bigramme “soil organisms” est le plus représenté dans les deux métaanalyses, reforçant encore le lien thématique (écologie des sols) commun aux MA2 et 4. Par ailleurs, de nombreuses références aux plantes (“plant responses”, “plant mediated” et “root herbivore” pour la MA2 et “plant functionnal”, “dry weight” et “diplocardia spp” pour la MA4) montrent que les deux MA s’intéressent spécifiquement au rôle des plantes dans l’écologie des sols.
+
+- La MA2 et la MA4 sont plus positive que prévu (cf. “words preceded by not”), en raison de l’effet du mot “not” sur le mot suivant.  
+
+```{r ggraph des corrélations ew}
+library(dplyr)
+library(ggraph)
+
+set.seed(2016)
+
+word_cors %>%
+  filter(item1 %in% c("earthworm")) %>%
+  head(100) %>%
+  graph_from_data_frame() %>%
+  ggraph(layout = "fr") +
+  geom_edge_link(aes(edge_alpha = correlation), show.legend = FALSE) +
+  geom_node_point(color = "lightblue", size = 5) +
+  geom_node_text(aes(label = name), repel = TRUE) +
+  theme_void()
+```
+
+```{r ggraph des corrélations euro}
+library(dplyr)
+library(ggraph)
+
+set.seed(2016)
+
+word_cors %>%
+  filter(item1 %in% c("european")) %>%
+  head(50) %>%
+  graph_from_data_frame() %>%
+  ggraph(layout = "fr") +
+  geom_edge_link(aes(edge_alpha = correlation), show.legend = FALSE) +
+  geom_node_point(color = "lightblue", size = 5) +
+  geom_node_text(aes(label = name), repel = TRUE) +
+  theme_void()
+```
+
+```{r ggraph des corrélations ricains}
+library(dplyr)
+library(ggraph)
+
+set.seed(2016)
+
+word_cors %>%
+  filter(item1 %in% c("american")) %>%
+  head(100) %>%
+  graph_from_data_frame() %>%
+  ggraph(layout = "fr") +
+  geom_edge_link(aes(edge_alpha = correlation), show.legend = FALSE) +
+  geom_node_point(color = "lightblue", size = 5) +
+  geom_node_text(aes(label = name), repel = TRUE) +
+  theme_void()
 ```
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Le double espace "  " à la fin d'un mots fait pareil que <br> -->
