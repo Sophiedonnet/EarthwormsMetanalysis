@@ -1,0 +1,693 @@
+---
+title: "Rapport R Markdown Earthworms"
+output: html_document
+date: "`r format(Sys.time(), '%d/%m/%y')`"
+---
+
+Premier bloc de code : importation des librairies.
+```{r Libraries}
+library(dplyr)
+library(ggplot2)
+library(tidytext)
+library(tm)
+library(knitr)
+library(SemNetCleaner)
+data("stop_words")
+custom_stop_words <- tibble(word = c("plot","wild","slug","manipulation","apple"),  
+                                      lexicon = c("custom"))
+```
+Deuxième bloc de code : définition des variables.
+```{r Variables}
+
+#----------------------------- 
+earthworms <- read.csv("~/Documents/GitHub/EarthwormsMetanalysis/ExtractionBiblio/metaanalyse_csv_final.csv")
+abstracts<-c()
+#--------------------- 
+names(earthworms)
+n = nrow(earthworms)
+```
+Troisième bloc de code: ajout d'une colonne "aboutEarthworms".
+```{r About Earthworms}
+earthworms <- earthworms %>% mutate(aboutEarthworms = rep(TRUE,n))
+```
+Quatrième bloc de code: Construction de la liste des abstracts.
+```{r Abstracts}
+abstracts=earthworms$Abstract
+```
+Cinquième bloc de code : Construction d'un dataframe de tokens.
+```{r Unnested tokens}
+ # Unnest tokens for the current abstract
+unnested_tokens <- tibble(abstracts) %>%
+unnest_tokens(word, abstracts)
+# Append the unnested tokens to the list
+unnested_tokens<-unnested_tokens%>%anti_join(stop_words)
+unnested_tokens<-unnested_tokens %>% rowwise() %>% mutate(word = singularize(word))
+```
+Analyse du dataframe: trouver les mots les plus communs dans les quatre MA confondues.
+
+```{r Fréquence Totale mots}
+ordre=unnested_tokens %>%
+     count(word, sort = TRUE) %>%
+     filter(n > 100) %>%
+     mutate(word = reorder(word, n,decreasing=TRUE))
+
+ ordre$word = factor(ordre$word,levels=rev(levels(ordre$word)))
+ ggplot(ordre,aes(n, word)) +
+     geom_col() +
+     labs(y = NULL)
+```
+
+# Création de subsets correspondant aux 4 MA individuellement, afin de pouvoir les comparer entre elles.
+
+## Import subset MA1:
+```{r Subset MA1}
+abstracts1<-c()
+MA1 <- read.csv("~/Documents/GitHub/EarthwormsMetanalysis/ExtractionBiblio/subset_MA1.csv")
+nMA1 <- nrow(MA1)
+abstracts1<-MA1$Abstract
+unnested_tokens1 <- tibble(abstracts1) %>%
+unnest_tokens(word, abstracts1)
+unnested_tokens1<-unnested_tokens1 %>% anti_join(stop_words)
+unnested_tokens1<-unnested_tokens1 %>% rowwise() %>% mutate(word = singularize(word))
+```
+## Import subset MA2:
+```{r Subset MA2}
+abstracts2<-c()
+MA2 <- read.csv("~/Documents/GitHub/EarthwormsMetanalysis/ExtractionBiblio/subset_MA2.csv")
+nMA2 <- nrow(MA2)
+abstracts2<-MA2$Abstract
+unnested_tokens2 <- tibble(abstracts2) %>%
+unnest_tokens(word, abstracts2)
+unnested_tokens2<-unnested_tokens2 %>% anti_join(stop_words)
+unnested_tokens2<-unnested_tokens2 %>% rowwise() %>% mutate(word = singularize(word))
+```
+## Import subset MA3:
+```{r Subset MA3}
+abstracts3<-c()
+MA3 <- read.csv("~/Documents/GitHub/EarthwormsMetanalysis/ExtractionBiblio/subset_MA3.csv")
+nMA3 <- nrow(MA3)
+abstracts3<-MA3$Abstract
+unnested_tokens3 <- tibble(abstracts3) %>%
+unnest_tokens(word, abstracts3)
+unnested_tokens3<-unnested_tokens3 %>% anti_join(stop_words)
+unnested_tokens3<-unnested_tokens3 %>% rowwise() %>% mutate(word = singularize(word))
+```
+## Import subset MA4:
+```{r Subset MA4}
+abstracts4<-c()
+MA4 <- read.csv("~/Documents/GitHub/EarthwormsMetanalysis/ExtractionBiblio/subset_MA4.csv")
+nMA4 <- nrow(MA4)
+abstracts4<-MA4$Abstract
+unnested_tokens4 <- tibble(abstracts4) %>%
+unnest_tokens(word, abstracts4)
+unnested_tokens4<-unnested_tokens4 %>% anti_join(stop_words)
+unnested_tokens4<-unnested_tokens4 %>% rowwise() %>% mutate(word = singularize(word))
+```
+# Création des quatre plots:
+
+## Plot MA1 :
+```{r Construction plot 1}
+ordre1=unnested_tokens1 %>%
+     count(word, sort = TRUE) %>%
+     filter(n > 25) %>%
+     mutate(word = reorder(word, n,decreasing=TRUE))
+
+ ordre1$word = factor(ordre1$word,levels=rev(levels(ordre1$word)))
+ plot1<-ggplot(ordre1,aes(n, word)) +
+     geom_col() +
+     labs(y = NULL)
+```
+## Plot MA2 :
+```{r Construction plot 2}
+ordre2=unnested_tokens2 %>%
+     count(word, sort = TRUE) %>%
+     filter(n > 25) %>%
+     mutate(word = reorder(word, n,decreasing=TRUE))
+
+ ordre2$word = factor(ordre2$word,levels=rev(levels(ordre2$word)))
+ plot2<-ggplot(ordre2,aes(n, word)) +
+     geom_col() +
+     labs(y = NULL)
+```
+## Plot MA3 :
+```{r Construction plot 3}
+ordre3=unnested_tokens3 %>%
+     count(word, sort = TRUE) %>%
+     filter(n > 25) %>%
+     mutate(word = reorder(word, n,decreasing=TRUE))
+
+ ordre3$word = factor(ordre3$word,levels=rev(levels(ordre3$word)))
+ plot3<-ggplot(ordre3,aes(n, word)) +
+     geom_col() +
+     labs(y = NULL)
+```
+## Plot MA4:
+```{r Construction plot 4}
+ordre4=unnested_tokens4 %>%
+     count(word, sort = TRUE) %>%
+     filter(n > 25) %>%
+     mutate(word = reorder(word, n,decreasing=TRUE))
+
+ ordre4$word = factor(ordre4$word,levels=rev(levels(ordre4$word)))
+ plot4<-ggplot(ordre4,aes(n, word)) +
+     geom_col() +
+     labs(y = NULL)
+```
+# Comparaison des quatre MA:
+
+Quels sont les mots les plus communs dans chacunes des MA?
+
+```{r ggarrange 4 plots}
+library(egg)
+ggarrange(plot1,plot2,plot3,plot4,widths = c(5,5),labels = c("1","2","3","4"))
+```
+
+# DataFrame pour comparer les fréquences des 4 MA:
+
+```{r Fréquence 1}
+library(tidyr)
+
+frequency1 <- bind_rows(mutate(unnested_tokens1, author = "MA1"),
+                       mutate(unnested_tokens2, author = "MA2"), 
+                       mutate(unnested_tokens3, author = "MA3"),
+                       mutate(unnested_tokens4, author = "MA4"))%>% 
+  mutate(word = stringr::str_extract(word, "[a-z']+")) %>%
+  count(author, word) %>%
+  group_by(author) %>%
+  mutate(proportion = n / sum(n)) %>% 
+  select(-n) %>% 
+  pivot_wider(names_from = author, values_from = proportion) %>%
+  pivot_longer(cols=c('MA2','MA3','MA4'),
+               names_to = "author", values_to = "proportion")
+```
+
+
+
+```{r Fréquence 2}
+frequency2 <- bind_rows(mutate(unnested_tokens1, author = "MA1"),
+                       mutate(unnested_tokens2, author = "MA2"), 
+                       mutate(unnested_tokens3, author = "MA3"),
+                       mutate(unnested_tokens4, author = "MA4"))%>% 
+  mutate(word = stringr::str_extract(word, "[a-z']+")) %>%
+  count(author, word) %>%
+  group_by(author) %>%
+  mutate(proportion = n / sum(n)) %>% 
+  select(-n) %>% 
+  pivot_wider(names_from = author, values_from = proportion) %>%
+  pivot_longer(cols=c('MA1','MA3','MA4'),
+               names_to = "author", values_to = "proportion")
+
+```
+
+
+```{r Fréquence 3}
+frequency3 <- bind_rows(mutate(unnested_tokens1, author = "MA1"),
+                       mutate(unnested_tokens2, author = "MA2"), 
+                       mutate(unnested_tokens3, author = "MA3"),
+                       mutate(unnested_tokens4, author = "MA4"))%>% 
+  mutate(word = stringr::str_extract(word, "[a-z']+")) %>%
+  count(author, word) %>%
+  group_by(author) %>%
+  mutate(proportion = n / sum(n)) %>% 
+  select(-n) %>% 
+  pivot_wider(names_from = author, values_from = proportion) %>%
+  pivot_longer(cols=c('MA1','MA2','MA4'),
+               names_to = "author", values_to = "proportion")
+```
+
+
+# Graphe de comparaison des fréquences:
+```{r Scale Plot}
+library(scales)
+
+# expect a warning about rows with missing values being removed
+ggplot(frequency1, aes(x = proportion, y = `MA1`, 
+                      color = abs(`MA1` - proportion))) +
+  geom_abline(color = "gray40", lty = 2) +
+  geom_jitter(alpha = 0.1, size = 2.5, width = 0.3, height = 0.3) +
+  geom_text(aes(label = word), check_overlap = TRUE, vjust = 1.5) +
+  scale_x_log10(labels = percent_format()) +
+  scale_y_log10(labels = percent_format()) +
+  scale_color_gradient(limits = c(0, 0.001), 
+                       low = "darkslategray4", high = "gray75") +
+  facet_wrap(~author, ncol = 2) +
+  theme(legend.position="none") +
+  labs(y = "MA1", x = NULL)
+```
+
+Quelques mots sont au pluriel, ce qui signifie que la fonction "singularize" n'a pas fonctionné correctement (des mots tels que "herbivores" ou "abundances".)
+
+## MA1 vs MA2 : 
+- Les mots proches de la ligne dans ces graphiques ont des fréquences similaires dans les deux ensembles de textes, soit, dans l'ordre croissant: "account", "action", "abundance", "fungal", "ability", "vary", "addition", "animal", "chemical", "approach", "control", "experiment", "impact", "activity", "liter", "result", **"analysis", "specie", "effect", "earthworm"**.
+
+- Les mots **"fraction", "invasion", "native" et "burrow"** sont plus fréquents dans la MA1 que dans la MA2, tandis que les mots **"grass", "herbivore" et "plant"** sont plus fréquents dans la MA2 que de la MA1.
+
+## MA1 vs MA3 :
+- Les mots proches de la ligne dans ces graphiques ont des fréquences similaires dans les deux ensembles de textes, soit, dans l'ordre croissant: "acquisition", "accompany", "abiotic", "mass", "addition", "common", "fauna", "north", America", "due", "affect","carbon", "analysis", "abundance", "study", "impact", "ecosystem", "community", "effect", **"plant", "specie", "soil", "earthworm"**.
+
+- Les mots **"caliginosa", "macroaggregate", "bacterial" et "volume"** sont plus fréquents dans la MA1 que dans la MA3, tandis que les mots **"bank", "invader", "seedling" et "seed"** sont plus fréquents dans la MA3 que de la MA1.
+
+## MA1 vs MA4 :
+- Les mots proches de la ligne dans ces graphiques ont des fréquences similaires dans les deux ensembles de textes, soit, dans l'ordre croissant: "action", "analytic", "abiotic", "arable", "affected", "cover", "abovground", "addition", "change", "role", "influence", "affect", "activity", "increase", "impact", "result", "community", "analysis", "ecosystem", **"species", "organic", "plant", "effect","earthworm"**.
+
+- Les mots **"exotic","burrow","density" et "habitat"** sont plus fréquents dans la MA1 que dans la MA4, tandis que les mots **"atmosferic", "tissue" et "crop"** sont plus fréquents dans la MA4 que de la MA1.
+
+## Analyse globale:
+- Dans cette configuration, la MA1 et la MA3 semblent être les plus similaires en termes de fréquences de mots (nuage de points davantage resserré autour de la droite.)
+
+- Dans cette configuration, la MA1 et la MA2 semblent être les moins similaires en termes de fréquences de mots (nuage de points davantage dispersé autour de la droite.)
+
+# Tests de corrélation:
+Quel est le degré de corrélation entre les fréquences de mots de chaque métaanalyse ?
+
+## MA2 VS MA1
+```{r Corr 2 vs 1}
+cor.test(data = frequency1[frequency1$author == "MA2",],
+         ~ proportion + `MA1`)
+```
+
+## MA3 VS MA1
+```{r Corr 3 vs 1}
+cor.test(data = frequency1[frequency1$author == "MA3",],
+         ~ proportion + `MA1`)
+```
+
+## MA4 VS MA1
+```{r Corr 4 vs 1}
+cor.test(data = frequency1[frequency1$author == "MA4",],
+         ~ proportion + `MA1`)
+```
+
+## MA3 VS MA2
+```{r Corr 3 vs 2}
+cor.test(data = frequency2[frequency2$author == "MA3",],
+         ~ proportion + `MA2`)
+```
+
+## MA4 VS MA2
+```{r Corr 4 vs 2}
+cor.test(data = frequency2[frequency2$author == "MA4",],
+         ~ proportion + `MA2`)
+```
+
+## MA4 VS MA3
+```{r Corr 4 vs 3}
+cor.test(data = frequency3[frequency3$author == "MA4",],
+         ~ proportion + `MA3`)
+```
+## Tableau récapitulatif :
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-0pky"></th>
+    <th class="tg-0pky"><span style="font-weight:bold">MA1</span></th>
+    <th class="tg-0pky"><span style="font-weight:bold">MA2</span></th>
+    <th class="tg-0pky"><span style="font-weight:bold">MA3</span></th>
+    <th class="tg-0lax"><span style="font-weight:bold">MA4</span></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-0lax"><span style="font-weight:bold">MA1</span></td>
+    <td class="tg-0lax">&nbsp;&nbsp;&nbsp;&nbsp;-<br></td>
+    <td class="tg-0lax">0.671</td>
+    <td class="tg-0lax">0.883</td>
+    <td class="tg-0lax">0.897</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"><span style="font-weight:bold">MA2</span></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">&nbsp;&nbsp;&nbsp;&nbsp;-</td>
+    <td class="tg-0lax">0.728</td>
+    <td class="tg-0lax">0.756</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"><span style="font-weight:bold">MA3</span></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">&nbsp;&nbsp;&nbsp;&nbsp;-</td>
+    <td class="tg-0lax">0.778</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"><span style="font-weight:bold">MA4</span></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">&nbsp;&nbsp;&nbsp;&nbsp;-</td>
+  </tr>
+</tbody>
+</table>
+
+<br>
+<i>MA1: "Soil chemistry turned upside down: a meta-analysis of invasive  earthworm effects on soil chemical properties"<br>
+MA2: "Earthworms affect plant growth and resistance against herbivores: A meta-analysis" <br>
+MA3: "The unseen invaders: introduced earthworms as drivers of change in plant communities in North American
+forests (a meta-analysis)" <br>
+MA4: "Earthworms increase plant production: a meta-analysis"</i>
+<br>
+
+D'après le tableau ci-dessus, on peut voir que le choix de mots est le plus corrélé (correlation de Pearson) entre la MA1 et la MA4 (r²=0.897), tandis que le choix de mots est le moins corrélé (corrélation de Pearson) entre la MA1 et la MA2 (r²=0.671).
+
+# Analyse de sentiments entre les 4 métaanalyses:
+
+## Premiers graphiques.
+
+On commence par construire des Tibbles contenant chaque mot exprimant un sentiment positif ou négatif (colonne *word*), puis on compte le nombre d'occurence de chaque mot (colonne *n*).
+
+```{r Construction Tibbles Senti, message=FALSE}
+library(tidytext)
+bing<-get_sentiments("bing")
+
+senti1<-unnested_tokens1 %>%
+  inner_join(bing) %>%
+  count(word, sort = TRUE)
+
+senti2<-unnested_tokens2 %>%
+  inner_join(bing) %>%
+  count(word, sort = TRUE)
+
+senti3<-unnested_tokens3 %>%
+  inner_join(bing) %>%
+  count(word, sort = TRUE)
+
+senti4<-unnested_tokens4 %>%
+  inner_join(bing) %>%
+  count(word, sort = TRUE)
+```
+
+On ne conserve que les dix premières valeurs et les dix dernières valeurs, afin de pouvoir produire des graphiques plus lisibles ne conservant que les valeurs extrêmes.
+
+```{r Filtrage des valeurs, message=FALSE}
+library(tidyr)
+MA1_senti <- senti1 %>%
+  inner_join(get_sentiments("bing")) %>%
+  pivot_wider(names_from = sentiment, values_from = n, values_fill = 0) %>% 
+  mutate(sentiment = positive - negative)
+sub1_MA1_senti<-MA1_senti %>%
+    arrange(sentiment) %>%
+    slice(1:10)
+sub2_MA1_senti<-MA1_senti %>%
+    arrange(desc(sentiment)) %>%
+    slice(1:10)
+sub_MA1_senti<-bind_rows(sub1_MA1_senti, sub2_MA1_senti)
+```
+
+On réalise un premier barplot, en associant à chaque mot positif la valeur de sentiment +1, et à chaque mot négatif la valeur de sentiment -1. On représente ensuite cela graphiquement chaque mot en abscisse et la somme de ses indices (dont la valeur dépend de sa connotation et du nombre d'occurences) en ordonnées. On peut noter que certains mots scientifiques (comme "plot" ou "manipulation") se sont ici vu attribués une connotation négative, car le dictionnaire de "stop words" n'est pas spécifiquement adapté au vocabulaire scientifique.
+
+
+```{r Plot senti exemple}
+ggplot(sub_MA1_senti, aes(x = word, y = sentiment, fill = factor(sign(sentiment)))) +
+  geom_bar(stat = "identity") +
+  labs(x = "Word", y = "Sentiment Score", fill = "Sentiment") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+On répète le processus pour comparer les métaanalyses 1,2,3 et 4.
+
+```{r Création plot senti, message=FALSE}
+library(tidyr)
+library(ggplot2)
+
+plot_sentiment_subset <- function(senti) {
+  MA_senti <- senti %>%
+    inner_join(get_sentiments("bing")) %>%
+    pivot_wider(names_from = sentiment, values_from = n, values_fill = 0) %>% 
+    mutate(sentiment = positive - negative)
+  
+  sub1_MA_senti <- MA_senti %>%
+    anti_join(custom_stop_words, by = c("word")) %>%
+    arrange(sentiment) %>%
+    slice(1:5)
+  
+  sub2_MA_senti <- MA_senti %>%
+    anti_join(custom_stop_words, by = c("word")) %>%
+    arrange(desc(sentiment)) %>%
+    slice(1:5)
+  
+  sub_MA_senti <- bind_rows(sub1_MA_senti, sub2_MA_senti)
+  
+  ggplot(sub_MA_senti, aes(x = word, y = sentiment, fill = factor(sign(sentiment)))) +
+    geom_bar(stat = "identity") +
+    labs(x = "Word", y = "Sentiment Score", fill = "Sentiment") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+}
+
+plot_senti1<-plot_sentiment_subset(senti1)
+plot_senti2<-plot_sentiment_subset(senti2)
+plot_senti3<-plot_sentiment_subset(senti3)
+plot_senti4<-plot_sentiment_subset(senti4)
+
+```
+
+```{r ggarrange plot senti}
+library(egg)
+ggarrange(plot_senti1,plot_senti2,plot_senti3,plot_senti4,widths = c(2,2),labels = c("1","2","3","4"))
+```
+
+Tout d'abord, il est immportant de noter que tous les graphes n'ont pas les mêmes échelles ; les MA1 et 2 semblent avoir des échelles de sentiment comparables (-40 à 30) tandis que la MA3 est davantage entre -50 et 50. L'échelle de sentiment la moins étendue est associée à la MA4 (-10 à 10). Si l'échantillon est représentatif de l'ensemble, on peut donc classer les MA par taille, dans l'ordre décroissant (puisque le score de sentiment est dépandant du nombre de mots): MA2, puis MA1, puis MA3, puis MA4.
+
+On peut constater que le mot positif *"significant"* est retrouvé dans tous les corpus fournis, tandis que *"abundance"* est retrouvé dans la plupart de métaanalyses (1,3 et 4). Il serait cependant nécessaire d'inspecter des unités textuelles plus larges pour interpréter au mieux ce résultat, car la signification de ces mots peut grandement dépendre des autres mots auquels ils sont associés et du contexte. 
+Le mot *"richness"* n'est quant à lui retrouvé que dans les métaanalyse 1 et 3, ce qui laisserait entendre qu'elle ont une portée écologique plus marquée que les deux autres, tandis que les métaanalyses 2 et 4 ont plus l'air orientées vers les bénéfices (*"beneficial"* dans la MA3 et *"benefit"* dans la MA4) directs produits par les vers de terre (résultats qui semblent corrélés positivement avec ce que nous pouvons lire dans le titre de ces articles).
+
+On peut constater qu'il n'y a aucun mots commun à tous les corpus. Cependant, le mot *"loss"* est rencontré dans les MA1, 3 et 4, ce qui en fait le mot connoté négativement le mieux réparti entre les textes.
+On peut aussi remarquer que le mot *"stress"* n'est retrouvé que dans les MA2 et 4, ce que ces métaanalyses sont davantage orientées biologie végétale que écologie. Le mot *"invasive"*, à l'inverse, n'est retrouvé que dans les MA1 et 3, ce qui semble montrer, à l'inverse, que ces MA traitent davantage des problèmes écologiques que les autres. On peut aussi noter que le mot *"disturbance"* apparaît dans tous les subsets où *"invasive"* est présent. Cela laisse entendre que les MA1 et 3 sont probablement plus négatives que les deux autres au sujet des vers de terre, plus particulièrement la 3 où ma présence du mot *"invader"* renforce encore cette impression.
+
+On peut enfin constater que le mot *"resistance"* est le mots le plus représenté dans le subset 2 (> 40 occurences), résultat qui ne semble pas particulièrement surprenant compte tenu du fait que cette métaanalyse s'intéresse plus spécifiquement aux mécanismes de résistance contre les herbivores. D'ailleurs, il convient aussi de noter que malgré sa comptabilisation négative dans le graphique, dans ce contexte scientifique précis, il semble plus raisonnable de le considérer comme un mot à valence positive.
+
+<br>
+<i>MA1: "Soil chemistry turned upside down: a meta-analysis of invasive  earthworm effects on soil chemical properties"<br>
+MA2: "Earthworms affect plant growth and resistance against herbivores: A meta-analysis" <br>
+MA3: "The unseen invaders: introduced earthworms as drivers of change in plant communities in North American
+forests (a meta-analysis)" <br>
+MA4: "Earthworms increase plant production: a meta-analysis"</i>
+<br>
+
+## Contribution de chaque terme au score final de sentiment.
+```{r Contribution sentiment, message=FALSE}
+bing_word_counts1 <- unnested_tokens1 %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  ungroup()
+bing_word_counts2 <- unnested_tokens2 %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  ungroup()
+bing_word_counts3 <- unnested_tokens3 %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  ungroup()
+bing_word_counts4 <- unnested_tokens4 %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  ungroup()
+```
+
+```{r Plot contrib}
+contrib1<-bing_word_counts1 %>%
+  anti_join(custom_stop_words, by = c("word")) %>%
+  group_by(sentiment) %>%
+  slice_max(n, n = 10) %>% 
+  ungroup() %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~sentiment, scales = "free_y") +
+  labs(x = "Contribution to sentiment",
+       y = NULL)
+
+contrib2<-bing_word_counts2 %>%
+  anti_join(custom_stop_words, by = c("word")) %>%
+  group_by(sentiment) %>%
+  slice_max(n, n = 10) %>% 
+  ungroup() %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~sentiment, scales = "free_y") +
+  labs(x = "Contribution to sentiment",
+       y = NULL)
+
+contrib3<-bing_word_counts3 %>%
+  anti_join(custom_stop_words, by = c("word")) %>%
+  group_by(sentiment) %>%
+  slice_max(n, n = 10) %>% 
+  ungroup() %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~sentiment, scales = "free_y") +
+  labs(x = "Contribution to sentiment",
+       y = NULL)
+
+contrib4<-bing_word_counts4 %>%
+  anti_join(custom_stop_words, by = c("word")) %>%
+  group_by(sentiment) %>%
+  slice_max(n, n = 10) %>% 
+  ungroup() %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~sentiment, scales = "free_y") +
+  labs(x = "Contribution to sentiment",
+       y = NULL)
+```
+
+```{r ggarrange contrib}
+library(egg)
+ggarrange(contrib1,contrib2,contrib3,contrib4,widths = c(2,2),labels = c("1","2","3","4"))
+```
+Par ailleues, de même que précédemment, l'échelle du graphique de la MA4 en abscisse est quatre fois plus petite, ce qui laisse entendre, une fois de plus, que le subset 4 est plus réduit que les autres.
+
+<u>Les trois mots positifs les plus courants sont:</u><br> 
+* *MA1:* "abundance", dynamic", "significant".<br>
+* *MA2:* "positive", "significant", "strong".<br>
+* *MA3:* "richness", "abundance", "significant".<br>
+* *MA4:* "benefit", "dynamic", "significant".<br>
+On remarque tout d'abord que le mot *"significant"* fait partie des trois mots qui a le plus contribué au sentiment dans tous les subsets. Le contexte semble nécessaire pour savoir s'il est employé pour décrire un phénomène positif ou négatif.<br>
+Par ailleurs, le mot *"abundance"* n'est dans les 3 premiers que dans les subsets 1 et 3, ce qui semble cohérent avec les résultats précédents: les MA1 et 3 semblent plus proches entre elles qu'elles ne le sont des deux autres. Pour ce qui est des MA2 et 4, ce seul résultat ne suffit pas à indiquer une proximité particulière entre les deux textes.<br>
+
+<u>Les trois mots négatifs les plus courants sont:</u><br> 
+* *MA1:* "invasive", "loss", "bias".<br>
+* *MA2:* "negative", "stress", "damage".<br>
+* *MA3:* "invasive", "loss", "invader".<br>
+* *MA4:* "loss", "stress", "limited".<br>
+On remarque d'abord qu'aucun des mots négatifs relevés n'est présent dans toutes les métaanalyses.<br>
+Une fois encore, la MA1 et la MA3 semblent plus comparables dans leurs choix de mots (avec *"invasive"* et *"loss"* aux première et seconde positions pour les deux subsets), tandis les MA2 et 4 se focalisent davantage sur le *"stress"*.
+On peut aussi relever que la MA2 à l'air d'étudier plus en détail le stress lié aux dommages causées sur la plante (*negative* en première position, *"damage"* en trosième).<br>
+La MA3 semblent insister davantage sur le concept d'invasion biologique, avec *"invasive"* en première place <u>et</u> *"invader"* en troisième.<br>
+Dans la MA4, de nombreux scores successifs semblent d'une remarquable stabilité entre les différents mots (*"weak"* --> *"absence"* pour les mots négatifs, *"support"* --> *"consistent"* pour les mots positifs).<br>
+
+Cependant, il serait peut-être nécessaire d'étudier des unités textuelles plus larges, comme par exemple les phrases, pour éviter au maximum le risque de contresens.
+
+# Wordclouds
+## Wordcloud MA1
+```{r Wordcloud 1}
+library(wordcloud)
+library(dplyr)
+
+unnested_tokens1 %>%
+  anti_join(stop_words) %>%
+  count(word) %>%
+  with(wordcloud(word, n, max.words = 50))
+cloud1 <- recordPlot()
+```
+
+## Wordcloud MA2
+```{r Wordcloud 2}
+unnested_tokens2 %>%
+  anti_join(stop_words) %>%
+  count(word) %>%
+  with(wordcloud(word, n, max.words = 50))
+cloud2 <- recordPlot()
+```
+
+## Wordcloud MA3
+```{r Wordcloud 3}
+unnested_tokens3 %>%
+  anti_join(stop_words) %>%
+  count(word) %>%
+  with(wordcloud(word, n, max.words = 50))
+cloud3 <- recordPlot()
+```
+
+## Wordcloud MA4
+```{r Wordcloud 4}
+unnested_tokens4 %>%
+  anti_join(stop_words) %>%
+  count(word) %>%
+  with(wordcloud(word, n, max.words = 50))
+cloud4 <- recordPlot()
+```
+
+# Wordcloud: coloration en fonction de la valence des mots.
+## Wordcloud MA1
+```{r Wordcloud senti1, warning=FALSE}
+library(reshape2)
+
+unnested_tokens1 %>%
+  anti_join(custom_stop_words, by = c("word")) %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  acast(word ~ sentiment, value.var = "n", fill = 0) %>%
+  comparison.cloud(colors = c("gray20", "gray80"),
+                   max.words = 100)
+cloud_senti1<-recordPlot()
+```
+
+## Wordcloud MA2
+```{r Wordcloud senti2, warning=FALSE}
+unnested_tokens2 %>%
+  anti_join(custom_stop_words, by = c("word")) %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  acast(word ~ sentiment, value.var = "n", fill = 0) %>%
+  comparison.cloud(colors = c("gray20", "gray80"),
+                   max.words = 100)
+cloud_senti2<-recordPlot()
+```
+
+## Wordcloud MA3
+```{r Wordcloud senti3, warning=FALSE}
+unnested_tokens3 %>%
+  anti_join(custom_stop_words, by = c("word")) %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  acast(word ~ sentiment, value.var = "n", fill = 0) %>%
+  comparison.cloud(colors = c("gray20", "gray80"),
+                   max.words = 100)
+cloud_senti3<-recordPlot()
+```
+
+## Wordcloud MA4
+```{r Wordcloud senti4, warning=FALSE}
+unnested_tokens4 %>%
+  anti_join(custom_stop_words, by = c("word")) %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  acast(word ~ sentiment, value.var = "n", fill = 0) %>%
+  comparison.cloud(colors = c("gray20", "gray80"),
+                   max.words = 100)
+cloud_senti4<-recordPlot()
+```
+```{r Sentence tokens}
+sentences1 <- tibble(text = abstracts1) %>% 
+  unnest_tokens(sentence, text, token = "sentences")
+sentences2 <- tibble(text = abstracts2) %>% 
+  unnest_tokens(sentence, text, token = "sentences")
+sentences3 <- tibble(text = abstracts3) %>% 
+  unnest_tokens(sentence, text, token = "sentences")
+sentences4 <- tibble(text = abstracts4) %>% 
+  unnest_tokens(sentence, text, token = "sentences")
+```
+
+```{r Ratio WIP}
+bingnegative <- get_sentiments("bing") %>% 
+  filter(sentiment == "negative")
+
+wordcounts1 <- bing_word_counts1 %>%
+  group_by(word, sentiment) %>%
+  summarize(words =n)
+
+ratio1<-bing_word_counts1 %>%
+  semi_join(bingnegative) %>%
+  group_by(word, sentiment) %>%
+  summarize(negativewords = n()) %>%
+  left_join(wordcounts1, by = c("word", "sentiment")) %>%
+  mutate(ratio = negativewords/words) %>%
+  slice_max(ratio, n = 1) %>% 
+  ungroup()
+
+```
+

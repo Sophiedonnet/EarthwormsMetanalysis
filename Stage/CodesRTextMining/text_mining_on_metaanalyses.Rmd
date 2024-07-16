@@ -1,0 +1,2328 @@
+---
+title: "Rapport Text Mining Earthworms"
+output:
+  html_document: default
+  pdf_document: default
+date: "`r format(Sys.time(), '%d/%m/%y')`"
+---
+
+```{r setup,include=FALSE}
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+rm(list=ls())
+```
+
+Premier bloc de code : importation des librairies.
+
+```{r Libraries}
+library(dplyr)
+library(ggplot2)
+library(tidytext)
+library(knitr)
+library(SnowballC)
+library(grid)
+# WARNING : some libraries are not used but kept here at hand if the code were 
+# to be modified back (those libraries were used in
+# previous versions of the script).
+data("stop_words")
+custom_stop_words <- tibble(word = c("plot","wild","slug","manipulation",
+                                     "apple","significant",
+                                     "significative","signific","free","led",
+                                     "lead","warm","fresh","like"),  
+                                      lexicon = c("custom")) # remove words 
+#that does not have the same connotation in science compared to common language.
+combined_stop_words <- bind_rows(stop_words, custom_stop_words) # didn't find 
+#the way to combine tibbles earlier, which is why some code chunks work with
+#the two "stop words" dictionnaries separetly.
+```
+
+Deuxième bloc de code : définition des variables.
+
+```{r Variables}
+#----------------------------- 
+earthworms <- read.csv(file.path("~", "Documents", "GitHub", 
+                                 "EarthwormsMetanalysis", 
+                                 "ExtractionBiblio",
+                                 "data_articles_metaanalyses.csv"))
+abstracts<-c()
+#--------------------- 
+names(earthworms)
+n = nrow(earthworms)
+```
+
+Troisième bloc de code: ajout d'une colonne "aboutEarthworms".
+
+```{r About Earthworms}
+earthworms <- earthworms %>% mutate(aboutEarthworms = rep(TRUE,n))
+```
+
+Quatrième bloc de code: Construction de la liste des abstracts.
+
+```{r Abstracts}
+abstracts=earthworms$Abstract
+```
+
+Cinquième bloc de code : Construction d'un dataframe de tokens.
+
+```{r Unnested tokens}
+ # Unnest tokens for the current abstract
+unnested_tokens <- tibble(abstracts) %>%
+unnest_tokens(word, abstracts)
+# Append the unnested tokens to the list
+unnested_tokens<-unnested_tokens%>%anti_join(stop_words)
+unnested_tokens<-unnested_tokens %>% rowwise() %>%
+  mutate(word = wordStem(word, language = "en"))
+```
+
+Analyse du dataframe: trouver les mots les plus communs dans les quatre
+MA confondues.
+
+```{r Fréquence Totale mots}
+ordre=unnested_tokens %>%
+     count(word, sort = TRUE) %>%
+     filter(n > 100) %>%
+     mutate(word = reorder(word, n,decreasing=TRUE))
+
+ ordre$word = factor(ordre$word,levels=rev(levels(ordre$word)))
+ ggplot(ordre,aes(n, word)) +
+     geom_col() +
+     labs(y = NULL)
+```
+
+<br> On peut voir que les trois mots les plus fréquents dans les
+articles des quatres métaanalyses confondues sont *earthworm*, *soil* et
+*plant*. On peut donc penser que les métaanalyses sont davantage portées
+sur le rôle écologique du ver de terre que sur l'étude des vers de terre
+à part entière.
+
+<br> <i>MA1: "Soil chemistry turned upside down: a meta-analysis of
+invasive earthworm effects on soil chemical properties"<br> MA2:
+"Earthworms affect plant growth and resistance against herbivores: A
+meta-analysis" <br> MA3: "The unseen invaders: introduced earthworms as
+drivers of change in plant communities in North American forests (a
+meta-analysis)" <br> MA4: "Earthworms increase plant production: a
+meta-analysis"</i> <br>
+
+# Création de subsets correspondant aux 4 MA individuellement, afin de pouvoir les comparer entre elles.
+
+## Import subset MA1:
+
+```{r Subset MA1}
+splitedData <- split(earthworms,earthworms$MA)
+
+abstracts1<-c()
+MA1 <- splitedData$MA1
+nMA1 <- nrow(MA1)
+abstracts1<-MA1$Abstract
+unnested_tokens1 <- tibble(abstracts1) %>%
+unnest_tokens(word, abstracts1)
+unnested_tokens1<-unnested_tokens1 %>% anti_join(stop_words)
+unnested_tokens1<-unnested_tokens1 %>% rowwise() %>%
+  mutate(word = wordStem(word, language = "en"))
+```
+
+## Import subset MA2:
+
+```{r Subset MA2}
+abstracts2<-c()
+MA2 <- splitedData$MA2
+nMA2 <- nrow(MA2)
+abstracts2<-MA2$Abstract
+unnested_tokens2 <- tibble(abstracts2) %>%
+unnest_tokens(word, abstracts2)
+unnested_tokens2<-unnested_tokens2 %>% anti_join(stop_words)
+unnested_tokens2<-unnested_tokens2 %>% rowwise() %>%
+  mutate(word = wordStem(word, language = "en"))
+```
+
+## Import subset MA3:
+
+```{r Subset MA3}
+abstracts3<-c()
+MA3 <- splitedData$MA3
+nMA3 <- nrow(MA3)
+abstracts3<-MA3$Abstract
+unnested_tokens3 <- tibble(abstracts3) %>%
+unnest_tokens(word, abstracts3)
+unnested_tokens3<-unnested_tokens3 %>% anti_join(stop_words)
+unnested_tokens3<-unnested_tokens3 %>% rowwise() %>%
+  mutate(word = wordStem(word, language = "en"))
+```
+
+## Import subset MA4:
+
+```{r Subset MA4}
+abstracts4<-c()
+MA4 <- splitedData$MA4
+nMA4 <- nrow(MA4)
+abstracts4<-MA4$Abstract
+unnested_tokens4 <- tibble(abstracts4) %>%
+unnest_tokens(word, abstracts4)
+unnested_tokens4<-unnested_tokens4 %>% anti_join(stop_words)
+unnested_tokens4<-unnested_tokens4 %>% rowwise() %>%
+  mutate(word = wordStem(word, language = "en"))
+```
+
+# Création des quatre plots:
+
+## Plot MA1 :
+
+```{r Construction plot 1}
+ordre1=unnested_tokens1 %>%
+     count(word, sort = TRUE) %>%
+     filter(n > 25) %>%
+     mutate(word = reorder(word, n,decreasing=TRUE))
+
+ ordre1$word = factor(ordre1$word,levels=rev(levels(ordre1$word)))
+ plot1<-ggplot(ordre1,aes(n, word)) +
+     geom_col() +
+     labs(y = NULL)
+```
+
+## Plot MA2 :
+
+```{r Construction plot 2}
+ordre2=unnested_tokens2 %>%
+     count(word, sort = TRUE) %>%
+     filter(n > 25) %>%
+     mutate(word = reorder(word, n,decreasing=TRUE))
+
+ ordre2$word = factor(ordre2$word,levels=rev(levels(ordre2$word)))
+ plot2<-ggplot(ordre2,aes(n, word)) +
+     geom_col() +
+     labs(y = NULL)
+```
+
+## Plot MA3 :
+
+```{r Construction plot 3}
+ordre3=unnested_tokens3 %>%
+     count(word, sort = TRUE) %>%
+     filter(n > 25) %>%
+     mutate(word = reorder(word, n,decreasing=TRUE))
+
+ ordre3$word = factor(ordre3$word,levels=rev(levels(ordre3$word)))
+ plot3<-ggplot(ordre3,aes(n, word)) +
+     geom_col() +
+     labs(y = NULL)
+```
+
+## Plot MA4:
+
+```{r Construction plot 4}
+ordre4=unnested_tokens4 %>%
+     count(word, sort = TRUE) %>%
+     filter(n > 25) %>%
+     mutate(word = reorder(word, n,decreasing=TRUE))
+
+ ordre4$word = factor(ordre4$word,levels=rev(levels(ordre4$word)))
+ plot4<-ggplot(ordre4,aes(n, word)) +
+     geom_col() +
+     labs(y = NULL)
+```
+
+# Comparaison des quatre MA:
+
+Quels sont les mots les plus communs dans chacunes des MA?
+
+```{r ggarrange 4 plots,, fig.height=10,fig.width=10}
+library(egg)
+ggarrange(plot1,plot2,plot3,plot4,widths = c(5,5),labels = c("1","2","3","4"))
+```
+
+<br>On remarque que les mots les plus fréquents dans les articles des
+métaanalyses sont: - *earthworm*, *soil* et *forest* pour la MA1 (qui
+semble donc s'intéresser plus particulièrement à l'écosystème
+forestier). - *plant*, *earthworm* et *increase* pour la MA2 (qui semble
+donc vouloir étudier précisément les effets des vers de terre sur les
+plantes). - *earthworm*, *specie*, et *plant* pour la MA3 (qui semble
+donc s'intéresser plus particulièrement à certaines espèces de vers de
+terre et leurs relations avec les plantes). - *earthworm*, *plant* et
+*soil* pour la MA4 (qui semble donc étudier l'influence des vers de
+terre sur les sols et les plantes). <br> <i>MA1: "Soil chemistry turned
+upside down: a meta-analysis of invasive earthworm effects on soil
+chemical properties"<br> MA2: "Earthworms affect plant growth and
+resistance against herbivores: A meta-analysis" <br> MA3: "The unseen
+invaders: introduced earthworms as drivers of change in plant
+communities in North American forests (a meta-analysis)" <br> MA4:
+"Earthworms increase plant production: a meta-analysis"</i> <br> \#
+DataFrame pour comparer les fréquences des 4 MA:
+
+```{r Fréquence 1}
+library(tidyr)
+
+frequency1 <- bind_rows(mutate(unnested_tokens1, author = "MA1"),
+                       mutate(unnested_tokens2, author = "MA2"), 
+                       mutate(unnested_tokens3, author = "MA3"),
+                       mutate(unnested_tokens4, author = "MA4"))%>% 
+  mutate(word = stringr::str_extract(word, "[a-z']+")) %>%
+  count(author, word) %>%
+  group_by(author) %>%
+  mutate(proportion = n / sum(n)) %>% 
+  select(-n) %>% 
+  pivot_wider(names_from = author, values_from = proportion) %>%
+  pivot_longer(cols=c('MA2','MA3','MA4'),
+               names_to = "author", values_to = "proportion")
+```
+
+```{r Fréquence 2}
+frequency2 <- bind_rows(mutate(unnested_tokens1, author = "MA1"),
+                       mutate(unnested_tokens2, author = "MA2"), 
+                       mutate(unnested_tokens3, author = "MA3"),
+                       mutate(unnested_tokens4, author = "MA4"))%>% 
+  mutate(word = stringr::str_extract(word, "[a-z']+")) %>%
+  count(author, word) %>%
+  group_by(author) %>%
+  mutate(proportion = n / sum(n)) %>% 
+  select(-n) %>% 
+  pivot_wider(names_from = author, values_from = proportion) %>%
+  pivot_longer(cols=c('MA1','MA3','MA4'),
+               names_to = "author", values_to = "proportion")
+
+```
+
+```{r Fréquence 3}
+frequency3 <- bind_rows(mutate(unnested_tokens1, author = "MA1"),
+                       mutate(unnested_tokens2, author = "MA2"), 
+                       mutate(unnested_tokens3, author = "MA3"),
+                       mutate(unnested_tokens4, author = "MA4")) %>% 
+  mutate(word = stringr::str_extract(word, "[a-z']+")) %>%
+  count(author, word) %>%
+  group_by(author) %>%
+  mutate(proportion = n / sum(n)) %>% 
+  select(-n) %>% 
+  pivot_wider(names_from = author, values_from = proportion) %>%
+  pivot_longer(cols=c('MA1','MA2','MA4'),
+               names_to = "author", values_to = "proportion")
+```
+
+# Graphe de comparaison des fréquences:
+
+```{r Scale Plot, fig.width=15,fig.height=10}
+library(scales)
+
+# expect a warning about rows with missing values being removed
+ggplot(frequency1, aes(x = proportion, y = `MA1`, 
+                      color = abs(`MA1` - proportion))) +
+  geom_abline(color = "gray40", lty = 2) +
+  geom_jitter(alpha = 0.1, size = 2.5, width = 0.3, height = 0.3) +
+  geom_text(aes(label = word), check_overlap = TRUE, vjust = 1.5) +
+  scale_x_log10(labels = percent_format()) +
+  scale_y_log10(labels = percent_format()) +
+  scale_color_gradient(limits = c(0, 0.001), 
+                       low = "darkslategray4", high = "gray75") +
+  facet_wrap(~author, ncol = 2) +
+  theme(legend.position="none") +
+  labs(y = "MA1", x = NULL)
+```
+
+## MA1 vs MA2 :
+
+-   Les mots proches de la ligne dans ces graphiques ont des fréquences
+    similaires dans les deux ensembles de textes, soit, dans l'ordre
+    croissant: "accelerated", "affecting","based", "dweling", "day",
+    "change", "common", "availability", "negative", "abundance",
+    "content", "increase", "activity", "concentration", **"litter",
+    "biomass", "specie", "soil", "earthworm"**. On remarque que les mots
+    les plus fréquents semblent être plus directement liés au sujet de
+    l'article que les autres, qui paraissent plus générique au
+    vocabulaire scientifique en écologie.
+
+-   Les mots **"invasion", "carbon", "layer" et "loss"** sont plus
+    fréquents dans la MA1 que dans la MA2, tandis que les mots
+    **"plant", "root", "shoot" et "grass"** sont plus fréquents dans la
+    MA2 que de la MA1.
+
+-   Les mots **"specie", "effect", "soil" et "earthworm"** représentent
+    entre 1 et 10% des mots totaux de chaque métaanalyse pour les
+    métaanalyses 1 et 2 (échelle logarithmique).
+
+## MA1 vs MA3 :
+
+-   Les mots proches de la ligne dans ces graphiques ont des fréquences
+    similaires dans les deux ensembles de textes, soit, dans l'ordre
+    croissant: "assessed", "basal", "abundant", "abiotic", "day",
+    "biotic", "avalability", "compared", "america", "invasive",
+    "european", "abundance", "study", "nutrient", "increased", "exotic",
+    "ecosystem", "impact", "litter", "biomass", "effect", **"invasion",
+    "forest", "specie", "soil", "earthworm"**. On remarque que certains
+    mots dont la fréquence est proches pourraient peut-être faire partie
+    du même groupe de mots (comme **"invasive european"**,**"nutrient
+    increased"**, **"ecosystem impact"** ou encore **"litter
+    biomass"**.)
+
+-   Les mots **"pool", "carbon", et "microbial** sont plus fréquents
+    dans la MA1 que dans la MA3, tandis que les mots **"cover", "tree",
+    "density" et "plant"** sont plus fréquents dans la MA3 que de la
+    MA1.
+
+-   Les mots **"specie", "forest,"soil" et "earthworm"** représentent
+    entre 1 et 10% des mots totaux de chaque métaanalyse pour les
+    métaanalyses 1 et 3 (échelle logarithmique). On peut remarquer une
+    forte ressemblance avec les résultats obtenus entre les MA 1 et 2.
+
+## MA1 vs MA4 :
+
+-   Les mots proches de la ligne dans ces graphiques ont des fréquences
+    similaires dans les deux ensembles de textes, soit, dans l'ordre
+    croissant: "access","acquisition","data","australia", "amonium",
+    "applied", "analysis", "due", "mass", "direct", "affect", "system",
+    "native", "ecosystem", "density", "experiment", "organic",
+    "activity", "litter", "community", "biomass", "specie", **effect,
+    earthworm**. On remarque que certains mots dont la fréquence est
+    proches pourraient peut-être faire partie du même groupe de mots
+    (comme **acquisition data**, **direct effect**, **native
+    ecosystem**, ou encore **litter community**).
+
+-   Les mots **"forest","invasion", "carbon" et "floor"** sont plus
+    fréquents dans la MA1 que dans la MA4, tandis que les mots
+    **"invader", "functional", "grassland", "grass" et "plant"** sont
+    plus fréquents dans la MA4 que de la MA1.
+
+-   Les mots **"effect" et "earthworm"** représentent entre 1 et 10% des
+    mots totaux de chaque métaanalyse pour les métaanalyses 1 et 4
+    (échelle logarithmique).
+
+## Analyse globale:
+
+-   Dans cette configuration, la MA1 et la MA4 semblent être les plus
+    similaires en termes de fréquences de mots (nuage de points
+    davantage resserré autour de la droite.)
+
+-   Dans cette configuration, la MA1 et la MA2 semblent être les moins
+    similaires en termes de fréquences de mots (nuage de points
+    davantage dispersé autour de la droite.)
+
+# Tests de corrélation:
+
+Quel est le degré de corrélation entre les fréquences de mots de chaque
+métaanalyse ?
+
+## MA2 VS MA1
+
+```{r Corr 2 vs 1}
+cor.test(data = frequency1[frequency1$author == "MA2",],
+         ~ proportion + `MA1`)
+```
+
+## MA3 VS MA1
+
+```{r Corr 3 vs 1}
+cor.test(data = frequency1[frequency1$author == "MA3",],
+         ~ proportion + `MA1`)
+```
+
+## MA4 VS MA1
+
+```{r Corr 4 vs 1}
+cor.test(data = frequency1[frequency1$author == "MA4",],
+         ~ proportion + `MA1`)
+```
+
+## MA3 VS MA2
+
+```{r Corr 3 vs 2}
+cor.test(data = frequency2[frequency2$author == "MA3",],
+         ~ proportion + `MA2`)
+```
+
+## MA4 VS MA2
+
+```{r Corr 4 vs 2}
+cor.test(data = frequency2[frequency2$author == "MA4",],
+         ~ proportion + `MA2`)
+```
+
+## MA4 VS MA3
+
+```{r Corr 4 vs 3}
+cor.test(data = frequency3[frequency3$author == "MA4",],
+         ~ proportion + `MA3`)
+```
+
+## Tableau récapitulatif :
+
+```{=html}
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial,
+sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial,
+sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+```
+|         | **MA1** | **MA2** | **MA3** | **MA4** |
+|---------|---------|---------|---------|---------|
+| **MA1** | \-      | 0.671   | 0.799   | 0.779   |
+| **MA2** |         | \-      | 0.793   | 0.825   |
+| **MA3** |         |         | \-      | 0.740   |
+| **MA4** |         |         |         | \-      |
+
+<br> <i>MA1: "Soil chemistry turned upside down: a meta-analysis of
+invasive earthworm effects on soil chemical properties"<br> MA2:
+"Earthworms affect plant growth and resistance against herbivores: A
+meta-analysis" <br> MA3: "The unseen invaders: introduced earthworms as
+drivers of change in plant communities in North American forests (a
+meta-analysis)" <br> MA4: "Earthworms increase plant production: a
+meta-analysis"</i> <br>
+
+D'après le tableau ci-dessus, on peut voir que le choix de mots est le
+plus corrélé (correlation de Pearson) entre la MA2 et la MA4 (r²=0.825),
+tandis que le choix de mots est le moins corrélé (corrélation de
+Pearson) entre la MA1 et la MA2 (r²=0.671).
+
+# Analyse de sentiment:
+
+## Premiers graphiques.
+
+On commence par construire des Tibbles contenant chaque mot exprimant un
+sentiment positif ou négatif (colonne *word*), puis on compte le nombre
+d'occurence de chaque mot (colonne *n*).
+
+```{r Construction Tibbles Senti, message=FALSE}
+library(tidytext)
+bing<-get_sentiments("bing")
+bingStem <- bing %>% mutate(word = wordStem(word)) %>% unique()
+
+senti1<-unnested_tokens1 %>%
+  inner_join(bing) %>%
+  count(word, sort = TRUE)
+
+senti2<-unnested_tokens2 %>%
+  inner_join(bing) %>%
+  count(word, sort = TRUE)
+
+senti3<-unnested_tokens3 %>%
+  inner_join(bing) %>%
+  count(word, sort = TRUE)
+
+senti4<-unnested_tokens4 %>%
+  inner_join(bing) %>%
+  count(word, sort = TRUE)
+```
+
+On ne conserve que les dix premières valeurs et les dix dernières
+valeurs, afin de pouvoir produire des graphiques plus lisibles ne
+conservant que les valeurs extrêmes.
+
+```{r Filtrage des valeurs, message=FALSE}
+library(tidyr)
+MA1_senti <- senti1 %>%
+  inner_join(get_sentiments("bing")) %>%
+  anti_join(custom_stop_words, by = c("word")) %>%
+  pivot_wider(names_from = sentiment, values_from = n, values_fill = 0) %>% 
+  mutate(sentiment = positive - negative)
+sub1_MA1_senti<-MA1_senti %>%
+    arrange(sentiment) %>%
+    slice(1:10)
+sub2_MA1_senti<-MA1_senti %>%
+    arrange(desc(sentiment)) %>%
+    slice(1:10)
+sub_MA1_senti<-bind_rows(sub1_MA1_senti, sub2_MA1_senti)
+```
+
+On réalise un premier barplot de sentiment à titre d'exemple, en
+associant à chaque mot positif l'indice +1, et à chaque mot négatif
+l'indice -1. On représente ensuite cela graphiquement chaque mot en
+abscisse et la somme de ses indices (dont la valeur dépend de sa
+connotation et du nombre d'occurences) en ordonnées. On peut noter que
+certains mots neutres dans un contexte scientifique (comme "plot" ou
+"manipulation") ont été rajoutés au dictionaire de "stop words", pour
+éviter qu'ils soient considérés à tort comme des mots à valence
+négative.
+
+```{r Plot senti exemple}
+ggplot(sub_MA1_senti, aes(x = word, y = sentiment,
+                          fill = factor(sign(sentiment)))) +
+  geom_bar(stat = "identity") +
+  labs(x = "Word", y = "Sentiment Score", fill = "Sentiment") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+On répète le processus pour comparer les métaanalyses 1,2,3 et 4.
+
+```{r Création plot senti, message=FALSE}
+library(tidyr)
+library(ggplot2)
+
+plot_sentiment_subset <- function(senti) {
+  MA_senti <- senti %>%
+    inner_join(bingStem) %>%
+    pivot_wider(names_from = sentiment, values_from = n, values_fill = 0) %>% 
+    mutate(sentiment = positive - negative)
+  
+  sub1_MA_senti <- MA_senti %>%
+    anti_join(custom_stop_words, by = c("word")) %>%
+    arrange(sentiment) %>%
+    slice(1:5)
+  
+  sub2_MA_senti <- MA_senti %>%
+    anti_join(custom_stop_words, by = c("word")) %>%
+    arrange(desc(sentiment)) %>%
+    slice(1:5)
+  
+  sub_MA_senti <- bind_rows(sub1_MA_senti, sub2_MA_senti)
+  
+  ggplot(sub_MA_senti, aes(x = word, y = sentiment,
+                           fill = factor(sign(sentiment)))) +
+    geom_bar(stat = "identity") +
+    labs(x = "Word", y = "Sentiment Score", fill = "Sentiment") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+}
+
+plot_senti1<-plot_sentiment_subset(senti1)
+plot_senti2<-plot_sentiment_subset(senti2)
+plot_senti3<-plot_sentiment_subset(senti3)
+plot_senti4<-plot_sentiment_subset(senti4)
+
+```
+
+```{r ggarrange plot senti}
+library(egg)
+ggarrange(plot_senti1,plot_senti2,plot_senti3,plot_senti4,widths = c(2,2),
+          labels = c("1","2","3","4"))
+```
+
+Tout d'abord, il est immportant de noter que tous les graphes n'ont pas
+les mêmes échelles ; les MA1 et 4 semblent avoir des échelles de
+sentiment comparables ([-20;10] et [-10;15]) et cela vaut aussi pour les
+MA2 et 3 ([-10;5] et [-5;10]).<br>
+
+Le terme *"strong"* est commun à toutes les métaanalyses. Cependant, sa
+valence peut grandement dépendre du contexte de son utilisation.<br> On
+peut constater que le mot positif *"rich/enrich"* est retrouvé dans la
+plupart de métaanalyses (1,2 et 3).<br> Le mot *"benefit"* n'est
+retrouvé que dans les MA2 et 4.<br> Le mot *"protect"* n'est retrouvé
+que dans la MA3. <br>
+
+On peut constater qu'il n'y a aucun mot négatif commun à tous les
+corpus.<br> Le mot *"disturb"* n'est retrouvé que dans les MA 1 et
+3.<br> Le mot *"infest"* est seulement présent dans les MA2 et 4.<br> Le
+mot *"loss"* n'est retrouvé que dans les MA1 et 4, ce qui semble
+indiquer que les effets négatifs relevés ne sont pas forcément liés à
+des pertes de caractéristiques.<br> Le mot *"sever"* n'est retrouvé que
+dans les MA3 et 4, ce qui signifie peut-être qu'elles sont plus
+"quantitatives" que les deux autres.<br> On peut enfin constater que le
+mot *"loss"* est le mot avec le score négatif le plus important des
+quatre graphiques, représenté dans la MA1.
+
+<br> <i>MA1: "Soil chemistry turned upside down: a meta-analysis of
+invasive earthworm effects on soil chemical properties"<br> MA2:
+"Earthworms affect plant growth and resistance against herbivores: A
+meta-analysis" <br> MA3: "The unseen invaders: introduced earthworms as
+drivers of change in plant communities in North American forests (a
+meta-analysis)" <br> MA4: "Earthworms increase plant production: a
+meta-analysis"</i> <br>
+
+## Contribution de chaque terme au score final de sentiment.
+
+```{r Contribution sentiment, message=FALSE}
+bing_word_counts1 <- unnested_tokens1 %>%
+  inner_join(bingStem) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  mutate(MA="MA1") %>%
+  ungroup() 
+bing_word_counts2 <- unnested_tokens2 %>%
+  inner_join(bingStem) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  mutate(MA="MA2") %>%
+  ungroup()
+bing_word_counts3 <- unnested_tokens3 %>%
+  inner_join(bingStem) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  mutate(MA="MA3") %>%
+  ungroup() 
+bing_word_counts4 <- unnested_tokens4 %>%
+  inner_join(bingStem) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  mutate(MA="MA4") %>%
+  ungroup()
+```
+
+```{r Plot contrib}
+contrib1<-bing_word_counts1 %>%
+  anti_join(custom_stop_words, by = c("word")) %>%
+  group_by(sentiment) %>%
+  slice_max(n, n = 10) %>% 
+  ungroup() %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~sentiment, scales = "free_y") +
+  labs(x = "Contribution to sentiment",
+       y = NULL)
+
+contrib2<-bing_word_counts2 %>%
+  anti_join(custom_stop_words, by = c("word")) %>%
+  group_by(sentiment) %>%
+  slice_max(n, n = 10) %>% 
+  ungroup() %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~sentiment, scales = "free_y") +
+  labs(x = "Contribution to sentiment",
+       y = NULL)
+
+contrib3<-bing_word_counts3 %>%
+  anti_join(custom_stop_words, by = c("word")) %>%
+  group_by(sentiment) %>%
+  slice_max(n, n = 10) %>% 
+  ungroup() %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~sentiment, scales = "free_y") +
+  labs(x = "Contribution to sentiment",
+       y = NULL)
+
+contrib4<-bing_word_counts4 %>%
+  anti_join(custom_stop_words, by = c("word")) %>%
+  group_by(sentiment) %>%
+  slice_max(n, n = 10) %>% 
+  ungroup() %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~sentiment, scales = "free_y") +
+  labs(x = "Contribution to sentiment",
+       y = NULL)
+```
+
+```{r ggarrange contrib,fig.height=6, fig.width=10}
+library(egg)
+ggarrange(contrib1,contrib2,contrib3,contrib4,widths = c(2,2),
+          labels = c("1","2","3","4"))
+```
+
+```{r}
+bingStem %>% filter(word=="domin")
+```
+
+```{r}
+library(stringr)
+bing %>% filter(str_detect(word, "^domin"))
+```
+
+```{r}
+library(stringr)
+unnested_tokens <- tibble(abstracts) %>%
+unnest_tokens(word, abstracts)
+unnested_tokens %>% filter(str_detect(word, "^domin")) %>% distinct() %>%
+  print()
+
+# Append the unnested tokens to the list
+unnested_tokens<-unnested_tokens%>%anti_join(stop_words)
+unnested_tokens<-unnested_tokens %>% rowwise() %>%
+  mutate(word = wordStem(word, language = "en"))
+```
+
+<br> Comme on peur le voir, dans le corpus de texte, *"domin"* a donc
+une valence **positive** et non négative. Dans la suite de cette
+analyse, les occurences négatives de ce mot seront donc négligées. <br>
+
+Tout d'abord, il faut noter que les graphiques ne sont pas à la même
+échelle en abscisse. Cela ne pose en théorie pas de problème pour
+interpréter les résultats au cas par cas, mais cela rentrera en jeux
+lors d'éventuelles comparaisons entre métaanalyses.<br>
+
+<u>Les quatre mots positifs les plus importants en contribution sont:
+</u><br> \* *MA1:* "effect", affect", "abundant","dominate".<br> \*
+*MA2:* "effect", "affect", "response","enhance".<br> \* *MA3:* "effect",
+"rich", "abundant", "affect".<br> \* *MA4:* "effect",
+"product","affect","fertilize".<br>
+
+Les mots *"effect"* et *"affect"* sont présents dans toutes les
+métaanalyses. Leur sens précis, cependant, dépend du contexte.<br>
+<u>MA1: </u> Les mots *"abundant"* et *"dominate"* évoquent l'écologie
+et les écosystèmes. La présence, dans le graphe, de mots comme
+*"content"*, *"dynamic"*, *"available"* ou encore *"survive"* laissent
+penser que le texte étudie la dynamique des ressources disponibles dans
+le sol, en lien avec des problématiques de survie.<br> <u>MA2: </u> Les
+mots *"response"* et *"enhance"* semblent décrire des mécanismes
+physiologiques de réponse à l'environnement, ainsi qu'une augmentation,
+probablement de la croissance ou de la résistance de la plante, d'après
+le titre de la métaanalyse. Dans cet intervalle, il y a plus de mots
+positifs que de mots négatifs.<br> <u>MA3: </u> Les mots *"rich"* et
+*"abundant"* semblent évoquer la richesse écosystémique, ainsi que la
+*"dynamique"*, probablement des écosystèmes, face à l'arrivée des vers
+de terre invasifs. <br> <u>MA4: </u> Les mots *"product"* et
+*"fertilize"* font partie du champs lexical de l'agriculture. Avec
+*"enhance"*, ils semblent montrer un impact plutôt positif des vers de
+terre sur la production des plantes. Dans cet intervalle, il y a plus de
+mots positifs que de mots négatifs.<br>
+
+<u>Les quatre mots négatifs les plus importants (en ignorant "content",
+"domin" et "floor") en contribution sont: </u><br> \* *MA1:* "invasive",
+"invade", "loss", "negative".<br> \* *MA2:* "drought", "infest",
+"negative","dead".<br> \* *MA3:* "invasive", "disturb",
+"burn","negative".<br> \* *MA4:* "infest", "invade",
+"sever","negative".<br> <u>MA2 et 4:</u>On remarque la présence du mot
+*"infest"*, respectivement en deuxième et première positions pour les
+MA2 et 4. Son association à *"dead"* (MA2) et à *"loss"* et *"pest"*
+(MA4) traduit une vision probablement négative du vers de terre dans ces
+métaanalyse, avec probablement des dommages écosystémiques
+importants.<br> <u>MA1 et 4:</u>Dans les MA1 et 4, la présence de
+*"invade"* et *"negative"*, présentant le vers de terre comme un
+problème, qui, sans forcément détruire totalement l'environnement natif,
+le **perturbe ("disturb")** (MA1) ou est perçu comme un **nuisible
+("pest")** (MA4).<br> <u>MA1 et 3:</u> Les mots *"invasive"* (1er
+positions dans les deux MA) et *"negative"* sont communs (dernière
+position dans les deux MA). La MA1 se focalise davantage sur
+l'**invasion** en tant que telle et la **perte**, et la MA3 sur la
+**perturbation** et la perte (**"burn"**). On constate donc que les
+thèses défendues semblent concordantes et négatives sur la question des
+vers de terre.<br> La MA2 semble légèrement différente des autres dans
+son approche, <u>avec des mots uniques qui lui sont propres</u> tels que
+*"drought"* ou bien *"dead"*. D'autres mots comme *"stress"* ou
+*"parasite"*, au vu du titre de la métaanalyse, semblent décrire des
+effets négatifs sur les plantes.<br>
+
+Da façon simpliste, il semble donc possible, à partir de ces graphiques,
+de proposer une première catégorisation comme suit:<br> - **MA1/MA3:
+Métaanalyses globalement défavorables aux vers de terre. Si certains
+bénéfices, pour la santé des sols notamment, semblent être reconnus, le
+vers de terre est perçu comme une espèce invasive perturbant les
+écosystèmes natifs.**<br> - **MA2/MA4: Métaanalyses globalement
+favorables au vers de terre, mettant en avant les bienfaits
+physiologiques des vers de terre pour la plante et les avantages de ces
+interactions pour favoriser la productivité. Cependant, le vers de terre
+peut malgré tout rester nuisible, car c'est une espèce invasive qui
+risque de déséquilibrer l'écosystème natif.**<br>
+
+Cependant, il serait peut-être nécessaire d'étudier des unités
+textuelles plus larges, comme par exemple les phrases ou les n-grames,
+pour éviter au maximum le risque de contresens.
+
+<br> <i>MA1: "Soil chemistry turned upside down: a meta-analysis of
+invasive earthworm effects on soil chemical properties"<br> MA2:
+"Earthworms affect plant growth and resistance against herbivores: A
+meta-analysis" <br> MA3: "The unseen invaders: introduced earthworms as
+drivers of change in plant communities in North American forests (a
+meta-analysis)" <br> MA4: "Earthworms increase plant production: a
+meta-analysis"</i> <br>
+
+# Représentation visuelle de la fréquence des mots: Wordclouds
+
+## Wordcloud MA1: "Soil chemistry turned upside down: a meta-analysis of invasive earthworm effects on soil chemical properties"
+
+Visuellement, on peut voir sur le nuage de mots que les termes
+prépondérants dans la MA1 sont :
+*"earthworm","soil","forest"*,*"increase"* et *"effect"*. On peut
+remarquer aussi que le mot *"invasion"* semble aussi relativement
+fréquent, ce qui est cohérent avec le titre de l'article ("invasive
+earthworms"). La prépondérance du mot *"earthworm"* sur les autres
+semble confirmer que les vers de terre sont le sujet principal de cette
+métaanalyse.
+
+```{r Wordcloud 1}
+library(wordcloud)
+library(dplyr)
+
+unnested_tokens1 %>%
+  anti_join(stop_words) %>%
+  count(word) %>%
+  with(wordcloud(word, n, max.words = 50))
+cloud1 <- recordPlot()
+```
+
+## Wordcloud MA2: "Earthworms affect plant growth and resistance against herbivores: A meta-analysis"
+
+Visuellement, on peut voir sur le nuage de mots que les termes
+prépondérants dans la MA2 sont : *"plant","earthworm","aphid",
+"soil"*,*"increase"* et *"effect"*. D'autres mots tel que *"community",
+"interaction", "presence","affect"* ou *"biomass"* semblent décrire un
+processus biologique dynamique. La prépondérance de *"plant"* sur les
+autres semble confirmer que la biologie végétale en lien avec les vers
+de terre est le thème principal de cette métaanalyse.
+
+```{r Wordcloud 2}
+unnested_tokens2 %>%
+  anti_join(stop_words) %>%
+  count(word) %>%
+  with(wordcloud(word, n, max.words = 50))
+cloud2 <- recordPlot()
+```
+
+## Wordcloud MA3: "The unseen invaders: introduced earthworms as drivers of change in plant communities in North American forests (a meta-analysis)"
+
+Visuellement, on peut voir sur le nuage de mots que les termes
+prépondérants dans la MA3 sont : *"earthworm","specie", "plant"* et
+*"forest"*. La prépondérance des mots *"earthworm"* et *"specie"* sur
+les autres semble confirmer que la métaanlyse s'intéresse en particulier
+à la façon dont les différentes **espèces** de vers de terre (natives ou
+introduite) influent sur l'écosystème global (et notamment l'écosystème
+**forestier**). D'autres racines telles que *"invasion", "community",
+"density", "native"* ou *"increase"* semblent décrire un processus
+écologique dynamique.
+
+```{r Wordcloud 3}
+unnested_tokens3 %>%
+  anti_join(stop_words) %>%
+  count(word) %>%
+  with(wordcloud(word, n, max.words = 50))
+cloud3 <- recordPlot()
+```
+
+## Wordcloud MA4: "Earthworms increase plant production: a meta-analysis"
+
+Visuellement, on peut voir sur le nuage de mots que les termes
+prépondérants dans la MA4 sont : *"earthworm","soil", "plant"*,
+*"effect"* et *"increase"*. Les mots *"presence"*, *"community"*,
+*"product"*, *"biomass"* et *"growth"* laissent entendre un effet plutôt
+positif des vers de terre sur le développement végatal.
+
+```{r Wordcloud 4}
+unnested_tokens4 %>%
+  anti_join(stop_words) %>%
+  count(word) %>%
+  with(wordcloud(word, n, max.words = 50))
+cloud4 <- recordPlot()
+```
+
+# Wordcloud: coloration en fonction de la valence des mots (bleu: Positif / rouge: Négatif)
+
+## Wordcloud MA1: "Soil chemistry turned upside down: a meta-analysis of invasive earthworm effects on soil chemical properties"
+
+Visuellement, on peut remarquer sur le nuage de mots que les termes
+positfs prépondérants dans la MA1 sont *"effect", "affect"* et
+*abundant*, tandis que les termes négatifs prépondérants sont
+*"invasive"*, *"invade"* et *"loss"*. On remarque tout d'abord que ces
+résultats sont très différents de ceux trouvés dans la partie précédente
+pour la même métaanalyse (Wordclouds: Wordcloud MA1) à cause de l'ajout
+de la variable "sentiment". Grâce à ce nuage de points, on retrouve de
+manière sythétique les résultats obtenues dans la partie précédante,
+"Contribution de chaque terme au score final de sentiment", pour la MA1.
+
+```{r Wordcloud senti1, warning=FALSE}
+library(reshape2)
+
+unnested_tokens1 %>%
+  anti_join(custom_stop_words, by = c("word")) %>%
+  inner_join(bingStem) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  acast(word ~ sentiment, value.var = "n", fill = 0) %>%
+  comparison.cloud(colors = c("red", "blue"),
+                   max.words = 100)
+cloud_senti1<-recordPlot()
+```
+
+## Wordcloud MA2: "Earthworms affect plant growth and resistance against herbivores: A meta-analysis"
+
+Visuellement, on peut remarquer sur le nuage de mots que les termes
+positfs prépondérants dans la MA1 sont *"effect", "affect"*,
+*"response"* / *enhance* (approximativement de même taille), tandis que
+les termes négatifs prépondérants sont *"drought"*, *"infest"* et
+*"negative"*/*"dead"* ("complex" n'étant pas nécessairement connoté
+négativement dans un contexte scientifique). On remarque tout d'abord
+que ces résultats sont très différents de ceux trouvés dans la partie
+précédente pour la même métaanalyse (Wordclouds: Wordcloud MA2) à cause
+de l'ajout de la variable "sentiment". Grâce à ce nuage de points, on
+retrouve de manière sythétique les résultats obtenues dans la partie
+précédante, "Contribution de chaque terme au score final de sentiment",
+pour la MA2.
+
+```{r Wordcloud senti2, warning=FALSE}
+unnested_tokens2 %>%
+  anti_join(custom_stop_words, by = c("word")) %>%
+  inner_join(bingStem) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  acast(word ~ sentiment, value.var = "n", fill = 0) %>%
+  comparison.cloud(colors = c("red", "blue"),
+                   max.words = 100)
+cloud_senti2<-recordPlot()
+```
+
+## Wordcloud MA3: "The unseen invaders: introduced earthworms as drivers of change in plant communities in North American forests (a meta-analysis)"
+
+Visuellement, on peut remarquer sur le nuage de mots que les termes
+positfs prépondérants dans la MA1 sont *"effect"*, *"rich"*, et
+*"abundant"* tandis que les termes négatifs prépondérants sont
+*"invasive"*, *"disturb"* et *"burn"*. On remarque tout d'abord que ces
+résultats sont très différents de ceux trouvés dans la partie précédente
+pour la même métaanalyse (Wordclouds: Wordcloud MA3) à cause de l'ajout
+de la variable "sentiment". Grâce à ce nuage de points, on retrouve de
+manière sythétique les résultats obtenus dans la partie précédante,
+"Contribution de chaque terme au score final de sentiment", pour la MA3.
+
+```{r Wordcloud senti3, warning=FALSE}
+unnested_tokens3 %>%
+  anti_join(custom_stop_words, by = c("word")) %>%
+  inner_join(bingStem) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  acast(word ~ sentiment, value.var = "n", fill = 0) %>%
+  comparison.cloud(colors = c("red", "blue"),
+                   max.words = 100)
+cloud_senti3<-recordPlot()
+```
+
+## Wordcloud MA4: "Earthworms increase plant production: a meta-analysis"
+
+Visuellement, on peut remarquer sur le nuage de mots que les termes
+positfs prépondérants dans la MA1 sont *"effect"*, *"product"*, et
+*"affect"* tandis que les termes négatifs prépondérants sont *"infest"*,
+*"invade"* et *"sever"*. On remarque tout d'abord que ces résultats sont
+très différents de ceux trouvés dans la partie précédente pour la même
+métaanalyse (Wordclouds: Wordcloud MA3) à cause de l'ajout de la
+variable "sentiment". Grâce à ce nuage de points, on retrouve de manière
+sythétique les résultats obtenus dans la partie précédante,
+"Contribution de chaque terme au score final de sentiment", pour la MA4.
+
+```{r Wordcloud senti4, warning=FALSE}
+unnested_tokens4 %>%
+  anti_join(custom_stop_words, by = c("word")) %>%
+  inner_join(bingStem) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  acast(word ~ sentiment, value.var = "n", fill = 0) %>%
+  comparison.cloud(colors = c("red", "blue"),
+                   max.words = 100)
+cloud_senti4<-recordPlot()
+```
+
+```{r Sentence tokens}
+sentences1 <- tibble(text = abstracts1) %>% 
+  unnest_tokens(sentence, text, token = "sentences")
+sentences2 <- tibble(text = abstracts2) %>% 
+  unnest_tokens(sentence, text, token = "sentences")
+sentences3 <- tibble(text = abstracts3) %>% 
+  unnest_tokens(sentence, text, token = "sentences")
+sentences4 <- tibble(text = abstracts4) %>% 
+  unnest_tokens(sentence, text, token = "sentences")
+```
+
+## Ratios de mots positifs / négatifs pour chaque métaanalyse:
+
+```{r}
+library(dplyr)
+library(purrr)
+library(kableExtra)
+
+bingnegative <- get_sentiments("bing") %>% 
+  filter(sentiment == "negative")
+
+bingpositive <- get_sentiments("bing") %>%
+  filter(sentiment == "positive")
+
+unnested_tokens1 <- unnested_tokens1 %>%
+  mutate(MA = "MA1")
+unnested_tokens2 <- unnested_tokens2 %>%
+  mutate(MA = "MA2")
+unnested_tokens3 <- unnested_tokens3 %>%
+  mutate(MA = "MA3")
+unnested_tokens4 <- unnested_tokens4 %>%
+  mutate(MA = "MA4")
+
+MA_labels <- c("MA1", "MA2", "MA3", "MA4")
+word_counts_MA <- c(length(unnested_tokens1$word),
+                    length(unnested_tokens2$word),
+                    length(unnested_tokens3$word),
+                    length(unnested_tokens4$word))
+
+word_count_tibble <- tibble(
+  MA = MA_labels,
+  words = word_counts_MA
+)
+
+all_ratios <- bind_rows(unnested_tokens1,unnested_tokens2,unnested_tokens3,
+                        unnested_tokens4)
+
+joined_tibble <- rbind(inner_join(all_ratios, bingnegative, by = "word"),
+                       inner_join(all_ratios, bingpositive, by= "word"))
+# Assuming joined_tibble is already defined
+sentiment_counts <- joined_tibble %>%
+    group_by(MA, sentiment) %>%
+    summarise(count = n())
+# Transpose the summarized counts
+sentiment_counts <- sentiment_counts %>%
+    pivot_wider(names_from = sentiment, values_from = count)
+```
+
+```{r Ratio}
+library(dplyr)
+library(purrr)
+library(kableExtra)
+
+bingnegative <- get_sentiments("bing") %>% 
+  filter(sentiment == "negative")
+
+bingpositive <- get_sentiments("bing") %>%
+  filter(sentiment == "positive")
+
+unnested_tokens1 <- unnested_tokens1 %>%
+  mutate(MA = "MA1")
+unnested_tokens2 <- unnested_tokens2 %>%
+  mutate(MA = "MA2")
+unnested_tokens3 <- unnested_tokens3 %>%
+  mutate(MA = "MA3")
+unnested_tokens4 <- unnested_tokens4 %>%
+  mutate(MA = "MA4")
+
+MA_labels <- c("MA1", "MA2", "MA3", "MA4")
+word_counts_MA <- c(length(unnested_tokens1$word),
+                    length(unnested_tokens2$word),
+                    length(unnested_tokens3$word),
+                    length(unnested_tokens4$word))
+
+word_count_tibble <- tibble(
+  MA = MA_labels,
+  words = word_counts_MA
+)
+
+all_ratios <- bind_rows(unnested_tokens1,unnested_tokens2,unnested_tokens3,
+                        unnested_tokens4)
+
+joined_tibble <- rbind(inner_join(all_ratios, bingnegative, by = "word"),
+                       inner_join(all_ratios, bingpositive, by= "word"))
+
+MA_titles <- c("Soil chemistry turned upside down: a meta-analysis [...]",
+               "Earthworms affect plant growth and resistance [...]",
+               "The unseen invaders: [...] in north American forests 
+               (a meta-analysis)",
+               "Earthworms increase plant production: a meta-analysis")
+
+positive_count=c(sentiment_counts$positive[1], sentiment_counts$positive[2],
+                 sentiment_counts$positive[3], sentiment_counts$positive[4])
+negative_count=c(sentiment_counts$negative[1], sentiment_counts$negative[2],
+                 sentiment_counts$negative[3], sentiment_counts$negative[4])
+
+summary_tibble <- joined_tibble %>%
+  group_by(MA) %>%
+  summarize(
+    positivewords = positive_count,
+    negativewords = negative_count,
+    sentimentwords=positive_count + negative_count
+  ) %>%
+  left_join(word_count_tibble, by = "MA") %>%
+  mutate(positive_ratio = signif(positivewords / sentimentwords,digits = 2)) %>%
+  mutate(negative_ratio = signif(negativewords / sentimentwords,digits = 2)) 
+
+summary_tibble <- data.frame(
+    MA = unique(summary_tibble$MA),
+    positivewords = unique(summary_tibble$positivewords),
+    negativewords = unique(summary_tibble$negativewords),
+    words = unique(summary_tibble$sentimentwords),
+    positive_ratio = unique(summary_tibble$positive_ratio),
+    negative_ratio = unique(summary_tibble$negative_ratio)
+) %>%head(4)
+
+summary_tibble <- as_tibble(summary_tibble)
+
+summary_tibble %>%
+  mutate(MA_title = MA_titles) %>%
+  mutate(current_MA = MA) %>%
+  select(MA_title, current_MA, words, positivewords, 
+         negativewords, positive_ratio, negative_ratio)
+
+ summary_tibble %>%
+  kbl() %>%
+  kable_material_dark("hover", full_width = F) %>%
+  row_spec(0, bold = T, color = "black", background = "#D7261E")
+```
+
+<br> Le tablau ci-dessus présente, pour chaque MA, le rapport mot
+positifs / total sentiment (colonne "positive ratio") et le le rapport
+mot négatifs / total sentiment (colonne "negative ratio"). On peut donc
+classer les MA dans cet ordre, la plus positive en dernier: MA2, MA1,
+MA4, MA3. On peut donc écrire, de manière synthétique, que:<br> \*
+**MA1:** 35% des mots connotés sont positifs, 65% sont négatifs.<br> \*
+**MA2:** 21% des mots connotés sont positifs, 79% sont négatifs.<br> \*
+**MA3:** 44% des mots connotés sont positifs, 56% sont négatifs.<br> \*
+**MA4:** 41% des mots connotés sont positifs, 59% sont négatifs.<br> Ces
+ratios semblent plutôt surprenants, car des métaanalyses au titre
+paraissant négatif (comme la MA3), ont finalement le ratio de mots
+positifs le plus élévé des quatre. A l'inverse, la MA2 semble être la
+plus négative alors que son titre paraît plutôt optimiste. Une analyse
+plus approfondie des textes permettrait probablement de résoudre cet
+apparent paradoxe.<br> Cependant, le ratio de mots négatifs est dans
+tous les cas \> 50%, ce qui semble indiquer que la vision du vers de
+terre présentée dans ces articles est majoritairement négative.<br>
+
+<br> <i>MA1: "Soil chemistry turned upside down: a meta-analysis of
+invasive earthworm effects on soil chemical properties"<br> MA2:
+"Earthworms affect plant growth and resistance against herbivores: A
+meta-analysis" <br> MA3: "The unseen invaders: introduced earthworms as
+drivers of change in plant communities in North American forests (a
+meta-analysis)" <br> MA4: "Earthworms increase plant production: a
+meta-analysis"</i> <br>
+
+# Approche tf-idf :
+
+<br> **Définitions:** <br> *tf*: term frequency.<br> *idf*: inverse
+document frequency. Plus élaboré que l'approche en "stop words". Diminue
+la fréquence des termes rencontrés très souvent et augmente la fréquence
+des termes rares, en jouant sur la pondération.<br> *tf-idf*: le produit
+de ces deux indices. Il premet d'identifier les mots qui sont **plus
+importants pour un document spécifique** parmi un ensemble de
+documents.<br>
+
+```{r Redéfinition des formats tidy sans filtration des "stop_words"}
+unnested_tokens1 <- tibble(abstracts1) %>%
+mutate(MA="MA1") %>%
+unnest_tokens(word, abstracts1)
+unnested_tokens1<-unnested_tokens1 %>% rowwise()%>%
+  mutate(word = wordStem(word, language = "en"))
+
+unnested_tokens2 <- tibble(abstracts2) %>%
+  mutate(MA="MA2") %>%
+  unnest_tokens(word, abstracts2)
+unnested_tokens2 <- unnested_tokens2 %>% 
+  rowwise() %>% mutate(word = wordStem(word, language = "en"))
+
+unnested_tokens3 <- tibble(abstracts3) %>%
+  mutate(MA="MA3") %>%
+  unnest_tokens(word, abstracts3)
+unnested_tokens3 <- unnested_tokens3 %>% rowwise() %>%
+  mutate(word = wordStem(word, language = "en"))
+
+unnested_tokens4 <- tibble(abstracts4) %>%
+  mutate(MA="MA4") %>%
+  unnest_tokens(word, abstracts4)
+unnested_tokens4 <- unnested_tokens4 %>% rowwise() %>%
+  mutate(word = wordStem(word, language = "en"))
+```
+
+```{r Mots totaux MA}
+word_counts_MA <- c(length(unnested_tokens1$word),
+                    length(unnested_tokens2$word), 
+                    length(unnested_tokens3$word),
+                    length(unnested_tokens4$word))
+
+ordre1=unnested_tokens1 %>%
+     count(word, sort = TRUE) %>%
+     mutate(word = reorder(word, n,decreasing=TRUE))
+tokens_ordered_1 <- left_join(unnested_tokens1, ordre1) %>%
+  mutate(Total=word_count_tibble$words[1])
+
+ordre2=unnested_tokens2 %>%
+     count(word, sort = TRUE) %>%
+     mutate(word = reorder(word, n,decreasing=TRUE))
+tokens_ordered_2 <- left_join(unnested_tokens2, ordre2) %>%
+  mutate(Total=word_count_tibble$words[2])
+
+ordre3=unnested_tokens4 %>%
+     count(word, sort = TRUE) %>%
+     mutate(word = reorder(word, n,decreasing=TRUE))
+tokens_ordered_3 <- inner_join(unnested_tokens3, ordre3) %>%
+  mutate(Total=word_count_tibble$words[3])
+
+ordre4=unnested_tokens4 %>%
+     count(word, sort = TRUE) %>%
+     mutate(word = reorder(word, n,decreasing=TRUE))
+tokens_ordered_4 <- left_join(unnested_tokens4, ordre4) %>%
+  mutate(Total=word_count_tibble$words[4])
+
+all_freq <- bind_rows(tokens_ordered_1,
+                      tokens_ordered_2,
+                      tokens_ordered_3,
+                      tokens_ordered_4) %>%
+  mutate(word_frequency = n/Total)
+```
+
+```{r tf-plots, warning=FALSE}
+library(ggplot2)
+library(egg)
+ 
+word_freq_plot1 <- ggplot(all_freq, aes(x = word_frequency, fill = MA)) +
+  geom_histogram(bins=100,show.legend = FALSE) +
+  ggtitle("xlim = max_word_frequency") + 
+  theme(plot.title = element_text(hjust = 0.5)) +
+  xlim(NA, max(all_freq$word_frequency)) +
+  facet_wrap(~MA, ncol = 2, scales = "free_y")
+
+word_freq_plot2 <-ggplot(all_freq, aes(x = word_frequency, fill = MA)) +
+  geom_histogram(bins=100,show.legend = FALSE) +
+  ggtitle("xlim = 0.05") + 
+  theme(plot.title = element_text(hjust = 0.5)) +
+  xlim(NA, 0.05) +
+  facet_wrap(~MA, ncol = 2, scales = "free_y")
+
+ggarrange(word_freq_plot1,word_freq_plot2,widths = c(1,2))
+
+```
+
+Ces graphiques présentent des distributions proches pour toutes les MA,
+avec de nombreux mots qui apparaissent rarement et moins de mots qui
+apparaissent fréquemment (le premier groupe de 4 graphes représentant
+l'intégralité des données, le deuxième groupe de 4 se focalisant
+uniquement sur l'intervalle [0;0.05], pour inspecter le massif de pics
+davantage en détail). En x, on peut voir que les mots apparaissant très
+souvent (à droite) sont rares, alors que les mots qui apparaissent peu
+souvent (à gauche) sont fréquents. Ces graphiques présentent des
+distributions similaires pour toutes les MA, avec de nombreux mots qui
+apparaissent rarement et moins de mots qui apparaissent fréquemment.
+
+## Loi de Zipf:
+
+<br> La loi de Zipf, découverte empiriquement par Zipf (1949) pour des
+mots d'un corpus anglais, stipule que si *f* est la fréquence d'un mot
+dans le corpus et *r* le rang, alors : <br>
+$frequency \propto \frac{1}{rank}$ <br> (la fréquence d'un mot donné est
+inversement proportionnelle à son rang).
+
+```{r Préparation Zipf}
+library(latex2exp)
+library(ggokabeito)
+
+freq_and_rank <-  all_freq %>% group_by(MA) %>%
+    distinct(word, .keep_all = TRUE) %>%
+    arrange(desc(n)) %>%
+    mutate(rank = seq_len(length(word)), word_frequency = n/Total) %>% # 
+    ungroup()
+
+# freq_and_rank %>% filter(MA=='MA2')
+
+freq_and_rank %>% 
+    ggplot(aes(rank, word_frequency, color = MA)) + 
+    geom_line(linewidth = 1.1, alpha = 0.8, show.legend = TRUE) + 
+    scale_x_log10() +
+    scale_y_log10() +
+    scale_color_okabe_ito() +
+    xlab(TeX("$\\log_{10}(Rank)$")) +
+    ylab(TeX("$\\log_{10}(Word~Frequency)$"))
+
+```
+
+<br>Les courbes de Zipf (log10(f) contre log10(r)) obtenues ci-dessus
+ont une pente négative. On peut visualiser graphiquement qu'il existe
+bel et bien une relation inversement proportionnelle entre *f* et *r*
+(échelle logarithmique). On peut cependant remarquer que la décroissance
+observée n'est pas strictement monotone. On pourrait considérer ces
+courbes comme des lois de puissance brisées (fonction par morceaux
+donnée par une séquence de lois de puissance jointes où chaque section a
+sa propre puissance (indice) et est définie par des "ruptures"
+limitatives.) et les diviser en trois sections:
+[1;10]/[10;100]/[100;1000]. Voyons quel est l'exposant de la loi de
+puissance pour la partie centrale de la plage de rangs.
+
+```{r}
+rank_subset <- freq_and_rank %>% 
+  filter(rank < 100,
+         rank > 10)
+lm(log10(word_frequency) ~ log10(rank), data = rank_subset)
+
+```
+
+```{r Abline linear model}
+library(latex2exp)
+
+freq_and_rank %>% ggplot(aes(rank, word_frequency, color = MA)) + 
+  geom_abline(intercept = -0.8048, slope = -0.8272, 
+              color = "gray50", linetype = 2) +
+  geom_line(linewidth = 1.1, alpha = 0.8, show.legend = TRUE) + 
+  scale_x_log10() +
+  scale_y_log10() +
+  scale_color_okabe_ito() +
+  xlab(TeX("$\\log_{10}(Rank)$")) +
+  ylab(TeX("$\\log_{10}(Word~Frequency)$"))
+```
+
+On peut remarquer en ragardant la partie supérieure que la MA3 contient
+davantage de mots "rares" que la valeur prédite par le modèle linéaire,
+alors que toutes les autres (courbes orange, vertes et blues) en
+contiennent moins. La MA3 est donc celle qui contient la plus haute
+fréquence de mots rares. Ce résultat semble logique lorsqu'on considère
+que c'est aussi elle qui comprends le moins de mots totaux (MA3=1860 \<
+MA2=2959 \< MA4=4985 \< MA1=5616, *voir table ci-dessous*). Pour ce qui
+est des mots très fréquents (quart inférieur droit sous 0.001 de
+fréquence), on peut constater que toutes les métaanalyses en contiennent
+moins que la valeur prédite. Au centre, les courbes des 4 MA sont
+relativement proche du modèle linéaire, ce qui n'est pas
+particulièrement étonnant car il a justement été ajusté pour convenir à
+l'intervalle correspondant à la partie centrale du graphe.
+
+```{r}
+word_count_tibble%>%
+  kbl() %>%
+  kable_material_dark("hover", full_width = F) %>%
+  row_spec(0, bold = T, color = "black", background = "#D7261E")
+```
+
+## Fonction bind_tf_idf:
+
+<br>
+
+```{r MA_tf_idf}
+MA_tf_idf <- all_freq %>%
+  distinct(word, .keep_all = TRUE) %>%
+  select(-word_frequency) %>%
+  select(-Total) %>%
+  bind_tf_idf(word, MA, n) %>%
+  arrange(desc(tf_idf))
+
+MA_tf_idf 
+```
+
+```{r plot MA_tf_idf,fig.height=8}
+library(forcats)
+
+MA_tf_idf %>%
+  anti_join(stop_words) %>%
+  anti_join(custom_stop_words) %>%
+  group_by(MA) %>%
+  slice_max(tf_idf, n = 15) %>%
+  ungroup() %>%
+  ggplot(aes(tf_idf, fct_reorder(word, tf_idf), fill = MA)) +
+  geom_col(show.legend = FALSE) +
+  scale_fill_okabe_ito() +
+  facet_wrap(~MA, ncol = 2, scales = "free") +
+  labs(x = "tf-idf", y = NULL)
+```
+
+D'après les graphiques ci-dessus, on peut constater que:<br> - Les mots
+*"earthworm"*, *"soil"*, *"forest"* et *"effect"* sont plus souvent
+employés dans la MA1 que dans les autres MA. Le mot *"invasion"* est
+aussi plus présent dans la MA1 que dans les autres MA.<br> - Les mots
+*"aphid,\*"nematode",* "herbivore"\* et *"legum"* sont plus souvent
+employés dans la MA2 que dans les autres MA. Le mot *"parasitoid"* est
+aussi plus présent dans la MA2 que dans les autres MA.<br> - Les mots
+*"require"*, *"na"*, *"every"* et *"april"* sont plus souvent employés
+dans la MA3 que dans les autres MA.<br> Les mots *"eastern"*, *"canopy"*
+et *"arthropod"* sont aussi plus présent dans la MA3 que dans les autres
+MA.<br> - Les mots *"maize,\*"gtt",* "grain"\* et *"diplocardia"* sont
+plus souvent employés dans la MA4 que dans les autres MA. Les mots du
+champs lexical de l'agriculture, comme *"earth"*, *"plfa"*, *"pb"*
+(probablement employé ici comme le symbole chimique du plomb) et *"cu"*
+(symbole chimique du cuivre) sont aussi plus présents dans la MA4 que
+dans les autres MA.<br>
+
+Rappelons les suppositions faites précédemment dans la partie "Analyse
+de sentiment":<br> - **MA1/MA3:** Métaanalyses globalement défavorables
+aux vers de terre. Si certains bénéfices, pour la santé des sols
+notamment, semblent être reconnus, le vers de terre est perçu comme une
+espèce invasive perturbant les écosystèmes natifs.<br> - **MA2/MA4:**
+Métaanalyses globalement favorables au vers de terre, mettant en avant
+les bienfaits physiologiques des vers de terre pour la plante et les
+avantages de ces interactions pour favoriser la productivité. Cependant,
+le vers de terre peut malgré tout rester nuisible, car c'est une espèce
+invasive qui risque de déséquilibrer l'écosystème natif.<br>
+
+En prenant en compte le sujet apparent de chaque métaanalyse, on peut
+supposer que:<br> - **MA1/MA3:** Métaanalyses globalement défavorables
+aux vers de terre. Si certains bénéfices, pour la santé des sols
+notamment, semblent être reconnus, le vers de terre est perçu comme une
+espèce invasive perturbant les écosystèmes natifs. Les mots "soil",
+"forest" et "effect" (MA1) et "canopy" (MA3), donnent une idée des
+environnements où se sont déroulées les études (sols forestiers, forêt).
+Les mots "exotic" (MA1) et "eastern" (MA3) semblent montrer que les
+espèces invasives viennent probablement d'Europe ou d'Asie.<br> -
+**MA2/MA4:** Métaanalyses globalement favorables au vers de terre,
+mettant en avant les bienfaits physiologiques des vers de terre pour la
+plante et les avantages de ces interactions pour favoriser la
+productivité. Cependant, le vers de terre peut malgré tout rester
+nuisible, car c'est une espèce invasive qui risque de déséquilibrer
+l'écosystème natif. La MA2 semble plus se focaliser sur les effets
+observées sur les plantes en tant que telles (pucerons, harbivores)
+alors que la 4 semble davantage axée sur la pollution des sols,
+notamment par les métaux lourds (Cu, Pb).<br>
+
+<br> <i>MA1: "Soil chemistry turned upside down: a meta-analysis of
+invasive earthworm effects on soil chemical properties"<br> MA2:
+"Earthworms affect plant growth and resistance against herbivores: A
+meta-analysis" <br> MA3: "The unseen invaders: introduced earthworms as
+drivers of change in plant communities in North American forests (a
+meta-analysis)" <br> MA4: "Earthworms increase plant production: a
+meta-analysis"</i> <br>
+
+## n-grams et corrélations :
+
+<br>
+
+```{r bigrams}
+library(dplyr)
+library(tidytext)
+
+all_abstracts_df <- rbind(data.frame(abstract = abstracts1, MA = "MA1"),
+      data.frame(abstract = abstracts2, MA = "MA2"),
+      data.frame(abstract = abstracts3, MA = "MA3"), 
+      data.frame(abstract = abstracts4, MA = "MA4"))
+
+tokens_bigrams_all <- tibble(all_abstracts_df) %>%
+  unnest_tokens(bigram, abstract, token = "ngrams", n = 2) %>%
+  filter(!is.na(bigram))
+
+tokens_bigrams1 <- tibble(abstracts1) %>%
+  unnest_tokens(bigram, abstracts1, token = "ngrams", n = 2) %>%
+  filter(!is.na(bigram))
+
+tokens_bigrams2 <- tibble(abstracts2) %>%
+  unnest_tokens(bigram, abstracts2, token = "ngrams", n = 2) %>%
+  filter(!is.na(bigram))
+
+tokens_bigrams3 <- tibble(abstracts3) %>%
+  unnest_tokens(bigram, abstracts3, token = "ngrams", n = 2) %>%
+  filter(!is.na(bigram))
+
+tokens_bigrams4 <- tibble(abstracts4) %>%
+  unnest_tokens(bigram, abstracts4, token = "ngrams", n = 2) %>%
+  filter(!is.na(bigram))
+
+tokens_bigrams1 %>% count(bigram, sort = TRUE)
+
+tokens_bigrams2 %>%
+ count(bigram, sort = TRUE)
+
+tokens_bigrams3 %>%
+ count(bigram, sort = TRUE)
+
+tokens_bigrams4 %>%
+ count(bigram, sort = TRUE)
+```
+
+De nombreux bigrammes sont non-informatifs ("in the", "of the" etc.). On
+va donc réemployer l'approche en "stop words" des étapes précédentes
+pour enlever ces mots.
+
+```{r bigrams separated}
+# bigrams ok, separated ok,  filtered ok.
+bigrams_separated_all <- tokens_bigrams_all %>%
+  separate(bigram, c("word1", "word2"), sep = " ")
+
+bigrams_separated1 <- tokens_bigrams1 %>%
+  separate(bigram, c("word1", "word2"), sep = " ")
+
+bigrams_filtered_all <- bigrams_separated_all %>% 
+  filter(!word1 %in% combined_stop_words$word) %>%
+  filter(!word2 %in% combined_stop_words$word)
+
+bigrams_filtered1 <- bigrams_separated1 %>%
+  filter(!word1 %in% combined_stop_words$word) %>%
+  filter(!word2 %in% combined_stop_words$word)
+
+# new bigram counts:
+bigram_counts_all <- bigrams_filtered_all %>%
+  count(MA, word1, word2, sort = TRUE)
+
+bigram_counts1 <- bigrams_filtered1 %>% 
+  count(word1, word2, sort = TRUE)
+
+# For bigrams_2
+bigrams_separated2 <- tokens_bigrams2 %>%
+  separate(bigram, c("word1", "word2"), sep = " ")
+
+bigrams_filtered2 <- bigrams_separated2 %>%
+  filter(!word1 %in% combined_stop_words$word) %>%
+  filter(!word2 %in% combined_stop_words$word)
+
+bigram_counts2 <- bigrams_filtered2 %>% 
+  count(word1, word2, sort = TRUE)
+
+# For bigrams_3
+bigrams_separated3 <- tokens_bigrams3 %>%
+  separate(bigram, c("word1", "word2"), sep = " ")
+
+bigrams_filtered3 <- bigrams_separated3 %>%
+  filter(!word1 %in% combined_stop_words$word) %>%
+  filter(!word2 %in% combined_stop_words$word)
+
+bigram_counts3 <- bigrams_filtered3 %>% 
+  count(word1, word2, sort = TRUE)
+
+# For bigrams_4
+bigrams_separated4 <- tokens_bigrams4 %>%
+  separate(bigram, c("word1", "word2"), sep = " ")
+
+bigrams_filtered4 <- bigrams_separated4 %>%
+  filter(!word1 %in% combined_stop_words$word) %>%
+  filter(!word2 %in% combined_stop_words$word)
+
+bigram_counts4 <- bigrams_filtered4 %>% 
+  count(word1, word2, sort = TRUE)
+
+bigrams_united_all <- bigrams_filtered_all %>%
+  unite(bigram, word1, word2, sep = " ")
+
+bigrams_united_all %>% count(MA, bigram, sort = TRUE)
+
+```
+
+```{r Looking at single words among bigrams}
+earthworms_bigrams <- bigrams_united_all %>%
+    filter(grepl("earthworms?", bigram, ignore.case = TRUE))
+# Count occurrences of MA and word2 combination, sorted in descending order
+count_earthworm_bigrams<- earthworms_bigrams %>%
+    count(MA, bigram, sort = TRUE) %>%
+    group_by(MA) %>%
+    filter(n>5) %>%
+    mutate(MA = factor(MA, levels = c("MA1", "MA2", "MA3", "MA4"))) %>% 
+    # Set the order of MA
+    arrange(MA, desc(n)) # Sort by MA and then by n in descending order
+count_earthworm_bigrams
+```
+
+```{r function to count bigrams}
+library(dplyr)
+
+# Define the function
+count_filtered_bigrams <- function(data, regex_motif,treshold) {
+  # Filter the bigrams based on the provided regex motif
+  filtered_bigrams <- data %>%
+    filter(grepl(regex_motif, bigram, ignore.case = TRUE))
+  
+  # Count occurrences of each combination of `MA` and `bigram`, 
+  # sort in descending order,
+  # group by `MA`, and filter counts greater than 5 within each group
+  count_bigrams <- filtered_bigrams %>%
+    count(MA, bigram, sort = TRUE) %>%
+    group_by(MA) %>%
+    filter(n > treshold) %>%
+    mutate(MA = factor(MA, levels = c("MA1", "MA2", "MA3", "MA4"))) %>%
+    arrange(MA, desc(n)) # Sort by MA and then by n in descending order
+  
+  return(count_bigrams)
+}
+
+count_filtered_bigrams(bigrams_united_all,"earthworms?",5)
+count_filtered_bigrams(bigrams_united_all,"invasions?",5)
+count_filtered_bigrams(bigrams_united_all,"invaders?",0)
+count_filtered_bigrams(bigrams_united_all,"europeans?",0)
+```
+
+```{r plot des bigrammes}
+bigram_tf_idf <- bigrams_united_all %>%
+  count(MA, bigram) %>%
+  bind_tf_idf(bigram, MA, n) %>%
+  arrange(desc(tf_idf))
+
+bigram_tf_idf %>%
+    group_by(MA) %>%
+    slice_max(tf_idf, n = 15) %>%
+    ungroup() %>%
+    ggplot(aes(tf_idf, fct_reorder(bigram, tf_idf), fill = MA)) +
+    geom_col(show.legend = FALSE) +
+    scale_fill_okabe_ito() +
+    facet_wrap(~MA, ncol = 2, scales = "free") +
+    labs(x = "tf-idf", y = NULL)
+```
+
+<br> D'après les graphiques ci-dessus, on peut constater que:<br> Les
+bigrammes *"mineral soil"*, *"earthworm invasion"*, *"exotic
+earthworms"* et *"forest soils"* sont plus souvent employés dans la MA1
+que dans les autres MA. Le bigramme *"earthworm invaded"* est aussi plus
+présent dans la MA1 que dans les autres MA.<br> Les bigrammes *"soil
+organisms"*, *"plant responses"*, *"plant mediated"* et *"root
+herbivore"* sont plus souvent employés dans la MA2 que dans les autres
+MA. Le bigramme *"aphid species"* est aussi plus présent dans la MA2 que
+dans les autres MA.<br> Les bigrammes *"tree species"*, *"native
+plant"*, *"species richness"* et *"caterpillar density"* sont plus
+souvent employés dans la MA3 que dans les autres MA. Le bigramme
+*"earthworm invasions"* est aussi plus présent dans la MA3 que dans les
+autres MA.<br> Les bigrammes *"soil organisms"*, *"plant functionnal"*,
+*"dry weight"* et *"diplocardia spp"* sont plus souvent employés dans la
+MA4 que dans les autres MA. Le bigramme *"soil fertility"* est aussi
+plus présent dans la MA4 que dans les autres MA.<br>
+
+Rappelons les suppositions faites dans la section précédente:<br> -
+**MA1/MA3:** Métaanalyses globalement défavorables aux vers de terre. Si
+certains bénéfices, pour la santé des sols notamment, semblent être
+reconnus, le vers de terre est perçu comme une espèce invasive
+perturbant les écosystèmes natifs. Les mots "soil", "forest" et "effect"
+(MA1) et "canopy" (MA3), donnent une idée des environnements où se sont
+déroulées les études (sols forestiers, forêt). Les mots "exotic" (MA1)
+et "eastern" (MA3) semblent montrer que les espèces invasives viennent
+probablement d'Europe ou d'Asie.<br> - **MA2/MA4:** Métaanalyses
+globalement favorables au vers de terre, mettant en avant les bienfaits
+physiologiques des vers de terre pour la plante et les avantages de ces
+interactions pour favoriser la productivité. Cependant, le vers de terre
+peut malgré tout rester nuisible, car c'est une espèce invasive qui
+risque de déséquilibrer l'écosystème natif. La MA2 semble plus se
+focaliser sur les effets observées sur les plantes en tant que telles
+(pucerons, harbivores) alors que la 4 semble davantage axée sur la
+pollution des sols, notamment par les métaux lourds (Cu, Pb).<br>
+
+En prenant en compte le sujet apparent de chaque métaanalyse, on peut
+supposer que:<br> - **MA1/MA3:** Métaanalyses globalement défavorables
+aux vers de terre. Si certains bénéfices, pour la santé des sols
+notamment, semblent être reconnus, le vers de terre est perçu comme une
+espèce invasive perturbant les écosystèmes natifs. Les mots "soil",
+"forest" et "effect" (MA1) et "canopy" (MA3), donnent une idée des
+environnements où se sont déroulées les études (sols forestiers, forêt).
+Les mots "exotic" (MA1) et "eastern" (MA3) semblent montrer que les
+espèces invasives viennent probablement d'Europe ou d'Asie. Les
+bigrammes "forest soils" (MA1) et "tree species" (MA3) confirment que
+les études s'intéressent aux environnements forestiers. Les bigrammes
+"earthworm invasion" (MA1) et "earthworm invasions" (MA3) confirment que
+les **vers de terre asiatiques et européens sont perçus comme des
+espèces invasives**. <br> - **MA2/MA4:** Métaanalyses globalement
+favorables au vers de terre, mettant en avant les bienfaits
+physiologiques des vers de terre pour la plante et les avantages de ces
+interactions pour favoriser la productivité. Cependant, le vers de terre
+peut malgré tout rester nuisible, car c'est une espèce invasive qui
+risque de déséquilibrer l'écosystème natif. La MA2 semble plus se
+focaliser sur les effets observées sur les plantes en tant que telles
+(pucerons, harbivores) alors que la 4 semble davantage axée sur la
+pollution des sols, notamment par les métaux lourds (Cu, Pb). Le
+bigramme "soil organisms" est le plus représenté dans les deux
+métaanalyses, reforçant encore le lien thématique (écologie des sols)
+commun aux MA2 et 4. Par ailleurs, de nombreuses références aux plantes
+(*"plant responses"*, *"plant mediated"* et *"root herbivore"* pour la
+MA2 et *"plant functionnal"*, *"dry weight"* et *"diplocardia spp"* pour
+la MA4) montrent que les deux MA s'intéressent spécifiquement au **rôle
+des plantes dans l'écologie des sols**.<br>
+
+<br> <i>MA1: "Soil chemistry turned upside down: a meta-analysis of
+invasive earthworm effects on soil chemical properties"<br> MA2:
+"Earthworms affect plant growth and resistance against herbivores: A
+meta-analysis" <br> MA3: "The unseen invaders: introduced earthworms as
+drivers of change in plant communities in North American forests (a
+meta-analysis)" <br> MA4: "Earthworms increase plant production: a
+meta-analysis"</i> <br>
+
+## n-grams et analyse de sentiment:
+
+<br>
+
+```{r Contexte des mots, fig.height=8,fig.width=12}
+ library(ggplot2)
+
+AFINN <-get_sentiments("afinn")
+
+not_words <- bigrams_separated_all %>%
+  filter(word1 == "not") %>%
+  inner_join(AFINN, by = c(word2 = "word")) %>%
+  count(word2, value, sort = TRUE)
+
+not_words %>%
+  mutate(contribution = n * value) %>%
+  arrange(desc(abs(contribution))) %>%
+  mutate(word2 = reorder(word2, contribution)) %>%
+  ggplot(aes(contribution, word2, fill = contribution > 0)) +
+  geom_col(show.legend = FALSE) +
+  labs(x = "Sentiment value * number of occurrences",
+       y = "Words preceded by \"not\"")
+```
+
+Les bigrammes *"not benefit"* et *"not increase"* sont les plus
+important facteur d'erreur d'identification, faisant paraître le texte
+plus **positif** qu'il ne l'est réellement.<br> Le bigramme *"not
+affected"* est le plus important facteur d'erreur d'identification,
+faisant paraître le texte plus **négatif** qu'il ne l'est
+réellement.<br>
+
+```{r Contexte: par métaanalyse}
+library(ggplot2)
+
+AFINN <-get_sentiments("afinn")
+bigrams_separated1 %>%
+  filter(word1 == "not") %>%
+  inner_join(AFINN, by = c(word2 = "word")) %>%
+  count(word2, value, sort = TRUE)
+```
+
+```{r word1="not"}
+not_words_with_factor <- bigrams_separated_all %>%
+    filter(word1 == "not") %>%
+    inner_join(AFINN, by = c(word2 = "word")) %>%
+    count(MA, word2, value, sort = TRUE)
+
+not_words_with_factor %>%
+  mutate(contribution = n * value) %>%
+  arrange(desc(abs(contribution))) %>%
+  mutate(word2 = reorder(word2, contribution)) %>%
+  ggplot(aes(contribution, word2, fill = contribution > 0)) +
+  geom_col(show.legend = FALSE) +
+  labs(x = "Sentiment value * number of occurrences",
+       y = "Words preceded by \"not\"") + 
+  coord_fixed(ratio = 0.25)+
+  facet_wrap(facets = vars(MA), ncol = 1)
+
+```
+
+<br> Lorsque l'on inspecte le jeu de données **pour chacune des MA**
+avec la fonction R *"facet_grid"*, on remarque que les mots ayant
+conduit au plus d'erreurs d'identification dans chaque MA sont:<br> -
+<u>MA1:</u> *"benefit"* et *"increase"* classés à tort en **positif**
+(comme le mot précédant était "not", "not benefit" et "not increase" ont
+une **valance négative**), pas de négatif relevé. **La MA1 est moins
+positive que les analyses précédentes le laissaient penser.**<br> -
+<u>MA2:</u> Pas de mot positif relevé. *"affected"* classé à tort en
+**négatif** (comme le mot précédent était "not", "not affected" a une
+**valence positive**). **La MA2 est plus positive que les analyses
+précédentes le laissaient penser.**<br> - <u>MA3:</u> Pas de mot positif
+relevé. *"affected"* classé à tort en **négatif** (comme le mot
+précédent était "not", "not affected" a une **valence positive**). On
+remarque cependant que l'effet observé est moindre comparé à la MA2.
+**La MA3 est plus positive que les analyses précédentes le laissaient
+penser**.<br> - <u>MA4:</u> *"responsible"* (donc, le bigramme "not
+responsible"), est classé positif par le dictionnaire AFINN, mais ces
+seuls deux mots ne suffisent pas à déterminer la valence (positive ou
+négative), de l'expression. Elles traduisent au contraire une forme de
+neutralité (quelque-chose qui est **non responsable** d'un effet est à
+priori neutre). Une analyse plus détaillée du contexte d'utilisation
+serait requise pour pouvoir décider.
+
+```{r}
+AFINN %>% filter(word %in% c("responsible", "prevent"))
+```
+
+Dans AFINN (dictionnaire), *"prevent"* est classé négatif (c'est
+pourquoi "not prevent" a une valence positive), mais en écologie, "not
+prevent" semble bel et bien <u>négatif</u> (il n'y a donc pas d'erreur
+d'identification dans cas précis). Par contre, classé à tort en
+**négatif**, on retrouve là-aussi *"affected"*, dans ce cas précédé par
+*"not"*, et donc de valence plutôt **positive**. **La MA4 est plus
+positive que les analyses précédentes le laissaient penser**. <br>
+
+Cependant, d'autres mots négatifs (comme *"never"* etc.) n'ont pas été
+pris en compte dans l'analyse ci-dessus. La prochaine étape à donc pour
+but de prendre davantage de mots de négation en considération dans
+l'analyse de sentiment. <br>
+
+```{r}
+negation_words <- c("ain't", "aren't", "can't", "couldn't", "didn't", "doesn't", 
+                    "don't", "hasn't", "isn't", "mightn't", "mustn't", 
+                    "neither", "never", "no", "nobody", "nor", 
+                    "not", "shan't", "shouldn't", "wasn't", "weren't", "won't", 
+                    "wouldn't","without")
+bigrams_separated_all %>%
+    filter(word1 %in% negation_words) %>%
+    inner_join(AFINN, by = c(word2 = "word"))
+```
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+
+negation_words_with_factor <- bigrams_separated_all %>%
+    filter(word1 %in% negation_words) %>%
+    inner_join(AFINN, by = c(word2 = "word")) %>%
+    count(MA, word1, word2, value, sort = TRUE)
+```
+
+```{r plot negation words, fig.height=8, fig.width=12}
+negation_words_with_factor %>%
+   mutate(contribution = n * value) %>%
+   arrange(desc(abs(contribution))) %>%
+   mutate(word2 = reorder(word2, contribution)) %>%
+   ggplot(aes(contribution, word2, fill = contribution > 0)) +
+   geom_col(show.legend = FALSE) +
+   labs(x = "Sentiment value * number of occurrences",
+        y = "Words preceded by negation word") + 
+   #coord_fixed(ratio = 0.25)+ : ATTENTION, peut sévèrement interférer 
+   #avec l'aspect d'un plot si mal utilisé. 
+   facet_wrap(facets = vars(word1), ncol = 2)
+```
+
+<br> Rappelons les suppositions faites dans la section précédente:<br> -
+**MA1/MA3:** Métaanalyses globalement défavorables aux vers de terre. Si
+certains bénéfices, pour la santé des sols notamment, semblent être
+reconnus, le vers de terre est perçu comme une espèce invasive
+perturbant les écosystèmes natifs. Les mots "soil", "forest" et "effect"
+(MA1) et "canopy" (MA3), donnent une idée des environnements où se sont
+déroulées les études (sols forestiers, forêt). Les mots "exotic" (MA1)
+et "eastern" (MA3) semblent montrer que les espèces invasives viennent
+probablement d'Europe ou d'Asie. Les bigrammes "forest soils" (MA1) et
+"tree species" (MA3) confirment que les études s'intéressent aux
+environnements forestiers. Les bigrammes "earthworm invasion" (MA1) et
+"earthworm invasions" (MA3) confirment que les vers de terre asiatiques
+et européens sont perçus comme des espèces invasives. <br> -
+**MA2/MA4:** Métaanalyses globalement favorables au vers de terre,
+mettant en avant les bienfaits physiologiques des vers de terre pour la
+plante et les avantages de ces interactions pour favoriser la
+productivité. Cependant, le vers de terre peut malgré tout rester
+nuisible, car c'est une espèce invasive qui risque de déséquilibrer
+l'écosystème natif. La MA2 semble plus se focaliser sur les effets
+observées sur les plantes en tant que telles (pucerons, harbivores)
+alors que la 4 semble davantage axée sur la pollution des sols,
+notamment par les métaux lourds (Cu, Pb). Le bigramme "soil organisms"
+est le plus représenté dans les deux métaanalyses, reforçant encore le
+lien thématique (écologie des sols) commun aux MA2 et 4. Par ailleurs,
+de nombreuses références aux plantes (*"plant responses"*, *"plant
+mediated"* et *"root herbivore"* pour la MA2 et *"plant functionnal"*,
+*"dry weight"* et *"diplocardia spp"* pour la MA4) montrent que les deux
+MA s'intéressent spécifiquement au rôle des plantes dans l'écologie des
+sols.<br>
+
+En prenant en compte le sujet apparent de chaque métaanalyse, on peut
+supposer que:<br> - **MA1/MA3:** Métaanalyses globalement défavorables
+aux vers de terre. Si certains bénéfices, pour la santé des sols
+notamment, semblent être reconnus, le vers de terre est perçu comme une
+espèce invasive perturbant les écosystèmes natifs. Les mots "soil",
+"forest" et "effect" (MA1) et "canopy" (MA3), donnent une idée des
+environnements où se sont déroulées les études (sols forestiers, forêt).
+Les mots "exotic" (MA1) et "eastern" (MA3) semblent montrer que les
+espèces invasives viennent probablement d'Europe ou d'Asie. Les
+bigrammes "forest soils" (MA1) et "tree species" (MA3) confirment que
+les études s'intéressent aux environnements forestiers. Les bigrammes
+"earthworm invasion" (MA1) et "earthworm invasions" (MA3) confirment que
+les vers de terre asiatiques et européens sont perçus comme des espèces
+invasives. La MA1 étant plus négative que prévu, sachant que la MA3
+(plus positive que prévu) ne semble pas compenser totalement cet effet
+(cf. "words preceded by not"), on en déduit que ces deux métaanalyses
+sont un peu plus négatives que présenté précedemment, en raison de
+l'effet du mot "not" sur le mot suivant.<br> - **MA2/MA4:** Métaanalyses
+globalement favorables au vers de terre, mettant en avant les bienfaits
+physiologiques des vers de terre pour la plante et les avantages de ces
+interactions pour favoriser la productivité. Cependant, le vers de terre
+peut malgré tout rester nuisible, car c'est une espèce invasive qui
+risque de déséquilibrer l'écosystème natif. La MA2 semble plus se
+focaliser sur les effets observées sur les plantes en tant que telles
+(pucerons, harbivores) alors que la 4 semble davantage axée sur la
+pollution des sols, notamment par les métaux lourds (Cu, Pb). Le
+bigramme "soil organisms" est le plus représenté dans les deux
+métaanalyses, reforçant encore le lien thématique (écologie des sols)
+commun aux MA2 et 4. Par ailleurs, de nombreuses références aux plantes
+(*"plant responses"*, *"plant mediated"* et *"root herbivore"* pour la
+MA2 et *"plant functionnal"*, *"dry weight"* et *"diplocardia spp"* pour
+la MA4) montrent que les deux MA s'intéressent spécifiquement au rôle
+des plantes dans l'écologie des sols. La MA2 étant plus positive que
+prévu, sachant que la MA4 est aussi plus positive que prévu (cf. "words
+preceded by not"), on en déduit que ces deux métaanalyses sont un peu
+plus positives que présenté précedemment, en raison de l'effet du mot
+"not" sur le mot suivant.<br> - **Faux positifs / faux négatifs:** On
+peut remarquer que le mot le plus important dans les faux négatifs est
+"not", et que le plus important dans les faux positfs est "no". Le terme
+"neither" a lui-aussi engendré quelques faux négatifs.
+
+<br> <i>MA1: "Soil chemistry turned upside down: a meta-analysis of
+invasive earthworm effects on soil chemical properties"<br> MA2:
+"Earthworms affect plant growth and resistance against herbivores: A
+meta-analysis" <br> MA3: "The unseen invaders: introduced earthworms as
+drivers of change in plant communities in North American forests (a
+meta-analysis)" <br> MA4: "Earthworms increase plant production: a
+meta-analysis"</i> <br>
+
+## Réseaux de bigrammes (ggraph)
+
+Visualiser les relations entre tous les mots simultanément, sous la
+forme d'un graphe noeuds / arrêtes. Un graphe est une combinaison de
+noeuds (mots) connectés, c'est à dire que leurs occurrences sont, dans
+le texte, proches les unes des autres. C'est une façon d'aller encore
+plus loin que de simplement regarder le mot précédant (bigrammes).
+
+```{r réseau bigram_count_all,fig.height=8,fig.width=12}
+library(igraph)
+library(ggraph)
+
+bigram_counts_all_noMA <- bigram_counts_all %>% select(-MA)
+
+bigram_graph <- bigram_counts_all_noMA %>%
+  filter(n > 10) %>%
+  graph_from_data_frame()
+
+ggraph(bigram_graph, layout = "fr") +
+  geom_edge_link() +
+  geom_node_point() +
+  geom_node_text(aes(label = name), vjust = 1, hjust = 1)
+```
+
+<br> Ce premier réseau de bigrammes (toutes MA confondues) nous montre
+que trois mots sont un centre (un noeud avec au moins trois
+connections):<br> - **earthworm:** Connecté avec *"species"*,
+*"invasion"* et *"activity"*.<br> - **soil:** Connecté avec *"mineral"*,
+*"microbial"* et *"organism"*.<br> - **plant:** Connecté avec
+*"native"*, *"plant"* et *"community/communities"*.<br> Pour le cluster
+centré sur "soil", on remarque que "microbial" et "biomass" sont
+connectés. De la même façon, les clusters mineurs (2 mots / 1 connexion)
+indiquent que les mot "lumbricus terrestris", "leaf litter", exotic
+earthworms", "organic matter", "forest floor" et "hardwood forest" sont
+fréquement employés en groupe de mots. Cependant, l'abscence de flèches
+sur ce graphe nous empêche de savoir avec certitude dans quel ordre ces
+mots sont utilisés. <br>
+
+```{r réseau plus joli,fig.height=8,fig.width=12}
+a <- grid::arrow(type = "closed", length = unit(.15, "inches"))
+
+ggraph(bigram_graph, layout = "fr") +
+  geom_edge_link(aes(edge_alpha = n), show.legend = FALSE,
+                 arrow = a, end_cap = circle(.07, 'inches')) +
+  geom_node_point(color = "lightblue", size = 5) +
+  geom_node_text(aes(label = name), vjust = 1, hjust = 1) +
+  theme_void()
+```
+
+<br> Dans cette nouvelle version du même graphe:<br>
+- Les liens sont **orientés**, afin de savoir quel mot est le premier de chaque
+bigramme.
+<br> - L'opacité des flèches est **proportionnelle à la
+fréquence d'occurence** du bigramme (haute fréquence/ opacité élevée,
+basse fréquence/opacité réduite).<br>
+- Les noeuds sont plus larges et colorés en bleu clair.<br> 
+<br> Les centres retrouvés sont: <br>
+- **plant:** "plant community", "plant growth", "plant communities",
+"native plant".<br>
+- **soil:** "mineral soil", "soil microbial" +
+<u>"microbial biomass" (forte association)</u>, "soil organisms".<br>
+-**earthworm:** "invasion", "species", "activity".<br>
+D'autres bigrammes notables sont: 
+"forest floor", "exotic earthworm", "organic matter",
+"leaf litter", "northern hardwood" et "lumbricus terretris".<br>
+*Grâce à ce nouveau graphe dont les liens sont orientés, on est maintenant*
+*certain de l'ordre dans lequel les mots composant les bigrammes*
+*apparaissaient.* <br>
+
+```{r réseau bigram_count_chaque_MA, fig.height=10,fig.width=10}
+library(igraph)
+library(ggraph)
+library(egg)
+library(ggpubr)
+library(ggplot2)
+
+bigram_graph1 <- bigram_counts1 %>%
+  filter(n > 10) %>%
+  graph_from_data_frame()
+
+network1 <- ggraph(bigram_graph1, layout = "fr") +
+  geom_edge_link(aes(edge_alpha = n), show.legend = FALSE,
+                 arrow = a, end_cap = circle(.07, 'inches')) +
+  geom_node_point(color = "lightblue", size = 5) +
+  geom_node_text(aes(label = name), vjust = 1, hjust = 1, size = 4) +
+  labs(title = "MA1")
+
+bigram_graph2 <- bigram_counts2 %>%
+  filter(n > 10) %>%
+  graph_from_data_frame()
+
+network2 <- ggraph(bigram_graph2, layout = "fr") +
+  geom_edge_link(aes(edge_alpha = n), show.legend = FALSE,
+                 arrow = a, end_cap = circle(.07, 'inches')) +
+  geom_node_point(color = "lightblue", size = 5) +
+  geom_node_text(aes(label = name), vjust = 1, hjust = 1, size = 4) +
+  labs(title = "MA2")
+
+bigram_graph3 <- bigram_counts3 %>%
+  filter(n > 10) %>%
+  graph_from_data_frame()
+
+network3 <- ggraph(bigram_graph3, layout = "fr") +
+  geom_edge_link(aes(edge_alpha = n), show.legend = FALSE,
+                 arrow = a, end_cap = circle(.07, 'inches')) +
+  geom_node_point(color = "lightblue", size = 5) +
+  geom_node_text(aes(label = name), vjust = 1, hjust = 1, size = 4) +
+  labs(title = "MA3")
+
+bigram_graph4 <- bigram_counts4 %>%
+  filter(n > 10) %>%
+  graph_from_data_frame()
+
+network4 <- ggraph(bigram_graph4, layout = "fr") +
+  geom_edge_link(aes(edge_alpha = n), show.legend = FALSE,
+                 arrow = a, end_cap = circle(.07, 'inches')) +
+  geom_node_point(color = "lightblue", size = 5) +
+  geom_node_text(aes(label = name), vjust = 1, hjust = 1, size = 4) +
+  labs(title = "MA4")
+```
+
+```{r}
+library(patchwork)
+networks <- network1 + network2 + network3 + network4 + plot_layout(nrow = 4)
+```
+
+```{=html}
+<style>
+  .superbigimage{
+      overflow:scroll;
+      white-space: nowrap;
+  }
+
+  .superbigimage img{
+     max-width: none;
+  }
+
+</style>
+```
+::: superbigimage
+```{r, echo = FALSE, fig.width=20,fig.height=5,eval = knitr::is_html_output()}
+network1
+```
+:::
+
+::: superbigimage
+```{r, echo = FALSE, fig.width=20,fig.height=5,eval = knitr::is_html_output()}
+network2
+```
+:::
+
+::: superbigimage
+```{r, echo = FALSE, fig.width=20,fig.height=5,eval = knitr::is_html_output()}
+network3
+```
+:::
+
+::: superbigimage
+```{r, echo = FALSE, fig.width=20,fig.height=5,eval = knitr::is_html_output()}
+network4
+```
+:::
+
+```{r, fig.width=20}
+network1
+```
+
+<br> Les centres retrouvées sont: <br>
+- **earthworm :** "invasion", "species".<br>
+D'autres bigrammes notables sont: 
+"mineral soil" --> "soil microbial" --> "microbial biomass".<br>
+Ou encore:<br>
+"exotic earthworms", "organic matter", "forest floor", "leaf litter", "northern hardwood", "lumbricus terrestris".
+<br>
+
+```{r, fig.width=20}
+network2
+```
+
+<br> Les centres retrouvées sont: <br>
+- **plant :** "species", "growth", "communities".<br>
+"soil organism" est aussi un bigramme fréquent.
+<br>
+
+```{r, fig.width=30}
+network3
+```
+
+<br> Aucun centre n'est retrouvé pour cette métaanalyse.<br>
+On peut par contre retrouver une chaîne de mots reliés entre eux:<br> 
+"native plants" --> "plant species" --> "earthworm species".
+<br>
+
+```{r, fig.width=20}
+network4
+```
+<br> Les centres retrouvées sont: <br>
+- **plant :** "species", "growth", "community/communities".<br>
+"soil organism" et "earthworm activity" sont aussi des bigrammes fréquents.
+<br>
+
+En conclusion, on remarque que les centres retrouvés pour l'ensemble des quatres MA ("earthworm", "plant", "soil"), sont souvent retrouvés dans les MA individuellement (1- "earthworm", 2- "plant"). Le cas de "soil" est remarquable, car il est un centre global, sans pour autant être un centre local dans aucune des quatre MA.<br>
+
+installed.packages()[names(sessionInfo()$otherPkgs), "Version"] = permet de visualiser les packages R non-natifs installés dans une session R.
+
+# Comptage / corrélation avec widyr:
+
+- Visualiser des co-occurrences de mots par section au sein du corpus de texte (dans mon cas, 1 section = 1 MA) = explorer des co-occurences de mots même non-adjacents --> dans chaque MA, quels mots sont retrouvés proches de quels mots?
+
+```{r Setup co-occurrences}
+library(dplyr)
+library(tidytext)
+library(stringr)
+
+MA_section_words <- earthworms %>%
+  select(Abstract, MA) %>%
+  mutate(section = row_number() %/% 5) %>% # find word correlation within 5 lines / For example, rows 0-9 will have section 0, rows 10-19 will have section 1, and so on.
+  filter(section > 0) %>%  # Filter rows where section is greater than 0
+  unnest_tokens(word, Abstract) %>%
+  mutate(MA = str_replace(MA, "MA", "")) %>% # replace MA1, MA2, MA3, MA4 with 1, 2, 3 and 4.
+  filter(!word %in% stop_words$word)
+# MA_section_words$section %>% unique()
+```
+
+```{r Comptage des paires de mots avec widyr}
+library(widyr)
+
+# count words co-occuring within sections
+word_pairs <- MA_section_words %>%
+  pairwise_count(word, section, sort = TRUE) # Count the number of times each pair of items appear together within a group defined by "feature." (here, 10-lines sections).
+word_pairs %>%
+  filter(item1 == "earthworm")
+```
+Le tableau ci-dessus présente les co-occurence de mots pour chacune des sections de 10 lignes définies au préalable, filtré pour que le premier mot soit "earthworm". Dans une section de dix lignes, les trois groupes de mots qui reviennent le plus souvent et commençant par "earthworm" sont donc **earthworm + earthworms** (sans doute la fin d'une phrase et le début d'une autre), **earthworm + effects** et **"earthworm + experiment"**.<br>
+
+On veut maintenant observer les corrélations entre les mots: nb de fois où ils apparaissent ensemble / nb de fois où ils apparaissent séparément (coefficient Phi, équiv. corrélation de Pearson).<br>
+
+Le coefficient Phi permet de mesurer le degré (l’intensité) de liaison entre deux variables binaires (codées 0 ou 1). Les variables peuvent donc être soit des variables dichotomiques par nature (ex. genre = H / F) soit des variables que l’on dichotomise soi-même (découper / faire 2 classes à partir d’une variable continue). Plus le coefficent est proche de 0, moins il y a d’associations entre les 2 variables. Si celui-ci est proche de 1 ou -1, cela indique qu’il existe une forte dépendance (positive ou négative). Source: https://www.soft-concept.com/surveymag/definition-fr/definition-coefficient-de-phi.html.
+
+```{r}
+# we need to filter for at least relatively common words first
+word_cors <- MA_section_words %>%
+  group_by(word) %>%
+  pairwise_cor(word, section, sort = TRUE, use = "pairwise") %>% # the use = pairwise is necessary to get a good result.
+  na.omit()
+# word_cors$correlation %>% unique()
+# word_cors$correlation %>% table() --> plus précis que "unique".
+```
+
+```{r}
+word_cors %>%
+  filter(item1 == "earthworm")
+```
+
+# Corrélations:
+## Ecologie:
+
+```{r écolo1}
+word_cors_ecology1= word_cors %>%
+  filter(item1 %in% c("earthworm","soil", "plants")) %>%
+  group_by(item1) %>%
+  slice_max(correlation, n = 5) %>%  # the plot don't know how to manage the ex-aequo during classifying.
+  ungroup() %>%
+  mutate(item2 = reorder(item2, correlation)) %>%
+  ggplot(aes(item2, correlation)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~ item1, scales = "free") +
+  coord_flip()
+word_cors_ecology1
+```
+
+<br>Le calcul des corrélations à l'intérieur de groupes de cinq lignes montre les termes fréquement employés au voisinage des mots choisis pour cette première partie d'analyse (*earthworm/plant/soil*).<br>
+**earthworm:** *"invasion", "forest", "hardwood", "northern"*. On peut en déduire que dans les textes du corpus, les vers de terre sont souvent liés à des invasions dans les forêts de feuillus d'Amérique du nord. On retrouve ici un thème important de la MA3.<br>
+**plants:** *plant", "detritivores", "aphid", "herbivores"*. On peut en déduire que dans les textes du corpus, les plantes sont souvent mentionnées en lien avec les pucerons, les détritivores et les herbivores. On retrouve ici un thème important de la MA2.<br>
+**soil:** *"anecic", "respiration", "american"*. Les vers de terres anéciques sont une classe de vers de terre définie par M. B. Bouché (*Stratégie lombricienne*, 1977), dont l'une des caractéristiques principales était de creuser de profondes galeries dans le sol (1 à 6 mètres de profondeur). On peut donc penser qu'ils participent très fortement à la *respiration* des sols, probablement plus que les deux autres classes (épigés et endogés), qui, par définition, creusent moins profondément. La présence du mot *"american"* sous-entends que les vers de terre anéciques sont particulièrement surveillées en Amérique. On retrouve ici un terme important de la MA1 (la racine "pool" n'apparaît que dans la MA1 dans la mesure de la fréquence des mots).<br>
+
+```{r écolo2}
+word_cors_ecology2= word_cors %>%
+  filter(item1 %in% c("ecosystem","invasion","interrelationship")) %>%
+  group_by(item1) %>%
+  slice_max(correlation, n = 5) %>%  # the plot don't know how to manage the ex-aequo during classifying.
+  ungroup() %>%
+  mutate(item2 = reorder(item2, correlation)) %>%
+  ggplot(aes(item2, correlation)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~ item1, scales = "free") +
+  coord_flip()
+word_cors_ecology2
+```
+<br>Le calcul des corrélations à l'intérieur de groupes de cinq lignes montre les termes fréquement employés au voisinage des mots choisis pour cette seconde partie d'analyse (*ecosystem/interrelationship/invasion*).<br>
+**ecosystem:** *"engineers","lumbricus", "understanding", "indigenous"*. La présence du "engineer" à proximité de "ecosytem" et de "lumbricus" laisse entendre que les textes composant le corpus désignent souvent le vers de terre comme un agent majeur des écosystèmes. Le terme "understanding" laisse entendre que la question est complexes et que les recherches sur le sujet sont encore en cours. "indigenous" évoque l'idée d'une espèce introduite, qui est donc "indigène" pour son écosystème d'acceuil. <br>
+**interrelationship:** *"polluted", "pb", "metals", "harvest", "cycles"*. La présence de ces termes dans le voisinage du mots "interrelations" montre que le corpus parle sans doute de la pollution des sols aux métaux lourd (comme le plomb), et plus largement du monde l'agriculture, de l'agronomie et des récoltes. On retrouve ici un thème abordé dans la MA4.<br>
+**invasion:** *"forest", "usa", "earthworm", "northern"*. On peut en déduire que dans les textes du corpus, les vers de terre sont souvent liés à des invasions dans les forêts du **nord des USA**. On retrouve ici un thème important de la MA3.<br>
+
+## Origine géographique:
+
+```{r geo}
+word_cors_geo= word_cors %>%
+  filter(item1 %in% c("european","american","usa")) %>%
+  group_by(item1) %>%
+  slice_max(correlation, n = 5) %>%  # the plot don't know how to manage the ex-aequo during classifying.
+  ungroup() %>%
+  mutate(item2 = reorder(item2, correlation)) %>%
+  ggplot(aes(item2, correlation)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~ item1, scales = "free") +
+  coord_flip()
+word_cors_geo
+```
+
+<br>Le calcul des corrélations à l'intérieur de groupes de cinq lignes montre les termes fréquement employés au voisinage des mots choisis pour cette troisième partie d'analyse. Les mots ont été choisis spécifiquement pour tenter de grouper les données selon la région géographique.<br>
+En regardant les encadrés "american" et "usa" (les USA étant un pays d'Amérique), on peut remarquer la présence des termes *"previously", "uninvaded", "invasion"* et *"forests"*. Ce corpus semble donc décrire un processus d'invasion dynamique ("previously uninvaded"), même s'il est plutôt étonnant que ces deux mots ne se trouvent pas dans le même subplot. L'encadré "european" nous apprend que ce mot est souvent utilié à proximité de *"north""* et *"america"*, ce qui laisse entendre que les vers de terre invasifs actifs en Amérique sont majoritairement européens.  
+
+Dans les analyses précédentes, on a vu que:  
+- **MA1/MA3:** Métaanalyses globalement défavorables aux vers de terre. Si certains bénéfices, pour la santé des sols notamment, semblent être reconnus, le vers de terre est perçu comme une espèce invasive perturbant les écosystèmes natifs.  Les mots “soil”, “forest” et “effect” (MA1) et “canopy” (MA3), donnent une idée des environnements où se sont déroulées les études (sols forestiers, forêt). Les mots “exotic” (MA1) et “eastern” (MA3) semblent montrer que les espèces invasives viennent probablement d’Europe ou d’Asie.  Les bigrammes “forest soils” (MA1) et “tree species” (MA3) confirment que les études s’intéressent aux environnements forestiers. Les bigrammes “earthworm invasion” (MA1) et “earthworm invasions” (MA3) confirment que les vers de terre asiatiques et européens sont perçus comme des espèces invasives. La MA1 étant plus négative que prévu, sachant que la MA3 (plus positive que prévu) ne semble pas compenser totalement cet effet (cf. “words preceded by not”), on en déduit que ces deux métaanalyses sont un peu plus négatives que présenté précedemment, en raison de l’effet du mot “not” sur le mot suivant. Grâce au calcul des corrélations pour la MA3, il est maintenant possible d'affirmer que les territoires envahis sont principalement le nord des USA.  
+- **MA2/MA4:** Métaanalyses globalement favorables au vers de terre, mettant en avant les bienfaits physiologiques des vers de terre pour la plante et les avantages de ces interactions pour favoriser la productivité. Cependant, le vers de terre peut malgré tout rester nuisible, car c’est une espèce invasive qui risque de déséquilibrer l’écosystème natif.  La MA2 semble plus se focaliser sur les effets observées sur les plantes en tant que telles (pucerons, harbivores) alors que la 4 semble davantage axée sur la pollution des sols, notament par les métaux lourds (Cu, Pb).  Le bigramme “soil organisms” est le plus représenté dans les deux métaanalyses, reforçant encore le lien thématique (écologie des sols) commun aux MA2 et 4. Par ailleurs, de nombreuses références aux plantes (“plant responses”, “plant mediated” et “root herbivore” pour la MA2 et “plant functionnal”, “dry weight” et “diplocardia spp” pour la MA4) montrent que les deux MA s’intéressent spécifiquement au rôle des plantes dans l’écologie des sols.  La MA2 et la MA4 sont plus positive que prévu (cf. “words preceded by not”), en raison de l’effet du mot “not” sur le mot suivant.  
+
+Grâce au calcul des corrélations sur les groupes de 5 lignes, on peut maintenant rajouter que:
+
+
+**MA1/MA3:** Métaanalyses globalement défavorables aux vers de terre. Si certains bénéfices, pour la santé des sols notamment, semblent être reconnus, le vers de terre est perçu comme une espèce invasive perturbant les écosystèmes natifs.
+
+
+- Les mots “soil”, “forest” et “effect” (MA1) et “canopy” (MA3), donnent une idée des environnements où se sont déroulées les études (sols forestiers, forêt). Les mots “exotic” (MA1) et “eastern” (MA3) semblent montrer que les espèces invasives viennent majoritairement d'Europe (voir "Corrélations: origine géographique").
+
+
+- Les bigrammes “forest soils” (MA1) et “tree species” (MA3) confirment que les études s’intéressent aux environnements forestiers. Les bigrammes “earthworm invasion” (MA1) et “earthworm invasions” (MA3) confirment que les vers de terre asiatiques et européens sont perçus comme des espèces invasives.
+
+- La MA1 et la MA3 sont moins positives que prévu (cf. “words preceded by not”), en raison de l’effet du mot “not” sur le mot suivant.  
+
+**MA2/MA4:** Métaanalyses globalement favorables au vers de terre, mettant en avant les bienfaits physiologiques des vers de terre pour la plante et les avantages de ces interactions pour favoriser la productivité. Cependant, le vers de terre peut malgré tout rester nuisible, car c’est une espèce invasive qui risque de déséquilibrer l’écosystème natif.
+
+
+- La MA2 semble plus se focaliser sur les effets observées sur les plantes en tant que telles (pucerons, harbivores) alors que la 4 semble davantage axée sur la pollution des sols, notamment par les métaux lourds (Cu, Pb). Les analyses de la partie "Corrélations: écologie" confirment que certains articles du corpus étudient bel et bien les relations entre les récoltes, les cycles naturels, et la pollution aux métaux lourds (principalement Pb). 
+
+
+- Le bigramme “soil organisms” est le plus représenté dans les deux métaanalyses, reforçant encore le lien thématique (écologie des sols) commun aux MA2 et 4. Par ailleurs, de nombreuses références aux plantes (“plant responses”, “plant mediated” et “root herbivore” pour la MA2 et “plant functionnal”, “dry weight” et “diplocardia spp” pour la MA4) montrent que les deux MA s’intéressent spécifiquement au rôle des plantes dans l’écologie des sols.
+
+- La MA2 et la MA4 sont plus positive que prévu (cf. “words preceded by not”), en raison de l’effet du mot “not” sur le mot suivant.  
+
+## Graphe des corrélations:
+
+Dans cette partie de l'analyse, les corrélations entre les mots seront représentées par groupe de dix lignes. Pour des questions techniques liés à la visualisation des données, on a imposé le choix du mot central et gardé que les cent premières lignes du tableau des corrélations.
+
+```{r ggraph des corrélations ew}
+library(dplyr)
+library(ggraph)
+
+set.seed(2016)
+
+MA_section_words <- earthworms %>%
+  select(Abstract, MA) %>%
+  mutate(section = row_number() %/% 10) %>% # find word correlation within 5 lines / For example, rows 0-9 will have section 0, rows 10-19 will have section 1, and so on.
+  filter(section > 0) %>%  # Filter rows where section is greater than 0
+  unnest_tokens(word, Abstract) %>%
+  mutate(MA = str_replace(MA, "MA", "")) %>% # replace MA1, MA2, MA3, MA4 with 1, 2, 3 and 4.
+  filter(!word %in% stop_words$word)
+# MA_section_words$section %>% unique()
+
+word_cors %>%
+  filter(item1 %in% c("earthworm")) %>%
+  head(100) %>%
+  graph_from_data_frame() %>%
+  ggraph(layout = "fr") +
+  geom_edge_link(aes(edge_alpha = correlation), show.legend = FALSE) +
+  geom_node_point(color = "lightblue", size = 5) +
+  geom_node_text(aes(label = name), repel = TRUE) +
+  theme_void()
+```
+
+Pour le premier graphe des corrélations ci-dessus, chaque terme est un noeud, et chaque connection est proportionnelle au dégré de corrélation. On a retenu le terme **"earthworm"** comme premier terme. On peut observer qu'il est fortement connecté avec *"invasion", "dynamics", "northern', "hardwood", "forests"* et *"abundance"*. Il est aussi corrélé avec *"alter", "invasive", "uninvaded", "losses", "american", "european", "exotic", "nonnative"*, et *"soil"*. Enfin, on peut aussi repérer un lien fort avec le terme *"driver"*.  
+On remarque dans un premier temps que les mots retrouvés dans la partie "bigrammes" sont fortement corrélés ("earthworm invasion", "exotic earthworm", etc.) ce qui est logique puisqu'ils faisaient justement partie du même groupe de mots.  
+On retrouve aussi la vision du vers de terre européen comme une espèce "invasive", dont la nature "exotique" dans les sols provoque des pertes et des altérations écosystémiques, notamment dans les forêts du nord des USA. Cependant, l'apparition à cette étape du terme **"driver"** confirme par Text-mining que le ver de terre est bel et bien une **cause** identifiée pour expliquer les symptômes décrits. De la même façon, l'apparition de *"epigeic"*, mais non de *"endogeic"* ou *"anecic"* suggère que les vers de terre de surface sont probablement davantage étudiés que les vers de terre présents en profondeur.
+
+```{r ggraph des corrélations plant}
+library(dplyr)
+library(ggraph)
+
+set.seed(2016)
+
+word_cors %>%
+  filter(item1 %in% c("plant")) %>%
+  head(100) %>%
+  graph_from_data_frame() %>%
+  ggraph(layout = "fr") +
+  geom_edge_link(aes(edge_alpha = correlation), show.legend = FALSE) +
+  geom_node_point(color = "lightblue", size = 5) +
+  geom_node_text(aes(label = name), repel = TRUE) +
+  theme_void()
+```
+
+Pour le deuxième graphe ci-dessus, chaque terme est un noeud, et chaque connection est proportionnelle au dégré de corrélation. On a retenu le terme **"plant"** comme premier terme. On peut observer qu'il est fortement connecté avec *"plants","detritivores", "affected", "leaves"*, et *"functional"*. Il est aussi corrélé avec *"hebivores", "aphid", "interactions", "reproduction"* et *"development"*.  
+On remarque dans un premier temps que les mots retrouvés dans la partie "bigrammes" sont fortement corrélés ("plant leaves", "plant functional"), ce qui est logique puisqu'ils faisaient justement partie du même groupe de mots. On peut aussi constater la présence du mot **"role"**, ce qui, dans le contexte des quatre MA, suggère que les vers de terre on une influence sur les rôles fonctionnels de la plante. Cela rapelle le thème de la MA2 (influence des vers de terre sur la physiologie végétale). 
+
+```{r ggraph des corrélations euro}
+library(dplyr)
+library(ggraph)
+
+set.seed(2016)
+
+word_cors %>%
+  filter(item1 %in% c("european")) %>%
+  head(50) %>%
+  graph_from_data_frame() %>%
+  ggraph(layout = "fr") +
+  geom_edge_link(aes(edge_alpha = correlation), show.legend = FALSE) +
+  geom_node_point(color = "lightblue", size = 5) +
+  geom_node_text(aes(label = name), repel = TRUE) +
+  theme_void()
+```
+
+Pour le troisième graphe ci-dessus, chaque terme est un noeud, et chaque connection est proportionnelle au dégré de corrélation. On a retenu le terme **"european"** comme premier terme, dans le but de détecter une éventuelle différence d'opinion entre l'Europe et l'Amérique du nord.  
+On peut observer qu'il est fortement connecté avec *"north"*, *"america"* et *"disappeared"*. Il est aussi corrélé avec *"destruction", "elimination", "native"* et *"rubellus"*. Les trois premiers mots relevés semblent indiquer que les vers de terre Européens sont bel et bien perçus comme des nuisibles en Amérique du nord,  impression renforcée par les termes "destruction", "elimination", "native" et "rubellus". D'autres termes, comme *"nitrification"* ou *"germinate"* donnent une impression plus positive, mais ils sont en minorité.
+
+```{r ggraph des corrélations american}
+library(dplyr)
+library(ggraph)
+
+set.seed(2016)
+
+word_cors %>%
+  filter(item1 %in% c("america")) %>%
+  head(150) %>%
+  graph_from_data_frame() %>%
+  ggraph(layout = "fr") +
+  geom_edge_link(aes(edge_alpha = correlation), show.legend = FALSE) +
+  geom_node_point(color = "lightblue", size = 5) +
+  geom_node_text(aes(label = name), repel = TRUE) +
+  theme_void()
+```
+
+Pour le troisième graphe ci-dessus, chaque terme est un noeud, et chaque connection est proportionnelle au dégré de corrélation. On a retenu le terme **"america"** comme premier terme, dans le but de détecter une éventuelle différence d'opinion entre l'Europe et l'Amérique du nord. On a choisi le mot "america" car les résultats obtenus semblaient plus intéressants qu'avec "american" (de nombreuses études composant le corpus étant localisées en Amérique du Nord).  Au seuil de 100 mots, le terme *"terrestris"* était retrouvé, mais pas le terme *"lumbricus"*, qui est souvent retrouvé avec, c'est pourquoi cette figure a été produite avec 150 mots et non 100.  
+On peut observer qu'il est fortement connecté avec *"north"*, *"forest(s)", "destruction", "invasion"* et *"disappeared"*. Il est aussi corrélé avec *"earthworm", "lumbricus", "terrestris" "ecosytems", "lumbricids"* et *"rubellus"*.  
+
+Les quatre premiers mots relevés semblent indiquer que les vers de terre invasifs sont bel et bien perçus comme des nuisibles en Amérique du nord (en particulier pour les forêts). La présence des termes *"earthworm", "lumbricus", "terrestris, "ecosytems", "lumbricids"* et *"rubellus"* confirme de manière explicite que les "espèces invasives" mentionnées sont très probablement des vers de terre.
+
+# Fin de "Rapport Text-mining Earthworms"
+
+<!-- Le double espace "  " à la fin d'un mots fait pareil que <br> -->

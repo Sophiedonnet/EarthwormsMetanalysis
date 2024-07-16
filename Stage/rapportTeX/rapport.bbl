@@ -1,0 +1,161 @@
+\begin{thebibliography}{13}
+% this bibliography was produced with the style dinat.bst v2.5
+\makeatletter
+\newcommand{\dinatlabel}[1]%
+{\ifNAT@numbers\else\NAT@biblabelnum{#1}\hspace{2\labelsep}\fi}
+\makeatother
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+\expandafter\ifx\csname url\endcsname\relax\def\url#1{\texttt{#1}}\fi
+
+\bibitem[Bertrand u.\,a.(2015)Bertrand, Barot, Blouin, Whalen, de~Oliveira und
+  Roger-Estrade]{4_augmentation_productivite_revue}
+\dinatlabel{Bertrand u.\,a. 2015} \textsc{Bertrand}, Michel~; \textsc{Barot},
+  Sébastien~; \textsc{Blouin}, Manuel~; \textsc{Whalen}, Joann~;
+  \textsc{Oliveira}, Tatiana de~; \textsc{Roger-Estrade}, Jean:
+\newblock Earthworm services for cropping systems. A review.
+\newblock In: \emph{Agronomy for Sustainable Development}
+\newblock 35 (2015), Januar, Nr.~2, S.~553–567. --
+\newblock URL \url{http://dx.doi.org/10.1007/s13593-014-0269-7}. --
+\newblock ISSN 1773-0155
+
+\bibitem[Bohlen u.\,a.(2004)Bohlen, Scheu, Hale, McLean, Migge, Groffman und
+  Parkinson]{7_EW_change_soil_chemical_properties}
+\dinatlabel{Bohlen u.\,a. 2004} \textsc{Bohlen}, Patrick~J.~; \textsc{Scheu},
+  Stefan~; \textsc{Hale}, Cindy~M.~; \textsc{McLean}, Mary~A.~; \textsc{Migge},
+  Sonja~; \textsc{Groffman}, Peter~M.~; \textsc{Parkinson}, Dennis:
+\newblock Non-native invasive earthworms as agents of change in northern
+  temperate forests.
+\newblock In: \emph{Frontiers in Ecology and the Environment}
+\newblock 2 (2004), Oktober, Nr.~8, S.~427–435. --
+\newblock URL
+  \url{http://dx.doi.org/10.1890/1540-9295(2004)002[0427:NIEAAO]2.0.CO;2}. --
+\newblock ISSN 1540-9295
+
+\bibitem[Edwards und Arancon(2022)]{3_recyclage_matiere_orga}
+\dinatlabel{Edwards und Arancon 2022} \textsc{Edwards}, Clive~A.~;
+  \textsc{Arancon}, Norman~Q.:
+\newblock \emph{The Role of Earthworms in Organic Matter and Nutrient Cycles}.
+\newblock S.~233–274.
+\newblock In: \emph{Biology and Ecology of Earthworms}, Springer US, 2022. --
+\newblock URL \url{http://dx.doi.org/10.1007/978-0-387-74943-3_8}. --
+\newblock ISBN 9780387749433
+
+\bibitem[Ferlian u.\,a.(2017)Ferlian, Eisenhauer, Aguirrebengoa, Camara,
+  Ramirez‐Rojas, Santos, Tanalgo und Thakur]{8_EW_erode_soil_biodiversity}
+\dinatlabel{Ferlian u.\,a. 2017} \textsc{Ferlian}, Olga~; \textsc{Eisenhauer},
+  Nico~; \textsc{Aguirrebengoa}, Martin~; \textsc{Camara}, Mariama~;
+  \textsc{Ramirez‐Rojas}, Irene~; \textsc{Santos}, Fábio~; \textsc{Tanalgo},
+  Krizler~; \textsc{Thakur}, Madhav~P.:
+\newblock Invasive earthworms erode soil biodiversity: A meta‐analysis.
+\newblock In: \emph{Journal of Animal Ecology}
+\newblock 87 (2017), September, Nr.~1, S.~162–172. --
+\newblock URL \url{http://dx.doi.org/10.1111/1365-2656.12746}. --
+\newblock ISSN 1365-2656
+
+\bibitem[Forey u.\,a.(2023)Forey, Sauze, Piel, Gritti, Devidal, Faez, Ravel,
+  Nahmani, Rouch, Blouin, Pérès, Capowiez, Roy und
+  Milcu]{10_EW_pas_effet_de_serre}
+\dinatlabel{Forey u.\,a. 2023} \textsc{Forey}, Oswaldo~; \textsc{Sauze},
+  Joana~; \textsc{Piel}, Clément~; \textsc{Gritti}, Emmanuel~S.~;
+  \textsc{Devidal}, Sébastien~; \textsc{Faez}, Abdelaziz~; \textsc{Ravel},
+  Olivier~; \textsc{Nahmani}, Johanne~; \textsc{Rouch}, Laly~; \textsc{Blouin},
+  Manuel~; \textsc{Pérès}, Guénola~; \textsc{Capowiez}, Yvan~; \textsc{Roy},
+  Jacques~; \textsc{Milcu}, Alexandru:
+\newblock Earthworms do not increase greenhouse gas emissions (CO2 and N2O) in
+  an ecotron experiment simulating a three-crop rotation system.
+\newblock In: \emph{Scientific Reports}
+\newblock 13 (2023), Dezember, Nr.~1. --
+\newblock URL \url{http://dx.doi.org/10.1038/s41598-023-48765-3}. --
+\newblock ISSN 2045-2322
+
+\bibitem[Hodson u.\,a.(2023)Hodson, Brailey-Jones, Burn, Harper, Hartley,
+  Helgason und Walker]{13_EW_enhance_plant_growth}
+\dinatlabel{Hodson u.\,a. 2023} \textsc{Hodson}, M.E.~; \textsc{Brailey-Jones},
+  P.~; \textsc{Burn}, W.L.~; \textsc{Harper}, A.L.~; \textsc{Hartley}, S.E.~;
+  \textsc{Helgason}, T.~; \textsc{Walker}, H.F.:
+\newblock Enhanced plant growth in the presence of earthworms correlates with
+  changes in soil microbiota but not nutrient availability.
+\newblock In: \emph{Geoderma}
+\newblock 433 (2023), Mai, S.~116426. --
+\newblock URL \url{http://dx.doi.org/10.1016/j.geoderma.2023.116426}. --
+\newblock ISSN 0016-7061
+
+\bibitem[Kim u.\,a.(2017)Kim, Robinson, Lee, Boyer und
+  Dickinson]{1_aeration_sols}
+\dinatlabel{Kim u.\,a. 2017} \textsc{Kim}, Young-Nam~; \textsc{Robinson},
+  Brett~; \textsc{Lee}, Keum-Ah~; \textsc{Boyer}, Stephane~;
+  \textsc{Dickinson}, Nicholas:
+\newblock Interactions between earthworm burrowing, growth of a leguminous
+  shrub and nitrogen cycling in a former agricultural soil.
+\newblock In: \emph{Applied Soil Ecology}
+\newblock 110 (2017), Februar, S.~79–87. --
+\newblock URL \url{http://dx.doi.org/10.1016/j.apsoil.2016.10.011}. --
+\newblock ISSN 0929-1393
+
+\bibitem[Kumar u.\,a.(2023)Kumar, Yadav, Gupta, Yodha, Kataria, Kadyan, Sharma
+  und Kaur]{11_EW_benefits_summary}
+\dinatlabel{Kumar u.\,a. 2023} \textsc{Kumar}, Rahul~; \textsc{Yadav}, Renu~;
+  \textsc{Gupta}, Rajender~K.~; \textsc{Yodha}, Kiran~; \textsc{Kataria},
+  Sudhir~K.~; \textsc{Kadyan}, Pooja~; \textsc{Sharma}, Pooja~; \textsc{Kaur},
+  Simran:
+\newblock The Earthworms: Charles Darwin’s Ecosystem Engineer.
+\newblock In: \textsc{Hakeem}, Khalid~R. (Hrsg.): \emph{Organic Fertilizers}.
+\newblock Rijeka~: IntechOpen, 2023, Kap.~13. --
+\newblock URL \url{https://doi.org/10.5772/intechopen.1001339}
+
+\bibitem[Lemtiri u.\,a.(2014)Lemtiri, Colinet, Alabi, Cluzeau, Zirbes, Haubruge
+  und Francis]{2_recyclage_elements_nutri}
+\dinatlabel{Lemtiri u.\,a. 2014} \textsc{Lemtiri}, Aboulkacem~;
+  \textsc{Colinet}, Gilles~; \textsc{Alabi}, Taofic~; \textsc{Cluzeau},
+  Daniel~; \textsc{Zirbes}, Lara~; \textsc{Haubruge}, Eric~; \textsc{Francis},
+  Frédéric:
+\newblock Impacts of earthworms on soil components and dynamics. A review.
+\newblock In: \emph{Biotechnologie, Agronomie, Société et Environnement /
+  Biotechnology, Agronomy, Society and Environment}
+\newblock (2014), November. --
+\newblock URL \url{https://hal-bioemco.ccsd.cnrs.fr/ECOBIO-RBPE/hal-01084235v1}
+
+\bibitem[Loss u.\,a.(2013)Loss, Hueffmeier, Hale, Host, Sjerven und
+  Frelich]{6_invasion_vers_de_terre}
+\dinatlabel{Loss u.\,a. 2013} \textsc{Loss}, Scott~R.~; \textsc{Hueffmeier},
+  Ryan~M.~; \textsc{Hale}, Cindy~M.~; \textsc{Host}, George~E.~;
+  \textsc{Sjerven}, Gerald~; \textsc{Frelich}, Lee~E.:
+\newblock Earthworm Invasions in Northern Hardwood Forests: a Rapid Assessment
+  Method.
+\newblock In: \emph{Natural Areas Journal}
+\newblock 33 (2013), Januar, Nr.~1, S.~21–30. --
+\newblock URL \url{http://dx.doi.org/10.3375/043.033.0103}. --
+\newblock ISSN 0885-8608
+
+\bibitem[Lubbers u.\,a.(2013)Lubbers, Van~Groenigen, Fonte, Six, Brussaard und
+  Van~Groenigen]{9_EW_effet_serre}
+\dinatlabel{Lubbers u.\,a. 2013} \textsc{Lubbers}, Ingrid~M.~;
+  \textsc{Van~Groenigen}, Kees~J.~; \textsc{Fonte}, Steven~J.~; \textsc{Six},
+  Johan~; \textsc{Brussaard}, Lijbert~; \textsc{Van~Groenigen}, Jan~W.:
+\newblock Greenhouse-gas emissions from soils increased by earthworms.
+\newblock In: \emph{Nature Climate Change}
+\newblock 3 (2013), Nr.~3, S.~187--194
+
+\bibitem[McLean u.\,a.(2006)McLean, Migge-Kleian und
+  Parkinson]{12_EW_disrupt_ecosys}
+\dinatlabel{McLean u.\,a. 2006} \textsc{McLean}, M.~A.~; \textsc{Migge-Kleian},
+  S.~; \textsc{Parkinson}, D.:
+\newblock Earthworm invasions of ecosystems devoid of earthworms: effects on
+  soil microbes.
+\newblock In: \emph{Biological Invasions}
+\newblock 8 (2006), Juli, Nr.~6, S.~1257–1273. --
+\newblock URL \url{http://dx.doi.org/10.1007/s10530-006-9020-x}. --
+\newblock ISSN 1573-1464
+
+\bibitem[Sharma u.\,a.(2017)Sharma, Tomar und
+  Chakraborty]{5_structuration_des_sols}
+\dinatlabel{Sharma u.\,a. 2017} \textsc{Sharma}, D.~K.~; \textsc{Tomar}, S.~;
+  \textsc{Chakraborty}, D.:
+\newblock Role of earthworm in improving soil structure and functioning.
+\newblock In: \emph{Current Science}
+\newblock 113 (2017), Nr.~6, S.~1064--1071. --
+\newblock URL \url{http://www.jstor.org/stable/26494167}. -- Zugriffsdatum:
+  2024-06-13. --
+\newblock ISSN 00113891
+
+\end{thebibliography}
