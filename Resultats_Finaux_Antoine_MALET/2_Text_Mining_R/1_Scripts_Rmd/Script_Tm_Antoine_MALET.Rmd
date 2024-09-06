@@ -40,12 +40,15 @@ Deuxième bloc de code : définition des variables.
 
 ```{r Variables}
 #----------------------------- 
-earthworms <- read.csv(file.path("~", "Documents", "GitHub", 
-                                 "EarthwormsMetanalysis", 
-                                 "Resultats_Finaux_Antoine_MALET",
-                                 "1_Web_Scraping_Python",
-                                 "b_Output_Py",
-                                 "data_articles_metaanalyses.csv"))
+#earthworms <- read.csv(file.path("~", "Documents", "GitHub", 
+#                                 "EarthwormsMetanalysis", 
+#                                 "Resultats_Finaux_Antoine_MALET",
+#                                 "1_Web_Scraping_Python",
+#                                 "b_Output_Py",
+#                                 ))
+earthworms <- read.csv("/home/sophie/WORK_LOCAL/RECHERCHE/TRAVAUX_DE_RECHERCHE/Makowski/EarthwormsMetanalysis/Resultats_Finaux_Antoine_MALET/1_Web_Scraping_Python/b_Output_Py/data_articles_metaanalyses.csv")
+
+
 abstracts<-c()
 #--------------------- 
 names(earthworms)
