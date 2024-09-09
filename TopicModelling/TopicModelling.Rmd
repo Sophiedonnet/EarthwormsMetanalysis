@@ -1,0 +1,171 @@
+---
+title: "Topics Modelling for Earthworms Metanalyses"
+author: "Sophie Donnet"
+date: "2024-09-06"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Packages utiles 
+
+```{r library, echo = TRUE, message = FALSE, warning = FALSE}
+library(dplyr)
+library(ggplot2)
+library(tidytext)
+library(tm) # text mining
+library(topicmodels) # lda estimation
+library(sbm) # Poisson lbm estimation
+library(knitr)
+``` 
+
+### The data
+
+```{r load folder, eval  = TRUE, echo = FALSE}
+if(Sys.info()[[4]]=="mia-ps-port007"){
+  folder_nm <- "/home/sophie/WORK_LOCAL/RECHERCHE/TRAVAUX_DE_RECHERCHE/Makowski/"
+} 
+if(Sys.info()[[4]]=="Fixe"){
+  folder_nm <- "/home/donnet/WORK_ALL/RECHERCHE/TRAVAUX_DE_RECHERCHE/Makowski/"
+} 
+folder_nm <- paste0(folder_nm,"EarthwormsMetanalysis/Resultats_Finaux_Antoine_MALET/1_Web_Scraping_Python/b_Output_Py/data_articles_metaanalyses.csv")
+```
+
+We load the dataset prepared by A. Mallet. We remove line 85 which is empty or nearly. 
+
+```{r load data, eval  = TRUE, echo = TRUE}
+earthworms <- read.csv(folder_nm)
+earthworms[85, 1:5]
+nrow(earthworms)
+``` 
+```{r remove line 85, eval  = TRUE, echo = FALSE}
+earthworms <- earthworms %>% filter(!row_number() %in% c(85)) 
+``` 
+
+The dataset has now   `r nrow(earthworms)` rows (documents)  and is organized as follows: 
+
+```{r the data, eval  = TRUE, echo = FALSE}
+names(earthworms)
+nrow(earthworms)
+```
+
+
+## About the abstracts 
+
+We consider the abstracts. We remove the numbers, punctuation, we "stem" (i.e. remove plural marks etc...) and we remove the stopwords. 
+```{r abstracts}
+abstracts=earthworms$Abstract
+abstracts <- Corpus(VectorSource(abstracts))
+
+TDM_abstract <- DocumentTermMatrix(abstracts,
+                        control = list(removeNumbers = TRUE,
+                                       removePunctuation = TRUE,
+                                       stemming = TRUE,
+                                       stopwords = TRUE))
+```
+ 
+We obtain a "matrix" of size `r dim(TDM_abstract)[1]` documents and `r dim(TDM_abstract)[2]` words. 
+We can plot the 20 most seen words 
+
+
+
+```{r plot TDM}
+M <- as.matrix(TDM_abstract)
+o <- order(colSums(M), decreasing = TRUE)
+Mo <- M[,o[1:20]]
+library(sbm)
+plotMyMatrix(t(Mo),dimLabels = c(row = "Words",col = "Documents" ),plotOptions= list(rowNames = TRUE))
+```
+
+### Latent Dirichlet Allocation estimation
+
+#### Inference by VEM for several values of K 
+```{r lda, eval  = TRUE, echo = TRUE}
+
+Kmax= 20 
+res_LDA = vector(mode = "list", length = Kmax-1)
+log_lik = rep(-Inf,Kmax-1)
+ACS = rep(-Inf,Kmax-1) # average cosine similarity
+for (K in 2:Kmax){
+  print(K)
+  res_lda_K <-  LDA(TDM_abstract, k = K, control = list())
+  res_LDA[[K-1]] <-  res_lda_K
+  log_lik[K-1] <- sum(res_lda_K@loglikelihood)
+  Corr_K <-  cor(t(res_lda_K@beta))
+  diag(Corr_K) <- 0
+  ACS[K-1] <- sum(Corr_K)/(K*(K-1))
+}
+save(res_LDA,log_lik,ACS,file='res_LDA.Rdata')
+``` 
+```{r lda load, eval  = TRUE, echo = FALSE}
+
+Kmax = 20
+load(file='res_LDA.Rdata')
+```
+
+
+#### Choice of K 
+
+It seems that the minimal ACS is obtained for $K=2$ topics. 
+ASC is the Topic Similarity
+Following Cao et al. (2009), the optimal number of topics is often selected
+by minimizing the average cosine similarity  (ACS) across topics. 
+It its obtained by the following formulae: 
+$$
+ACS =\frac{1}{K(K-1)} \sum_{k=1,\ell\neq k}^{K}\text{corr}(\beta_k,\beta_\ell) 
+$$ 
+```{r plot ACS}
+res = data.frame(val_crit=c(log_lik,ACS))
+res$K <- rep(2:Kmax,2)
+res$crit = as.factor(rep(c('log_lik','ACS'),each=Kmax-1))
+ggplot(res,aes(x=K,y=val_crit,col=crit,group=crit)) + geom_line() + facet_wrap(~crit,scales="free_y")
+```
+
+
+#### Analysis of the results for 2 topics 
+
+We look at the words the most involved in each topic. They seem very similar. Let's see if the documents can be clustered. 
+
+```{r the 2 topics}
+
+K = 2
+abstract_topics <- tidy(res_LDA[[K-1]], matrix = "beta")
+abstract_top_terms <- abstract_topics %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 20) %>% 
+  ungroup() %>%
+  arrange(topic, -beta)
+abstract_top_terms %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col() +
+  facet_wrap(~ topic, scales = "free") +
+  scale_y_reordered()
+
+
+```
+
+
+
+```{r }
+K = 3
+#lda_cluster_documents <- apply(res_LDA[[K-1]]@gamma,1,which.max)
+lda_cluster_documents2 <- apply(res_LDA[[1]]@gamma,1,which.max)
+#knitr::kable(table(lda_cluster_documents2,lda_cluster_documents))
+
+
+knitr::kable(table(as.factor(lda_cluster_documents2),earthworms$MA))
+#abstract_documents
+#tidy(TDM_abstract.new ) %>%
+#  filter(document == 6) %>%
+#  arrange(desc(count))
+```
+
+
+### Latent block model estimation
+
+```{r lbm, eval  = FALSE}
+res_lbm <- estimateBipartiteSBM(M,model="poisson",dimLabels=c(row="Documents", col="Words"), estimOptions = list(nbCores = 6,exploreMax = 10))
+ 
