@@ -164,8 +164,25 @@ knitr::kable(table(as.factor(lda_cluster_documents2),earthworms$MA))
 ```
 
 
+
+
 ### Latent block model estimation
 
-```{r lbm, eval  = FALSE}
-res_lbm <- estimateBipartiteSBM(M,model="poisson",dimLabels=c(row="Documents", col="Words"), estimOptions = list(nbCores = 6,exploreMax = 10))
- 
+```{r lbm, eval  = TRUE}
+colsumsM <- colSums(M)
+plot(ecdf(colsumsM), main="Repartition function of the frequencies of words")
+
+w2 <- which(colsumsM<=2) # words seen only one time across ALL the abstracts
+wmax <- order(colsumsM,decreasing=TRUE)[1:3]
+Mshort <- M[,-c(w2,wmax)]
+
+o <- order(colSums(M), decreasing = TRUE)
+
+#res_lbm <- estimateBipartiteSBM(Mshort,model="poisson",dimLabels=c(row="Documents", col="Words"), estimOptions = list(nbCores = 6))#exploreMax = 10))
+# save(res_lbm,file='res_lbm.Rdata')
+load("res_lbm.Rdata")
+```
+
+```{r table lbm}
+knitr::kable(table(as.factor(res_lbm$memberships$Documents),earthworms$MA))
+```
