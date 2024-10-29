@@ -21,14 +21,14 @@ library(sbm) # Poisson lbm estimation
 library(knitr)
 ``` 
 
-### The data
+# A.The data
 
 ```{r load folder, eval  = TRUE, echo = FALSE}
 if(Sys.info()[[4]]=="mia-ps-port007"){
   folder_nm <- "/home/sophie/WORK_LOCAL/RECHERCHE/TRAVAUX_DE_RECHERCHE/Makowski/"
 } 
-if(Sys.info()[[4]]=="Fixe"){
-  folder_nm <- "/home/donnet/WORK_ALL/RECHERCHE/TRAVAUX_DE_RECHERCHE/Makowski/"
+if(Sys.info()[[4]]=="mia-ps-fix006"){
+  folder_nm <- "/home/donnet/WORK_ALL/RECHERCHE/TRAVAUX_RECHERCHE/Makowski/"
 } 
 folder_nm <- paste0(folder_nm,"EarthwormsMetanalysis/Resultats_Finaux_Antoine_MALET/1_Web_Scraping_Python/b_Output_Py/data_articles_metaanalyses.csv")
 ```
@@ -52,7 +52,7 @@ nrow(earthworms)
 ```
 
 
-## About the abstracts 
+### About the abstracts 
 
 We consider the abstracts. We remove the numbers, punctuation, we "stem" (i.e. remove plural marks etc...) and we remove the stopwords. 
 ```{r abstracts}
@@ -91,34 +91,113 @@ library(sbm)
 plotMyMatrix(t(Mo),dimLabels = c(row = "Words",col = "Documents" ),plotOptions= list(rowNames = TRUE))
 ```
 
-### Latent Dirichlet Allocation estimation
+# B. Latent Dirichlet Allocation estimation
 
-#### Inference by VEM for several values of K 
-```{r lda, eval  = TRUE, echo = TRUE}
 
-Kmax= 20 
+### B.1. Pb of randomness in the estimates 
+
+For $K=4$ and $K=2$, we tru $50$ several seeds to see how the results vary from one seed to another. 
+
+
+```{r lda seed, eval  = FALSE , echo = TRUE}
+Nbseeds  = 50
+res_LDA = vector(mode = "list", length = Nbseeds)
+log_lik = rep(-Inf,Nbseeds)
+ACS = rep(-Inf,Nbseeds) # average cosine similarity
+
+K = 2 
+for(s in 1:50){
+  print(s)
+  res_lda_K_s<-  LDA(TDM_abstract, k = K, seed = s, method = "VEM",control = list())
+  res_LDA[[s]] <-  res_lda_K_s
+  log_lik[s] <- sum(res_lda_K_s@loglikelihood)
+  Corr_K <-  cor(t(res_lda_K_s@beta))
+  diag(Corr_K) <- 0
+  ACS[s] <- sum(Corr_K)/(K*(K-1))
+}
+save(res_LDA,log_lik,ACS,file='res_LDA_severalseed_K=2.Rdata')
+``` 
+
+We plot all the likelihoods obtained for the various seeds. 
+```{r}
+load(file='res_LDA_severalseed_K=2.Rdata')
+plot(log_lik)
+w  = which.max(log_lik)
+lda_cluster_documents <- apply(res_LDA[[w]]@gamma,1,which.max)
+knitr::kable(table(as.factor(lda_cluster_documents),earthworms$MA))
+
+
+```
+
+
+For K equal to 4
+
+```{r lda_seed_K4, eval  = FALSE, echo = TRUE}
+Nbseeds  = 50
+res_LDA = vector(mode = "list", length = Nbseeds)
+log_lik = rep(-Inf,Nbseeds)
+ACS = rep(-Inf,Nbseeds) # average cosine similarity
+
+K = 4
+for(s in 1:50){
+  print(s)
+  res_lda_K_s<-  LDA(TDM_abstract, k = K, seed = s, method = "VEM",control = list())
+  res_LDA[[s]] <-  res_lda_K_s
+  log_lik[s] <- sum(res_lda_K_s@loglikelihood)
+  Corr_K <-  cor(t(res_lda_K_s@beta))
+  diag(Corr_K) <- 0
+  ACS[s] <- sum(Corr_K)/(K*(K-1))
+}
+save(res_LDA,log_lik,ACS,file='res_LDA_severalseed_K=4.Rdata')
+```
+
+```{r lda seed K4 load, eval  = TRUE, echo = TRUE}
+load(file='res_LDA_severalseed_K=4.Rdata')
+plot(log_lik)
+w  = which.max(log_lik)
+lda_cluster_documents4 <- apply(res_LDA[[w]]@gamma,1,which.max)
+knitr::kable(table(as.factor(lda_cluster_documents4),earthworms$MA))
+``` 
+
+### B.2. Inference by VEM for several values of K 
+```{r lda, eval  = FALSE, echo = TRUE}
+
+Kmax= 10 
 res_LDA = vector(mode = "list", length = Kmax-1)
 log_lik = rep(-Inf,Kmax-1)
 ACS = rep(-Inf,Kmax-1) # average cosine similarity
 for (K in 2:Kmax){
   print(K)
-  res_lda_K <-  LDA(TDM_abstract, k = K, control = list())
-  res_LDA[[K-1]] <-  res_lda_K
-  log_lik[K-1] <- sum(res_lda_K@loglikelihood)
+  res_lda_K_current <- NULL
+  log_lik_current <- -Inf
+  for(s in 1:10){ # with 10 seeds. 
+    print(s)
+    res_lda_K <-  LDA(TDM_abstract, k = K, seed = s, method = "VEM",control = list())
+    if (sum(res_lda_K@loglikelihood)>log_lik_current){
+      res_lda_K_current <- res_lda_K
+      log_lik_current <-sum(res_lda_K@loglikelihood)
+    }
+  }
+  
+  res_LDA[[K-1]] <-  res_lda_K_current
+  log_lik[K-1] <- sum(res_lda_K_current@loglikelihood)
   Corr_K <-  cor(t(res_lda_K@beta))
   diag(Corr_K) <- 0
   ACS[K-1] <- sum(Corr_K)/(K*(K-1))
 }
 save(res_LDA,log_lik,ACS,file='res_LDA.Rdata')
 ``` 
+
+
+
+
+
+### B.3. Choice of K 
+
 ```{r lda load, eval  = TRUE, echo = FALSE}
 
-Kmax = 20
-load(file='res_LDA.Rdata')
+
 ```
-
-
-#### Choice of K 
 
 It seems that the minimal ACS is obtained for $K=2$ topics. 
 ASC is the Topic Similarity
@@ -128,7 +207,10 @@ It its obtained by the following formulae:
 $$
 ACS =\frac{1}{K(K-1)} \sum_{k=1,\ell\neq k}^{K}\text{corr}(\beta_k,\beta_\ell) 
 $$ 
+
 ```{r plot ACS}
+load(file='res_LDA.Rdata')
+Kmax <- length(log_lik)+1
 res = data.frame(val_crit=c(log_lik,ACS))
 res$K <- rep(2:Kmax,2)
 res$crit = as.factor(rep(c('log_lik','ACS'),each=Kmax-1))
@@ -136,10 +218,11 @@ ggplot(res,aes(x=K,y=val_crit,col=crit,group=crit)) + geom_line() + facet_wrap(~
 ```
 
 
-#### Analysis of the results for 2 topics 
+### B.4. Analysis of the results for 2 or 4 topics 
 
 We look at the words the most involved in each topic. They seem very similar. Let's see if the documents can be clustered. 
 
+#### B.4.1. Analysis with 2 topics 
 ```{r the 2 topics}
 
 K = 2
@@ -162,25 +245,45 @@ abstract_top_terms %>%
 
 
 ```{r }
-K = 3
-#lda_cluster_documents <- apply(res_LDA[[K-1]]@gamma,1,which.max)
-lda_cluster_documents2 <- apply(res_LDA[[1]]@gamma,1,which.max)
-#knitr::kable(table(lda_cluster_documents2,lda_cluster_documents))
-
-
+K = 2
+lda_cluster_documents2 <- apply(res_LDA[[K-1]]@gamma,1,which.max)
 knitr::kable(table(as.factor(lda_cluster_documents2),earthworms$MA))
-#abstract_documents
-#tidy(TDM_abstract.new ) %>%
-#  filter(document == 6) %>%
-#  arrange(desc(count))
+plotAlluvial(list(MA =earthworms$MA, LDA = lda_cluster_documents2))
+```
+
+#### B.4.2. Analysis with 4  topics 
+
+```{r the 4 topics}
+
+K = 4
+abstract_topics <- tidy(res_LDA[[K-1]], matrix = "beta")
+abstract_top_terms <- abstract_topics %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 20) %>% 
+  ungroup() %>%
+  arrange(topic, -beta)
+abstract_top_terms %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col() +
+  facet_wrap(~ topic, scales = "free") +
+  scale_y_reordered()
+
+
 ```
 
 
 
+```{r }
+K = 4
+lda_cluster_documents4 <- apply(res_LDA[[K-1]]@gamma,1,which.max)
+knitr::kable(table(as.factor(lda_cluster_documents4),earthworms$MA))
+plotAlluvial(list(MA =earthworms$MA, LDA = lda_cluster_documents4))
+```
 
-### Latent block model estimation
+# C. Latent block model estimation
 
-```{r lbm, eval  = TRUE}
+```{r lbm, eval  = FALSE, echo = TRUE}
 colsumsM <- colSums(M)
 plot(ecdf(colsumsM), main="Repartition function of the frequencies of words")
 
@@ -190,11 +293,17 @@ Mshort <- M[,-c(w2,wmax)]
 
 o <- order(colSums(M), decreasing = TRUE)
 
-res_lbm <- estimateBipartiteSBM(Mshort,model="poisson",dimLabels=c(row="Documents", col="Words"), estimOptions = list(nbCores = 6))#exploreMax = 10))
- save(res_lbm,file='res_lbm.Rdata')
-load("res_lbm.Rdata")
+res_lbm <- estimateBipartiteSBM(Mshort,model="poisson",dimLabels=c(row = "Documents", col="Words"), estimOptions = list(nbCores = 6,plot=FALSE))#exploreMax = 10))
+save(res_lbm,file='res_lbm.Rdata')
+
 ```
 
+
+
+
 ```{r table lbm}
+load("res_lbm.Rdata")
+plot(res_lbm,plotOptions = list(line.width = 0.1))
 knitr::kable(table(as.factor(res_lbm$memberships$Documents),earthworms$MA))
+plotAlluvial(list(MA =earthworms$MA, LBM = res_lbm$memberships$Documents))
 ```
