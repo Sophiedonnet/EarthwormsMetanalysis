@@ -66,12 +66,24 @@ TDM_abstract <- DocumentTermMatrix(abstracts,
                                        stopwords = TRUE))
 ```
  
+We remove the word `earthworms` which is not informative 
+
+```{r remove earthworm}
+# Step 1: Calculate term frequencies
+term_freq <- colSums(as.matrix(TDM_abstract))
+# Step 3: Remove these terms from the DocumentTermMatrix
+TDM_abstract_filt <- TDM_abstract[, !colnames(TDM_abstract) %in% c('earthworm')]
+
+```
+ 
+ 
 We obtain a "matrix" of size `r dim(TDM_abstract)[1]` documents and `r dim(TDM_abstract)[2]` words. 
 We can plot the 20 most seen words 
 
 
 
 ```{r plot TDM}
+TDM_abstract <- TDM_abstract_filt
 M <- as.matrix(TDM_abstract)
 o <- order(colSums(M), decreasing = TRUE)
 Mo <- M[,o[1:20]]
@@ -178,8 +190,8 @@ Mshort <- M[,-c(w2,wmax)]
 
 o <- order(colSums(M), decreasing = TRUE)
 
-#res_lbm <- estimateBipartiteSBM(Mshort,model="poisson",dimLabels=c(row="Documents", col="Words"), estimOptions = list(nbCores = 6))#exploreMax = 10))
-# save(res_lbm,file='res_lbm.Rdata')
+res_lbm <- estimateBipartiteSBM(Mshort,model="poisson",dimLabels=c(row="Documents", col="Words"), estimOptions = list(nbCores = 6))#exploreMax = 10))
+ save(res_lbm,file='res_lbm.Rdata')
 load("res_lbm.Rdata")
 ```
 
